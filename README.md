@@ -30,6 +30,7 @@ Each entry has:
 | [boards/adafruit-matrix-portal-m4](boards/adafruit-matrix-portal-m4/README.md) | SAMD51 + ESP32 HUB75 controller, LIS3DH |
 | [boards/lilygo-t3-lora32-v1.6.1](boards/lilygo-t3-lora32-v1.6.1/README.md) | ESP32-PICO-D4 + SX1276/SX1278 LoRa, SSD1306 OLED, microSD |
 | [parts/waveshare-1.69in-lcd-module](parts/waveshare-1.69in-lcd-module/README.md) | 1.69" 240×280 ST7789V2 SPI LCD (Seeed SKU 5755) |
+| [parts/gc9a01-1.28in-round-lcd](parts/gc9a01-1.28in-round-lcd/README.md) | 1.28" 240×240 round GC9A01A SPI LCD module |
 | [chips/esp32-s3](chips/esp32-s3/README.md) | Espressif ESP32-S3 |
 | [chips/nrf54lm20a](chips/nrf54lm20a/README.md) | Nordic nRF54LM20A |
 | [chips/nrf52840](chips/nrf52840/README.md) | Nordic nRF52840 |
