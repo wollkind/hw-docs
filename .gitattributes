@@ -10,3 +10,4 @@
 *.step -text
 *.stp -text
 *.xlsx binary
+*.hex -text
