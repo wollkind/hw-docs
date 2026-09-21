@@ -6,3 +6,7 @@
 *.webp binary
 *.png binary
 *.jpg binary
+*.dxf -text
+*.step -text
+*.stp -text
+*.xlsx binary
