@@ -1,6 +1,6 @@
 # hw-docs mission + work queue
 
-**Read this first when resuming.** It is self-contained: a Claude Code session in a cloud sandbox (repo only, no local machine, no `~/.claude/skills`) has everything it needs here.
+**Read this first when resuming.** It and `.claude/skills/hw-docs/SKILL.md` together are self-contained: a Claude Code session in a cloud sandbox (repo only) has everything it needs.
 
 ## Mission
 
@@ -10,7 +10,7 @@ Build a local, git-tracked reference library of every board, chip and part the o
 - the files: schematics, datasheets, dimensions, 3D models, small firmware
 - a **distilled README**: specs, pinout, a working config, gotchas
 
-Done means: every item in the queue below has an entry, it's in the index in `README.md`, and it's committed and pushed.
+Done means: every item in the queue below has an entry, it's in the index in `README.md`, and it's committed. The owner handles pushes.
 
 ## Environment
 
@@ -21,62 +21,9 @@ Done means: every item in the queue below has an entry, it's in the index in `RE
 - The owner's PlatformIO projects are separate private repos, `wollkind/pio-<name>`, plus `wollkind/infopanel64` and `wollkind/info-orbs`. Locally they're in `~/Documents/PlatformIO/Projects/<name>`. In a sandbox, use `gh repo clone` or `gh api` to grep them for "Used by" and for lessons learned. Their `README.md`/`CLAUDE.md` often hold hard-won hardware facts.
 - Style for the owner: terse reports, no padding. Don't ask about mechanical decisions.
 
-## Workflow per item (this is the `hw-docs` skill)
+## Workflow per item
 
-### 0. Already there?
-
-Check `boards/`, `chips/`, `parts/` and the index. If the entry exists, refresh it rather than duplicating it.
-
-### 1. Identify exactly
-
-- Pin down vendor, model, **revision** and SKU. Amazon links are resellers, so find the real maker and its wiki (Amazon pages can be read with WebFetch).
-- If there are variants (flash/PSRAM, V1/V2, chip), record all of them and how to tell them apart. Don't guess.
-- Pick the folder (lowercase-hyphenated names):
-  - `boards/<vendor>-<model>` for dev boards, modules, carriers and dev kits with displays
-  - `chips/<family>` for MCUs/SoCs, stored once and shared
-  - `parts/<part>` for sensors, bare displays, power modules, ICs
-
-### 2. Fetch
-
-```sh
-uv run tools/fetch_page.py <url> <entry>/wiki/<page>.md    # page → markdown + images in wiki/img/, prints JSON of file/page links
-uv run tools/fetch_file.py <url> <entry>/hardware/schematic.pdf   # refuses HTML posing as PDF/ZIP; FAILED on 4xx
-```
-
-- Crawl the product's own sub-pages (overview, pinout, resources, FAQ, Arduino/IDF setup). Skip generic tutorials.
-- Get these if they exist:
-  - schematic
-  - dimensions (DXF/PDF)
-  - datasheet for the board and for each distinct onboard IC (`datasheets/`)
-  - STEP model (zip it if it's big)
-  - KiCad/Eagle files
-  - factory firmware under 5 MB (`firmware/`)
-- Chips: use the manufacturer's URL (espressif.com, microchip.com, st.com, raspberrypi.com). Nordic's docs site returns 403 to scripts, so use a vendor copy and note it.
-- GitHub: record the repo and the commit SHA (`gh api repos/O/R/commits/HEAD --jq .sha`). Copy only small useful files (pin headers, BSP config, `sdkconfig.defaults`, variant files), taken from `raw.githubusercontent.com/O/R/<sha>/...`. Never fork, and never vendor whole repos.
-- Unzip vendor zips, including nested ones. Rename files to short lowercase names and keep the originals in `sources.md`.
-- Skip files over 20 MB unless they're irreplaceable. Log skips in `sources.md`.
-
-### 3. Distill `<entry>/README.md`
-
-Use `boards/waveshare-esp32-s3-rgb-matrix/README.md` as the model:
-
-1. **Title and one line:** what it is, a link to its chip entry, and "Used by" projects.
-2. **Key specs** table: MCU, memory, radio, USB type, power, onboard ICs with I2C addresses.
-3. **Pinout** tables: cite the source file for each. Board revisions get separate columns. Where sources conflict, show both.
-4. **PlatformIO/Arduino config:** say "verified in <project>" only if a project actually uses it. Otherwise "from vendor docs, untested".
-5. **Gotchas:** FAQ items, strapping/flash/PSRAM pin conflicts (cross-check the chip datasheet), UARTs that are taken, power limits, and project lessons.
-6. **Files** list.
-
-Also write `sources.md`: every URL, the fetch date, SHAs, and anything skipped or failed.
-
-**Every fact must come from a fetched source or a project file. Mark anything else `(unverified)`. A wrong pin number costs more than a missing one.**
-
-### 4. File it
-
-- Add a row to the index table in `README.md`.
-- Link the board from its chip README.
-- Make one commit per entry and push.
-- Report tersely: the path, what was fetched, what's missing, and open questions.
+Follow **`.claude/skills/hw-docs/SKILL.md`**. It's the `hw-docs` skill, which Claude Code loads automatically in this repo (`/hw-docs <item>`). It covers identifying the item, fetching, distilling the README, `sources.md`, and filing the entry. The one rule that matters most: every fact must come from a fetched source or a project file, and anything else is marked `(unverified)`.
 
 ## Queue (as of 2026-09-21)
 
@@ -121,7 +68,7 @@ Next, the **bulk pass:**
 
 ## Open issues
 
-- **Push to GitHub has been failing** from the owner's machine: "Connection reset by peer" / `pack-objects died of signal 15` on a large pack. As of this writing, local `main` is ahead of `origin/main` by several commits. If you're in a sandbox and these entries are missing, they're only on the local disk. Try `git push` again; if the big pack keeps failing, push one commit at a time (`git push origin <sha>:refs/heads/main`), or try HTTPS instead of SSH.
+- **Push to GitHub has been failing** from the owner's machine: "Connection reset by peer" / `pack-objects died of signal 15` on a large pack. As of this writing, local `main` is ahead of `origin/main` by several commits. If you're in a sandbox and these entries are missing, they're only on the local disk. The owner handles pushes, so don't push from a session.
 - **Missing source:** the nRF52840 PS in `chips/nrf52840` is v1.5 (Seeed's copy). The current Nordic PS needs a browser download.
 - **Missing source:** there's no separate XIAO ESP32-S3 Sense schematic. Seeed's URL serves the v1.4 base file.
 - **Unverified:** the XIAO nRF52840 Sense IMU address 0x6A is unconfirmed against the schematic.
