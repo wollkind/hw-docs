@@ -31,7 +31,6 @@ Identified products are marked ✔. Work top to bottom.
 
 | # | Item as given | Identified as | Likely folder | Notes |
 |---|---|---|---|---|
-| 5 | https://www.adafruit.com/product/5650 | not yet looked up | | Adafruit: learn guide + GitHub PCB repo |
 | 6 | https://www.adafruit.com/product/5691 | not yet looked up | | as above |
 | 7 | https://www.amazon.com/dp/B0G43FCHFX | ✔ Elecrow CrowPanel ESP32 E-Paper HMI 4.2" (400×300, B/W, SPI) | `boards/elecrow-crowpanel-epaper-4.2` | Elecrow wiki. The owner has a project `pio-crowpanel2` (check which CrowPanel it targets) |
 | 8 | https://www.amazon.com/dp/B0GGF7C46X | ✔ AITRIP 2.8" ESP32-S3 touch module, 240×320 IPS, capacitive | `boards/…` | reseller: identify the real board (likely a "CYD"-style ESP32-S3 2.8" clone) from photos/pinout before naming the folder |
@@ -61,6 +60,7 @@ Next, the **bulk pass:**
 | `boards/adafruit-matrix-portal-m4` | used by sandpanel |
 | `parts/waveshare-1.69in-lcd-module` | Seeed SKU 5755 |
 | `chips/esp32-s3`, `chips/nrf52840`, `chips/atsamd51` | |
+| `boards/adafruit-feather-rp2040-scorpio` | PID 5650; EAGLE schematic + CircuitPython/arduino-pico pin maps |
 | `parts/sk-120-buck-boost` | XY-SK120; vendor Modbus PDFs via a community GitHub repo; electrical specs still unsourced |
 | `parts/gc9a01-1.28in-round-lcd` | GC9A01A datasheet + TFT_eSPI/Adafruit init; module pin labels unverified |
 | `boards/seeed-xiao-nrf54lm20a-sense`, `chips/nrf54lm20a` | wiki source from GitHub; schematic and Nordic datasheet still missing |
@@ -69,6 +69,7 @@ Next, the **bulk pass:**
 ## Open issues
 
 - **Sandbox egress:** vendor sites (lilygo.cc, wiki.seeedstudio.com, docs.waveshare.com, adafruit.com, espressif.com, semtech.com) are blocked by the proxy. GitHub (including raw and clones of public vendor repos) and web search work, so vendor GitHub repos are the way in.
+- **Missing source:** no `chips/rp2040` entry — datasheets.raspberrypi.com is blocked by the proxy. Adafruit Learn guides are unreachable too (adafruit.com, cdn-learn.adafruit.com), so Adafruit entries rest on the PCB repos and board definitions.
 - **Missing source:** XY-SK120 electrical specs and front-panel manual. The user guides live on telemetry2u.com / manuals.plus / done.land, all blocked by the proxy; and which variant (SK120/SK120X/SK120D) the owner has is unconfirmed.
 - **Unverified:** the GC9A01 module's pin labels and pin order (7- vs 8-pin build) — needs a photo of the owner's board.
 - **Missing source:** XIAO nRF54LM20A Sense schematic, KiCad project and the Nordic nRF54LM20A datasheet: all three live on `files.seeedstudio.com`, which the proxy blocks. Need a browser download.

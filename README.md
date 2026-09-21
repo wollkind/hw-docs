@@ -26,6 +26,7 @@ Each entry has:
 | [boards/seeed-xiao-esp32s3](boards/seeed-xiao-esp32s3/README.md) | XIAO ESP32-S3 / Sense / Plus |
 | [boards/seeed-xiao-1.14in-display-esp32s3](boards/seeed-xiao-1.14in-display-esp32s3/README.md) | XIAO ESP32-S3 Plus + 1.14" ST7789, IMU, mic, buttons |
 | [boards/seeed-xiao-nrf52840-sense](boards/seeed-xiao-nrf52840-sense/README.md) | XIAO nRF52840 Sense (IMU, PDM mic) |
+| [boards/adafruit-feather-rp2040-scorpio](boards/adafruit-feather-rp2040-scorpio/README.md) | RP2040 Feather, 8× level-shifted NeoPixel outputs |
 | [boards/seeed-xiao-nrf54lm20a-sense](boards/seeed-xiao-nrf54lm20a-sense/README.md) | XIAO nRF54LM20A Sense (BLE 6.0, nPM1300, IMU, PDM mic) |
 | [boards/adafruit-matrix-portal-m4](boards/adafruit-matrix-portal-m4/README.md) | SAMD51 + ESP32 HUB75 controller, LIS3DH |
 | [boards/lilygo-t3-lora32-v1.6.1](boards/lilygo-t3-lora32-v1.6.1/README.md) | ESP32-PICO-D4 + SX1276/SX1278 LoRa, SSD1306 OLED, microSD |
