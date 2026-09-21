@@ -31,7 +31,6 @@ Identified products are marked ✔. Work top to bottom.
 
 | # | Item as given | Identified as | Likely folder | Notes |
 |---|---|---|---|---|
-| 6 | https://www.adafruit.com/product/5691 | not yet looked up | | as above |
 | 7 | https://www.amazon.com/dp/B0G43FCHFX | ✔ Elecrow CrowPanel ESP32 E-Paper HMI 4.2" (400×300, B/W, SPI) | `boards/elecrow-crowpanel-epaper-4.2` | Elecrow wiki. The owner has a project `pio-crowpanel2` (check which CrowPanel it targets) |
 | 8 | https://www.amazon.com/dp/B0GGF7C46X | ✔ AITRIP 2.8" ESP32-S3 touch module, 240×320 IPS, capacitive | `boards/…` | reseller: identify the real board (likely a "CYD"-style ESP32-S3 2.8" clone) from photos/pinout before naming the folder |
 | 9 | https://www.amazon.com/dp/B0FX4PZZMQ | ✔ Elecrow CrowPanel ESP32 E-Paper HMI 2.13" (122×250, B/W, SPI), without case | `boards/elecrow-crowpanel-epaper-2.13` | Elecrow wiki |
@@ -60,6 +59,7 @@ Next, the **bulk pass:**
 | `boards/adafruit-matrix-portal-m4` | used by sandpanel |
 | `parts/waveshare-1.69in-lcd-module` | Seeed SKU 5755 |
 | `chips/esp32-s3`, `chips/nrf52840`, `chips/atsamd51` | |
+| `boards/adafruit-esp32-s3-reverse-tft-feather` | PID 5691; EAGLE + pinout PDFs + all three board definitions |
 | `boards/adafruit-feather-rp2040-scorpio` | PID 5650; EAGLE schematic + CircuitPython/arduino-pico pin maps |
 | `parts/sk-120-buck-boost` | XY-SK120; vendor Modbus PDFs via a community GitHub repo; electrical specs still unsourced |
 | `parts/gc9a01-1.28in-round-lcd` | GC9A01A datasheet + TFT_eSPI/Adafruit init; module pin labels unverified |
