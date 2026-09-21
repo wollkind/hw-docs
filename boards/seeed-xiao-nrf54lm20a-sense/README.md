@@ -1,0 +1,80 @@
+# Seeed Studio XIAO nRF54LM20A Sense (SKU 100018440)
+
+XIAO-format board around Nordic's nRF54LM20A: BLE 6.0 / Thread / Zigbee / Matter / NFC, 8 MB external flash, nPM1300 PMIC, and on the Sense version an LSM6DS3TR-C IMU and a PDM microphone. Chip: [../../chips/nrf54lm20a](../../chips/nrf54lm20a/README.md).
+Used by: no project (new board, not in any `pio-*` repo checked).
+
+## Key specs
+
+| | |
+|---|---|
+| SoC | nRF54LM20A: Cortex-M33 @ 128 MHz + RISC-V coprocessor @ 128 MHz |
+| RAM / NVM | 512 KB RAM, 2 MB on-chip NVM (PlatformIO reports 2 084 864 B max sketch, 524 288 B RAM) |
+| External flash | 8 MB PY25Q64HA SPI NOR (on `spi00`) |
+| PMIC | Nordic nPM1300: charging, regulation, ship mode; on its own I2C |
+| Radio | BLE 6.0 incl. Channel Sounding, BLE Mesh, Thread, Zigbee, Matter, Amazon Sidewalk, proprietary 2.4 GHz (to 4 Mbps); PCB antenna + IPEX4 connector |
+| Sense extras | LSM6DS3TR-C 6-axis IMU (I2C **0x6A**), MSM261DGT006 PDM MEMS microphone |
+| I/O | 28 GPIO, 9 analog, 1× I2C, 1× UART, 1× SPI, NFC, SHPHLD pin |
+| Onboard | RGB user LED, charge LED, reset button, user button, IPEX4 connector |
+| Debug | SAMD11 coprocessor providing CMSIS-DAP (SWD shared with the nRF54; separate SAMD11_RESET pad) |
+| Power | USB-C 5 V, or 3.7 V Li-ion on BAT+/BAT− |
+| Sleep current (Sense, 3.7 V) | light sleep ~9.96 µA, System OFF ~4.76 µA (4.92 µA with GRTC wake), ship mode 0.33 µA |
+| Size / temp | 21 × 17.8 mm, −20 °C to 70 °C |
+
+## Pinout
+
+Header pins (Seeed pin map):
+
+| Pad | Function | Chip pin |
+|---|---|---|
+| A0 / A1 / A2 / A3 / A7 | AIN0 / AIN1 / AIN2 / AIN3 / AIN7 | P1.00 / P1.31 / P1.30 / P1.29 / P1.03 |
+| SDA / SCL | user I2C | P1.03 / P1.07 |
+| TX / RX | UART | P1.08 / P1.09 |
+| MOSI / MISO / SCK | SPI | P1.06 / P1.05 / P1.04 |
+| VBUS, 3V3, GND, BAT+, BAT−, SHPHLD | power | — |
+| RESET, SWCLK, SWDIO, SAMD11_RESET | debug/reset | — |
+
+Onboard peripherals (Seeed pin map, confirmed against the Zephyr overlays in `reference/`):
+
+| Signal | Chip pin |
+|---|---|
+| User button (`sw0`, active low, pull-up) | P0.09 |
+| RGB LED R / G / B | P1.22 / P1.24 / P1.23 |
+| IMU I2C SDA / SCL (`i2c30`) | P0.08 / P0.07 |
+| IMU INT1 | P0.06 |
+| IMU CS | P3.12 |
+| Mic data / clock (`pdm20`) | P1.14 / P1.13 |
+| nPM1300 I2C SDA / SCL (bit-banged GPIO I2C) | P1.18 / P1.17 |
+| NFC antenna | P1.02 / P1.01 |
+| GRTC | P0.04 / P0.05 |
+| External flash `py25q64` on `spi00`: HOLD# / SCK / MOSI / WP# / MISO / CS# | P2.00 / P2.01 / P2.02 / P2.03 / P2.04 / P2.05 |
+
+**Conflict in the vendor table:** both `A7` and `SDA` are listed as **P1.03**. Seeed's own table says so; no schematic was available to settle it, so treat A7/SDA as the same pin `(unverified)`.
+
+## PlatformIO (from the Seeed wiki, untested here)
+
+```ini
+[env:seeed-xiao-nrf54lm20a]
+platform = https://github.com/Seeed-Studio/platform-seeedboards.git
+framework = zephyr
+board = seeed-xiao-nrf54lm20a
+monitor_speed = 115200
+```
+
+Install the platform once with `pio pkg install -g -p "https://github.com/Seeed-Studio/platform-seeedboards.git"`. Upload defaults to CMSIS-DAP through the onboard SAMD11 (pyOCD/probe-rs/J-Link also listed); `pio run -e seeed-xiao-nrf54lm20a -t upload`.
+
+Arduino is possible but unofficial: the wiki points at a **third-party** core, `https://raw.githubusercontent.com/lolren/nrf54-arduino-core/main/package_nrf54l15clean_index.json` ("nRF54L15 Boards" → XIAO nRF54LM20A). Zephyr, either through PlatformIO or the nRF Connect SDK, is the supported path; MicroPython has a flash package too.
+
+## Gotchas
+
+- **The IMU and mic are not powered at boot.** The rails are `power_en` (fixed regulator on P1.12) and `imu_vdd`/`dmic_vdd` = nPM1300 **LDO1** at 3.3 V. Seeed's samples mark the sensor `zephyr,deferred-init` and enable the rails from `main()`, because the nPM1300 hangs off a GPIO-bit-banged I2C that is not ready when the regulator driver initialises (priority 92 vs sensor 90). Initialise in that order or the IMU never answers.
+- **IMU driver:** the LSM6DS3TR-C binds to Zephyr's `st,lsm6dsl` driver (`CONFIG_LSM6DSL=y`) at address 0x6A on `i2c30`.
+- **Charger defaults** in Seeed's sample: 4.2 V termination, 150 mA charge current, 500 mA VBUS limit. Raise the current only after checking the cell's rating.
+- **Ship mode** is entered through the PMIC and drops the board to 0.33 µA; the SHPHLD pad brings it back.
+- **Two I2C buses:** the user I2C (P1.03/P1.07) is separate from both the IMU bus (P0.08/P0.07) and the PMIC bus (P1.18/P1.17). Adding a sensor on the user bus does not clash with the onboard ones.
+- **Non-Sense variant:** same board without the IMU and microphone; everything else in the pin map is identical.
+
+## Files
+
+- `wiki/`: Seeed's wiki pages in their source form — getting started, built-in sensors, pin multiplexing, low power, NCS, Arduino, MicroPython, BLE, Matter, NFC, e-paper + SD application. Images are remote links on `files.seeedstudio.com` (blocked from this sandbox), so they do not render offline.
+- `reference/seeed-xiao-nrf54lm20a.json`: the PlatformIO board definition (memory sizes, upload protocols, SVD name)
+- `reference/tapwake-imu.overlay`, `reference/npm1300.overlay`: Seeed's Zephyr overlays for the IMU rails and the PMIC I2C/charger settings

@@ -31,7 +31,6 @@ Identified products are marked ✔. Work top to bottom.
 
 | # | Item as given | Identified as | Likely folder | Notes |
 |---|---|---|---|---|
-| 2 | Seeed Studio XIAO nRF54LM20A Sense | name only. Search wiki.seeedstudio.com | `boards/seeed-xiao-nrf54lm20a-sense` + `chips/nrf54lm20` | new Nordic part. Zephyr/NCS, not Arduino |
 | 3 | HiLetgo 1.28" TFT, GC9A01 240×240 round, 3.3 V 4-wire SPI (round PCB) | generic GC9A01 round module | `parts/gc9a01-1.28in-round-lcd` | no vendor wiki. Get the GC9A01 datasheet, module pin labels and library init (TFT_eSPI / Adafruit_GC9A01A) |
 | 4 | https://www.amazon.com/dp/B0D9H3Z637 | ✔ SK-120 120 W buck-boost converter, CC/CV, 6–36 V in → 0–36 V out, colour display | `parts/sk-120-buck-boost` | find the manufacturer manual. Some units have a Modbus/TTL port |
 | 5 | https://www.adafruit.com/product/5650 | not yet looked up | | Adafruit: learn guide + GitHub PCB repo |
@@ -64,11 +63,13 @@ Next, the **bulk pass:**
 | `boards/adafruit-matrix-portal-m4` | used by sandpanel |
 | `parts/waveshare-1.69in-lcd-module` | Seeed SKU 5755 |
 | `chips/esp32-s3`, `chips/nrf52840`, `chips/atsamd51` | |
+| `boards/seeed-xiao-nrf54lm20a-sense`, `chips/nrf54lm20a` | wiki source from GitHub; schematic and Nordic datasheet still missing |
 | `boards/lilygo-t3-lora32-v1.6.1` | T3 LoRa32 V1.6.1, SX1276/SX1278; sources from the LilyGO GitHub repo |
 
 ## Open issues
 
 - **Sandbox egress:** vendor sites (lilygo.cc, wiki.seeedstudio.com, docs.waveshare.com, adafruit.com, espressif.com, semtech.com) are blocked by the proxy. GitHub (including raw and clones of public vendor repos) and web search work, so vendor GitHub repos are the way in.
+- **Missing source:** XIAO nRF54LM20A Sense schematic, KiCad project and the Nordic nRF54LM20A datasheet: all three live on `files.seeedstudio.com`, which the proxy blocks. Need a browser download.
 - **Missing source:** no `chips/esp32` entry for the ESP32-PICO-D4 on the T3 LoRa32, and no SX1276/SX1278 datasheet: espressif.com and semtech.com are unreachable.
 - **Missing source:** the nRF52840 PS in `chips/nrf52840` is v1.5 (Seeed's copy). The current Nordic PS needs a browser download.
 - **Missing source:** there's no separate XIAO ESP32-S3 Sense schematic. Seeed's URL serves the v1.4 base file.
