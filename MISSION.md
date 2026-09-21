@@ -10,7 +10,7 @@ Build a local, git-tracked reference library of every board, chip and part the o
 - the files: schematics, datasheets, dimensions, 3D models, small firmware
 - a **distilled README**: specs, pinout, a working config, gotchas
 
-Done means: every item in the queue below has an entry, it's in the index in `README.md`, and it's committed. The owner handles pushes.
+Done means: every item in the queue below has an entry, it's in the index in `README.md`, and it's committed.
 
 ## Environment
 
@@ -68,7 +68,6 @@ Next, the **bulk pass:**
 
 ## Open issues
 
-- **Push to GitHub has been failing** from the owner's machine: "Connection reset by peer" / `pack-objects died of signal 15` on a large pack. As of this writing, local `main` is ahead of `origin/main` by several commits. If you're in a sandbox and these entries are missing, they're only on the local disk. The owner handles pushes, so don't push from a session.
 - **Missing source:** the nRF52840 PS in `chips/nrf52840` is v1.5 (Seeed's copy). The current Nordic PS needs a browser download.
 - **Missing source:** there's no separate XIAO ESP32-S3 Sense schematic. Seeed's URL serves the v1.4 base file.
 - **Unverified:** the XIAO nRF52840 Sense IMU address 0x6A is unconfirmed against the schematic.
