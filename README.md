@@ -26,6 +26,7 @@ Each entry has:
 | [boards/seeed-xiao-esp32s3](boards/seeed-xiao-esp32s3/README.md) | XIAO ESP32-S3 / Sense / Plus |
 | [boards/seeed-xiao-1.14in-display-esp32s3](boards/seeed-xiao-1.14in-display-esp32s3/README.md) | XIAO ESP32-S3 Plus + 1.14" ST7789, IMU, mic, buttons |
 | [boards/seeed-xiao-nrf52840-sense](boards/seeed-xiao-nrf52840-sense/README.md) | XIAO nRF52840 Sense (IMU, PDM mic) |
+| [boards/waveshare-esp32-s3-rlcd-4.2](boards/waveshare-esp32-s3-rlcd-4.2/README.md) | ESP32-S3 + 4.2" 300×400 reflective ST7305 LCD, audio, RTC (used by pio-rlcd) |
 | [boards/elecrow-crowpanel-epaper-2.13](boards/elecrow-crowpanel-epaper-2.13/README.md) | ESP32-S3 + 2.13" 122×250 e-paper HMI (used by pio-crowpanel2) |
 | [boards/elecrow-crowpanel-epaper-4.2](boards/elecrow-crowpanel-epaper-4.2/README.md) | ESP32-S3 + 4.2" 400×300 SSD1683 e-paper HMI |
 | [boards/adafruit-esp32-s3-reverse-tft-feather](boards/adafruit-esp32-s3-reverse-tft-feather/README.md) | ESP32-S3 Feather, rear 240×135 ST7789, 3 buttons |

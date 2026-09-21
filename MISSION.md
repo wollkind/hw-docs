@@ -32,7 +32,6 @@ Identified products are marked ✔. Work top to bottom.
 | # | Item as given | Identified as | Likely folder | Notes |
 |---|---|---|---|---|
 | 8 | https://www.amazon.com/dp/B0GGF7C46X | ✔ AITRIP 2.8" ESP32-S3 touch module, 240×320 IPS, capacitive | `boards/…` | reseller: identify the real board (likely a "CYD"-style ESP32-S3 2.8" clone) from photos/pinout before naming the folder |
-| 10 | https://www.amazon.com/dp/B0GF23YC3Y | ✔ Waveshare ESP32-S3-RLCD-4.2 (4.2" reflective LCD, 300×400) | `boards/waveshare-esp32-s3-rlcd-4.2` | wiki at https://docs.waveshare.com/ESP32-S3-RLCD-4.2. The owner has a project `pio-rlcd` |
 | 11 | https://www.seeedstudio.com/XIAO-PowerBread-p-6318.html | XIAO PowerBread | `boards/seeed-xiao-powerbread` | Seeed wiki |
 | 12 | https://www.seeedstudio.com/Seeeduino-XIAO-Expansion-board-p-4746.html | XIAO Expansion Board | `boards/seeed-xiao-expansion-board` | Seeed wiki |
 | 13 | https://www.seeedstudio.com/XIAO-LOG-p-6341.html | XIAO LOG | `boards/seeed-xiao-log` | Seeed wiki |
@@ -57,6 +56,7 @@ Next, the **bulk pass:**
 | `boards/adafruit-matrix-portal-m4` | used by sandpanel |
 | `parts/waveshare-1.69in-lcd-module` | Seeed SKU 5755 |
 | `chips/esp32-s3`, `chips/nrf52840`, `chips/atsamd51` | |
+| `boards/waveshare-esp32-s3-rlcd-4.2` | used by `pio-rlcd`; pins from the vendor repo, schematic still missing |
 | `boards/elecrow-crowpanel-epaper-2.13` | used by `pio-crowpanel2`; vendor repo schematic + examples |
 | `boards/elecrow-crowpanel-epaper-4.2` | vendor GitHub repo: schematic, SSD1683 datasheet, STEP, examples |
 | `boards/adafruit-esp32-s3-reverse-tft-feather` | PID 5691; EAGLE + pinout PDFs + all three board definitions |
@@ -69,6 +69,7 @@ Next, the **bulk pass:**
 ## Open issues
 
 - **Sandbox egress:** vendor sites (lilygo.cc, wiki.seeedstudio.com, docs.waveshare.com, adafruit.com, espressif.com, semtech.com) are blocked by the proxy. GitHub (including raw and clones of public vendor repos) and web search work, so vendor GitHub repos are the way in.
+- **Missing source:** ESP32-S3-RLCD-4.2 schematic, dimensions and the ST7305 datasheet — only on the blocked Waveshare wiki.
 - **Missing source:** no `chips/rp2040` entry — datasheets.raspberrypi.com is blocked by the proxy. Adafruit Learn guides are unreachable too (adafruit.com, cdn-learn.adafruit.com), so Adafruit entries rest on the PCB repos and board definitions.
 - **Missing source:** XY-SK120 electrical specs and front-panel manual. The user guides live on telemetry2u.com / manuals.plus / done.land, all blocked by the proxy; and which variant (SK120/SK120X/SK120D) the owner has is unconfirmed.
 - **Unverified:** the GC9A01 module's pin labels and pin order (7- vs 8-pin build) — needs a photo of the owner's board.
