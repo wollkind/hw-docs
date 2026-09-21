@@ -33,7 +33,6 @@ Identified products are marked ✔. Work top to bottom.
 |---|---|---|---|---|
 | 8 | https://www.amazon.com/dp/B0GGF7C46X | ✔ AITRIP 2.8" ESP32-S3 touch module, 240×320 IPS, capacitive | `boards/…` | reseller: identify the real board (likely a "CYD"-style ESP32-S3 2.8" clone) from photos/pinout before naming the folder |
 | 11 | https://www.seeedstudio.com/XIAO-PowerBread-p-6318.html | XIAO PowerBread | `boards/seeed-xiao-powerbread` | Seeed wiki |
-| 12 | https://www.seeedstudio.com/Seeeduino-XIAO-Expansion-board-p-4746.html | XIAO Expansion Board | `boards/seeed-xiao-expansion-board` | Seeed wiki |
 | 13 | https://www.seeedstudio.com/XIAO-LOG-p-6341.html | XIAO LOG | `boards/seeed-xiao-log` | Seeed wiki |
 | 14 | https://www.seeedstudio.com/Wio-SX1262-with-XIAO-ESP32S3-p-5982.html | Wio-SX1262 + XIAO ESP32-S3 kit | `boards/seeed-wio-sx1262-xiao-esp32s3` | fits the XIAO B2B connector. Link to `boards/seeed-xiao-esp32s3` |
 
@@ -56,6 +55,7 @@ Next, the **bulk pass:**
 | `boards/adafruit-matrix-portal-m4` | used by sandpanel |
 | `parts/waveshare-1.69in-lcd-module` | Seeed SKU 5755 |
 | `chips/esp32-s3`, `chips/nrf52840`, `chips/atsamd51` | |
+| `boards/seeed-xiao-expansion-board` | wiki page only; schematic and part datasheets still missing |
 | `boards/waveshare-esp32-s3-rlcd-4.2` | used by `pio-rlcd`; pins from the vendor repo, schematic still missing |
 | `boards/elecrow-crowpanel-epaper-2.13` | used by `pio-crowpanel2`; vendor repo schematic + examples |
 | `boards/elecrow-crowpanel-epaper-4.2` | vendor GitHub repo: schematic, SSD1683 datasheet, STEP, examples |
