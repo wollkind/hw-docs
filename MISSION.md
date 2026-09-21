@@ -32,7 +32,6 @@ Identified products are marked ✔. Work top to bottom.
 | # | Item as given | Identified as | Likely folder | Notes |
 |---|---|---|---|---|
 | 8 | https://www.amazon.com/dp/B0GGF7C46X | ✔ AITRIP 2.8" ESP32-S3 touch module, 240×320 IPS, capacitive | `boards/…` | reseller: identify the real board (likely a "CYD"-style ESP32-S3 2.8" clone) from photos/pinout before naming the folder |
-| 13 | https://www.seeedstudio.com/XIAO-LOG-p-6341.html | XIAO LOG | `boards/seeed-xiao-log` | Seeed wiki |
 
 Next, the **bulk pass:**
 
@@ -53,6 +52,7 @@ Next, the **bulk pass:**
 | `boards/adafruit-matrix-portal-m4` | used by sandpanel |
 | `parts/waveshare-1.69in-lcd-module` | Seeed SKU 5755 |
 | `chips/esp32-s3`, `chips/nrf52840`, `chips/atsamd51` | |
+| `boards/seeed-xiao-log` | no Seeed wiki; schematics V1–V3 and MicroPython from the potblitd repo |
 | `boards/seeed-xiao-powerbread` | no Seeed wiki; schematic, datasheets and firmware from the nicho810 repo |
 | `boards/seeed-wio-sx1262-xiao-esp32s3` | pins from the Meshtastic variant; Seeed schematic/datasheet still missing |
 | `boards/seeed-xiao-expansion-board` | wiki page only; schematic and part datasheets still missing |

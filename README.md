@@ -32,6 +32,7 @@ Each entry has:
 | [boards/elecrow-crowpanel-epaper-4.2](boards/elecrow-crowpanel-epaper-4.2/README.md) | ESP32-S3 + 4.2" 400×300 SSD1683 e-paper HMI |
 | [boards/adafruit-esp32-s3-reverse-tft-feather](boards/adafruit-esp32-s3-reverse-tft-feather/README.md) | ESP32-S3 Feather, rear 240×135 ST7789, 3 buttons |
 | [boards/adafruit-feather-rp2040-scorpio](boards/adafruit-feather-rp2040-scorpio/README.md) | RP2040 Feather, 8× level-shifted NeoPixel outputs |
+| [boards/seeed-xiao-log](boards/seeed-xiao-log/README.md) | XIAO Logger HAT: SHT40, BH1750, PCF8563, battery sense |
 | [boards/seeed-xiao-powerbread](boards/seeed-xiao-powerbread/README.md) | Breadboard PSU + INA3221 meter, XIAO-hosted |
 | [boards/seeed-xiao-expansion-board](boards/seeed-xiao-expansion-board/README.md) | XIAO carrier: OLED, PCF8563 RTC, microSD, Grove, LiPo |
 | [boards/seeed-xiao-nrf54lm20a-sense](boards/seeed-xiao-nrf54lm20a-sense/README.md) | XIAO nRF54LM20A Sense (BLE 6.0, nPM1300, IMU, PDM mic) |
