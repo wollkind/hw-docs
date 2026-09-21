@@ -23,6 +23,7 @@ Each entry has:
 |---|---|
 | [boards/waveshare-esp32-s3-rgb-matrix](boards/waveshare-esp32-s3-rgb-matrix/README.md) | ESP32-S3 N32R16 HUB75 driver, mics/IMU/RTC onboard |
 | [boards/seengreat-rgb-matrix-adapter-e](boards/seengreat-rgb-matrix-adapter-e/README.md) | HUB75 carrier for ESP32-S3-DevKitC-1 / ESP32-DevKitC |
+| [boards/seeed-xiao-esp32c6](boards/seeed-xiao-esp32c6/README.md) | XIAO ESP32-C6: Wi-Fi 6, BLE, Zigbee/Thread |
 | [boards/seeed-xiao-esp32s3](boards/seeed-xiao-esp32s3/README.md) | XIAO ESP32-S3 / Sense / Plus |
 | [boards/seeed-wio-sx1262-xiao-esp32s3](boards/seeed-wio-sx1262-xiao-esp32s3/README.md) | XIAO ESP32-S3 + Wio-SX1262 LoRa kit (Meshtastic) |
 | [boards/seeed-xiao-1.14in-display-esp32s3](boards/seeed-xiao-1.14in-display-esp32s3/README.md) | XIAO ESP32-S3 Plus + 1.14" ST7789, IMU, mic, buttons |

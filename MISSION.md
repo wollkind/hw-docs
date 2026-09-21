@@ -48,6 +48,7 @@ Next, the **bulk pass:**
 | `boards/adafruit-matrix-portal-m4` | used by sandpanel |
 | `parts/waveshare-1.69in-lcd-module` | Seeed SKU 5755 |
 | `chips/esp32-s3`, `chips/nrf52840`, `chips/atsamd51` | |
+| `boards/seeed-xiao-esp32c6` | bulk pass: used by pio-solar, pio-soil1, pio-strip-com, pio-xiao-hdc-wifi |
 | `boards/aitrip-esp32-s3-2.8in-touch-lcd` | **provisional** — reseller board not identified, no pin map |
 | `boards/seeed-xiao-log` | no Seeed wiki; schematics V1–V3 and MicroPython from the potblitd repo |
 | `boards/seeed-xiao-powerbread` | no Seeed wiki; schematic, datasheets and firmware from the nicho810 repo |
@@ -65,6 +66,8 @@ Next, the **bulk pass:**
 
 ## Open issues
 
+- **Found in the bulk pass:** `pio-strip-com`'s `display` env is `board = esp32-s3-devkitc-1` but is really a **SmartPanle PanelLan `BOARD_SC05_X`** (320×240 IPS + touch, 16 MB flash, OPI PSRAM, `smartpanle/PanelLan` library). It needs its own entry. That project also pins `platform = file://C:/Users/steve/pio-esp32-55.03.311`, a local fork that will not resolve on another machine.
+- **Missing source:** no `chips/esp32-c6` entry — the Espressif datasheet is only on blocked hosts.
 - **Blocked — item 8:** the AITRIP 2.8" ESP32-S3 touch module has no identifiable vendor design. Amazon is blocked from the sandbox and the listing text (ST7789P3 + FT6336U + ESP32-S3-R2 + RS485) matches several white-label sellers, none with documentation. Needs a photo of the board silkscreen to get a model code; the entry records what is known and deliberately records no pin map.
 
 - **Sandbox egress:** vendor sites (lilygo.cc, wiki.seeedstudio.com, docs.waveshare.com, adafruit.com, espressif.com, semtech.com) are blocked by the proxy. GitHub (including raw and clones of public vendor repos) and web search work, so vendor GitHub repos are the way in.
