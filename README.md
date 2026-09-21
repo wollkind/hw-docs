@@ -30,6 +30,7 @@ Each entry has:
 | [boards/waveshare-esp32-s3-rlcd-4.2](boards/waveshare-esp32-s3-rlcd-4.2/README.md) | ESP32-S3 + 4.2" 300×400 reflective ST7305 LCD, audio, RTC (used by pio-rlcd) |
 | [boards/elecrow-crowpanel-epaper-2.13](boards/elecrow-crowpanel-epaper-2.13/README.md) | ESP32-S3 + 2.13" 122×250 e-paper HMI (used by pio-crowpanel2) |
 | [boards/elecrow-crowpanel-epaper-4.2](boards/elecrow-crowpanel-epaper-4.2/README.md) | ESP32-S3 + 4.2" 400×300 SSD1683 e-paper HMI |
+| [boards/aitrip-esp32-s3-2.8in-touch-lcd](boards/aitrip-esp32-s3-2.8in-touch-lcd/README.md) | 2.8" 240×320 ESP32-S3 touch module (provisional: board not identified) |
 | [boards/adafruit-esp32-s3-reverse-tft-feather](boards/adafruit-esp32-s3-reverse-tft-feather/README.md) | ESP32-S3 Feather, rear 240×135 ST7789, 3 buttons |
 | [boards/adafruit-feather-rp2040-scorpio](boards/adafruit-feather-rp2040-scorpio/README.md) | RP2040 Feather, 8× level-shifted NeoPixel outputs |
 | [boards/seeed-xiao-log](boards/seeed-xiao-log/README.md) | XIAO Logger HAT: SHT40, BH1750, PCF8563, battery sense |

@@ -31,7 +31,6 @@ Identified products are marked ✔. Work top to bottom.
 
 | # | Item as given | Identified as | Likely folder | Notes |
 |---|---|---|---|---|
-| 8 | https://www.amazon.com/dp/B0GGF7C46X | ✔ AITRIP 2.8" ESP32-S3 touch module, 240×320 IPS, capacitive | `boards/…` | reseller: identify the real board (likely a "CYD"-style ESP32-S3 2.8" clone) from photos/pinout before naming the folder |
 
 Next, the **bulk pass:**
 
@@ -52,6 +51,7 @@ Next, the **bulk pass:**
 | `boards/adafruit-matrix-portal-m4` | used by sandpanel |
 | `parts/waveshare-1.69in-lcd-module` | Seeed SKU 5755 |
 | `chips/esp32-s3`, `chips/nrf52840`, `chips/atsamd51` | |
+| `boards/aitrip-esp32-s3-2.8in-touch-lcd` | **provisional** — reseller board not identified, no pin map |
 | `boards/seeed-xiao-log` | no Seeed wiki; schematics V1–V3 and MicroPython from the potblitd repo |
 | `boards/seeed-xiao-powerbread` | no Seeed wiki; schematic, datasheets and firmware from the nicho810 repo |
 | `boards/seeed-wio-sx1262-xiao-esp32s3` | pins from the Meshtastic variant; Seeed schematic/datasheet still missing |
@@ -67,6 +67,8 @@ Next, the **bulk pass:**
 | `boards/lilygo-t3-lora32-v1.6.1` | T3 LoRa32 V1.6.1, SX1276/SX1278; sources from the LilyGO GitHub repo |
 
 ## Open issues
+
+- **Blocked — item 8:** the AITRIP 2.8" ESP32-S3 touch module has no identifiable vendor design. Amazon is blocked from the sandbox and the listing text (ST7789P3 + FT6336U + ESP32-S3-R2 + RS485) matches several white-label sellers, none with documentation. Needs a photo of the board silkscreen to get a model code; the entry records what is known and deliberately records no pin map.
 
 - **Sandbox egress:** vendor sites (lilygo.cc, wiki.seeedstudio.com, docs.waveshare.com, adafruit.com, espressif.com, semtech.com) are blocked by the proxy. GitHub (including raw and clones of public vendor repos) and web search work, so vendor GitHub repos are the way in.
 - **Missing source:** ESP32-S3-RLCD-4.2 schematic, dimensions and the ST7305 datasheet — only on the blocked Waveshare wiki.
