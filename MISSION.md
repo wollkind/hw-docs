@@ -25,12 +25,9 @@ Done means: every item in the queue below has an entry, it's in the index in `RE
 
 Follow **`.claude/skills/hw-docs/SKILL.md`**. It's the `hw-docs` skill, which Claude Code loads automatically in this repo (`/hw-docs <item>`). It covers identifying the item, fetching, distilling the README, `sources.md`, and filing the entry. The one rule that matters most: every fact must come from a fetched source or a project file, and anything else is marked `(unverified)`.
 
-## Queue (as of 2026-09-21)
+## Queue
 
-Identified products are marked ✔. Work top to bottom.
-
-| # | Item as given | Identified as | Likely folder | Notes |
-|---|---|---|---|---|
+The 14 numbered items from 2026-09-21 are all filed (see Done). Item 8 is filed as a **provisional** entry only — the reseller board could not be identified; see Open issues.
 
 Next, the **bulk pass:**
 
