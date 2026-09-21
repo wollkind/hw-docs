@@ -48,6 +48,7 @@ Next, the **bulk pass:**
 | `boards/adafruit-matrix-portal-m4` | used by sandpanel |
 | `parts/waveshare-1.69in-lcd-module` | Seeed SKU 5755 |
 | `chips/esp32-s3`, `chips/nrf52840`, `chips/atsamd51` | |
+| `boards/adafruit-feather-esp32-s2` | bulk pass: used by pio-bme280, pio-bme680, pio-feather |
 | `boards/adafruit-feather-32u4-rfm69` | bulk pass: used by pio-radio, pio-radio1, pio-radio2 (915 MHz RFM69) |
 | `boards/seeed-xiao-esp32c6` | bulk pass: used by pio-solar, pio-soil1, pio-strip-com, pio-xiao-hdc-wifi |
 | `boards/aitrip-esp32-s3-2.8in-touch-lcd` | **provisional** — reseller board not identified, no pin map |
@@ -67,6 +68,7 @@ Next, the **bulk pass:**
 
 ## Open issues
 
+- **Found in the bulk pass:** the projects that target `board = featheresp32-s2` are building the **no-PSRAM** profile (`-DARDUINO_ADAFRUIT_FEATHER_ESP32S2_NOPSRAM`). If the hardware is a PID 5000/5303 Feather, `board = adafruit_feather_esp32s2` is the profile that enables its 2 MB PSRAM.
 - **Found in the bulk pass:** `pio-radio2` builds with `board = leonardo` in an env named `feather32u4`; the hardware is a Feather 32u4 RFM69. Harmless but wrong profile.
 - **Found in the bulk pass:** `pio-strip-com`'s `display` env is `board = esp32-s3-devkitc-1` but is really a **SmartPanle PanelLan `BOARD_SC05_X`** (320×240 IPS + touch, 16 MB flash, OPI PSRAM, `smartpanle/PanelLan` library). It needs its own entry. That project also pins `platform = file://C:/Users/steve/pio-esp32-55.03.311`, a local fork that will not resolve on another machine.
 - **Missing source:** no `chips/esp32-c6` entry — the Espressif datasheet is only on blocked hosts.
