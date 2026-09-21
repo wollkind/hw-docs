@@ -34,8 +34,11 @@ def main():
     ap.add_argument("out")
     a = ap.parse_args()
 
-    r = requests.get(a.url, headers=UA, timeout=120, allow_redirects=True)
-    r.raise_for_status()
+    try:
+        r = requests.get(a.url, headers=UA, timeout=120, allow_redirects=True)
+        r.raise_for_status()
+    except requests.RequestException as e:
+        sys.exit(f"FAILED {a.url}: {e}")
     data = r.content
     ext = os.path.splitext(a.out)[1].lower()
     head = data[:512].lstrip().lower()
