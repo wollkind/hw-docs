@@ -1,6 +1,6 @@
 # /// script
 # requires-python = ">=3.10"
-# dependencies = ["beautifulsoup4", "markdownify", "requests"]
+# dependencies = ["beautifulsoup4", "html5lib", "markdownify", "requests"]
 # ///
 """Save a vendor wiki/doc page as local markdown with its images.
 
@@ -65,7 +65,8 @@ def main():
 
     r = requests.get(a.url, headers=UA, timeout=30)
     r.raise_for_status()
-    soup = BeautifulSoup(r.content, "html.parser")  # bytes, so bs4 honours the page charset
+    # bytes, so bs4 honours the page charset; html5lib, because pages omit </td>/</tr> as HTML5 allows
+    soup = BeautifulSoup(r.content, "html5lib")
     title = (soup.title.get_text(strip=True) if soup.title else a.url)
     body = pick_main(soup)
     for sel in JUNK:
