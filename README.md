@@ -23,7 +23,16 @@ Each entry has:
 |---|---|
 | [boards/waveshare-esp32-s3-rgb-matrix](boards/waveshare-esp32-s3-rgb-matrix/README.md) | ESP32-S3 N32R16 HUB75 driver, mics/IMU/RTC onboard |
 | [boards/seengreat-rgb-matrix-adapter-e](boards/seengreat-rgb-matrix-adapter-e/README.md) | HUB75 carrier for ESP32-S3-DevKitC-1 / ESP32-DevKitC |
+| [boards/seeed-xiao-esp32s3](boards/seeed-xiao-esp32s3/README.md) | XIAO ESP32-S3 / Sense / Plus |
+| [boards/seeed-xiao-1.14in-display-esp32s3](boards/seeed-xiao-1.14in-display-esp32s3/README.md) | XIAO ESP32-S3 Plus + 1.14" ST7789, IMU, mic, buttons |
+| [boards/seeed-xiao-nrf52840-sense](boards/seeed-xiao-nrf52840-sense/README.md) | XIAO nRF52840 Sense (IMU, PDM mic) |
+| [boards/adafruit-matrix-portal-m4](boards/adafruit-matrix-portal-m4/README.md) | SAMD51 + ESP32 HUB75 controller, LIS3DH |
+| [parts/waveshare-1.69in-lcd-module](parts/waveshare-1.69in-lcd-module/README.md) | 1.69" 240×280 ST7789V2 SPI LCD (Seeed SKU 5755) |
 | [chips/esp32-s3](chips/esp32-s3/README.md) | Espressif ESP32-S3 |
+| [chips/nrf52840](chips/nrf52840/README.md) | Nordic nRF52840 |
+| [chips/atsamd51](chips/atsamd51/README.md) | Microchip ATSAMD51 |
+
+Work queue and resume instructions: [MISSION.md](MISSION.md).
 
 ## Adding hardware
 
