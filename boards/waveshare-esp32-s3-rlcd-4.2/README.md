@@ -45,7 +45,9 @@ Audio (I2S, from `codec-board_cfg.h`, board entry `S3_RLCD_4_2`):
 
 microSD over SDMMC, 1-bit (defaults in `sdcard_bsp.h`): CLK 38, CMD 21, D0 39.
 
-Battery: ADC1 channel 3 — GPIO4 on the ESP32-S3 `(unverified — pin/channel mapping not cross-checked against the datasheet)`. Waveshare's code multiplies the calibrated reading by 3.
+Battery: ADC1 channel 3 — GPIO4 on the ESP32-S3 `(unverified — the pin/channel mapping is not cross-checked against the datasheet, and the schematic's text layer gives net names such as `BAT_ADC` and `VBAT` without the pin they land on)`. Waveshare's code multiplies the calibrated reading by 3.
+
+The schematic also carries four key nets (`Key1`–`Key4`) and a `PA_CTRL` speaker-amplifier enable, none of which Waveshare's example headers name. Read the GPIO off `hardware/schematic.pdf` before using them.
 
 ## PlatformIO (as used in `pio-rlcd`)
 
@@ -79,6 +81,10 @@ Waveshare ships Arduino, ESP-IDF, ESPHome and XiaoZhi examples plus prebuilt fir
 
 ## Files
 
+- `hardware/schematic.pdf`: Waveshare's schematic (fetched 2026-09-22, once docs.waveshare.com became reachable)
+- `hardware/3d-model.rar`: the structure and dimensions archive, left packed
+- `datasheets/st7305-v0.2.pdf`: the reflective LCD controller, Sitronix ST7305 V0.2
+- `datasheets/es8311.pdf`, `datasheets/shtc3.pdf`, `datasheets/pcf85063atl.pdf`: the audio codec, humidity/temperature sensor and RTC
 - `reference/user_config.h`: Waveshare's display and I2C pin header
 - `reference/codec-board_cfg.h`: the `S3_RLCD_4_2` audio board entry (I2S pins, codecs, PA)
 - `reference/sdcard_bsp.h`: SDMMC pin defaults

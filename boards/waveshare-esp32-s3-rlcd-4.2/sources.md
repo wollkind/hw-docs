@@ -1,6 +1,13 @@
-# Sources (fetched 2026-09-21)
+# Sources (fetched 2026-09-21, extended 2026-09-22)
 
-- Product page https://www.waveshare.com/esp32-s3-rlcd-4.2.htm and the wiki https://docs.waveshare.com/ESP32-S3-RLCD-4.2: **not fetched** — waveshare.com and docs.waveshare.com are blocked by the sandbox egress proxy. The wiki is where the schematic, dimensions and the ST7305/ES8311/PCF85063/SHTC3 datasheets live.
+- https://docs.waveshare.com/ESP32-S3-RLCD-4.2 → `wiki/waveshare-docs-overview.md` and https://docs.waveshare.com/ESP32-S3-RLCD-4.2/Resources-And-Documents → `wiki/waveshare-docs-resources.md` (fetched 2026-09-22).
+- https://files.waveshare.com/wiki/ESP32-S3-RLCD-4.2/ESP32-S3-RLCD-4.2-schematic.pdf → `hardware/schematic.pdf`
+- https://files.waveshare.com/wiki/ESP32-S3-RLCD-4.2/ESP32-S3-RLCD-4.2-3dFile.rar → `hardware/3d-model.rar` (kept packed)
+- https://files.waveshare.com/wiki/common/ST_7305_V0_2.pdf → `datasheets/st7305-v0.2.pdf`
+- https://files.waveshare.com/wiki/common/ES8311.DS.pdf → `datasheets/es8311.pdf`
+- https://files.waveshare.com/wiki/common/SHTC3_Datasheet.pdf → `datasheets/shtc3.pdf`
+- https://files.waveshare.com/wiki/common/Pcf85063atl1118-NdPQpTGE-loeW7GbZ7.pdf → `datasheets/pcf85063atl.pdf`
+- `https://www.waveshare.com/wiki/ESP32-S3-RLCD-4.2` and the product page `https://www.waveshare.com/esp32-s3-rlcd-4.2.htm` still answer **403** to a scripted request, with or without a browser user agent. `docs.waveshare.com` is the host that serves; use it.
 - https://github.com/waveshareteam/ESP32-S3-RLCD-4.2 @ `eb1f63427d735a22b9c30e22fa63ebddae1834d3`:
   - `02_Example/ESP-IDF/05_I2C_SHTC3/main/user_config.h` → `reference/user_config.h`
   - `02_Example/Arduino/07_Audio_Test/src/ExternLib/codec_board/board_cfg.h` → `reference/codec-board_cfg.h`
@@ -10,4 +17,6 @@
   - I2C addresses read from `02_Example/Arduino/04_I2C_PCF85063/{04_I2C_PCF85063.ino,i2c_equipment.h}`, `05_I2C_SHTC3/i2c_equipment.h` and `07_Audio_Test/codec_bsp.h`.
 - Not copied: `01_Arduino_Libraries/` (416 MB), the rest of `02_Example/` (194 MB), `03_Firmware/` (16 MB).
 - `wollkind/pio-rlcd` (shallow clone): `platformio.ini` and `src/main.cpp` gave the working build config and confirmed the display pin set; `src/i2c_bsp.h` settled the `(scl, sda, port)` argument order.
-- Missing: schematic, dimensions and the ST7305 datasheet — all behind the blocked Waveshare wiki. No `parts/st7305` entry as a result.
+- Resolved 2026-09-22: schematic, 3D/dimensions archive and the ST7305, ES8311, SHTC3 and PCF85063 datasheets are all filed here now.
+- The schematic PDF's text layer is net labels only — the nets are readable (`LCD_CS`, `LCD_RS`, `LCD_RESET`, `LCD_TE`, `LCD_SDA`, `LCD_SCL`, `I2S_SCLK`, `PA_CTRL`, `BAT_ADC`, `VBAT`, `Key1`–`Key4`) but which module pin each lands on does not survive extraction. The pin table in `README.md` therefore still comes from Waveshare's example headers; read the PDF by eye to confirm or to find the key and PA_CTRL pins.
+- The Espressif ESP32-S3 datasheet and TRM that the resources page links are already in `chips/esp32-s3/`, not duplicated here.
