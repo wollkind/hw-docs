@@ -63,7 +63,7 @@ build_flags = -DT3_V1_6_SX1276     ; or -DT3_V1_6_SX1278 for the 433 MHz board
 
 The matching Arduino IDE settings from the vendor doc: ESP32 Dev Module, 240 MHz, 4 MB (32 Mb) flash, QIO, 80 MHz, partition scheme "Huge APP (3 MB No OTA/1 MB SPIFFS)".
 
-## Gotchas
+## Operational notes
 
 - **No battery protection on the board.** LilyGO says to use a Li-ion cell that has its own protection circuit.
 - **Never transmit without an antenna** — it damages the RF module.
@@ -71,12 +71,19 @@ The matching Arduino IDE settings from the vendor doc: ESP32 Dev Module, 240 MHz
 - **Pick the right radio flag.** `-DT3_V1_6_SX1276` (868/915 MHz) vs `-DT3_V1_6_SX1278` (433 MHz); the wrong one still compiles against the same pin map but the radio will not start.
 - **Antenna path:** the board ships on the SMA path. To use the IPEX connector, rotate the matching resistor 90° left and resolder it (`wiki/img/LoRa-IPEX.png`).
 - **The TCXO SKU is a different board.** On "T3 V1.6.1 TCXO" (sold as `t3-tcxo`) GPIO33 is the TCXO enable, not DIO1, and LilyGO notes it does not support their LoRaWAN examples.
-- **USB bridge conflict:** the schematic in this folder shows a Micro-USB connector with a CP2104. The vendor quick-start text tells you to install the **CH9102** driver and mentions USB-C — that text is shared across the T3 series, so later production runs may carry a CH9102F `(unverified)`. Check the chip on the board before hunting for a driver.
+- **USB bridge conflict:** the schematic in this folder shows a Micro-USB connector with a CP2104. The vendor quick-start text tells you to install the **CH9102** driver and mentions USB-C — that text is shared across the T3 series, so later production runs may carry a CH9102F `(unverified)`. Identify the bridge chip on the board before selecting a driver.
 - **V1.3 is not pin-compatible:** LoRa RESET moves from GPIO14 (V1.3) to GPIO23 (V1.6/V1.6.1), and V1.3 has no SD slot in the pin map.
 
 ## Demo
 
 [`examples/lora-ping-pong`](../../examples/lora-ping-pong/README.md) builds for this board: a ping/pong link test that reports RSSI and SNR in both directions. Untested on hardware.
+
+## Applications
+
+- **LoRa receiver with local logging.** Packets to the microSD card, status on the SSD1306. Remove the card before each sketch upload.
+- **Field sensor node.** Battery powered, OLED for local readout during installation, LoRa uplink to a base station. No battery protection circuit is present, so the cell must have its own.
+- **Meshtastic node.** LilyGO lists Meshtastic as a supported application for this board.
+- **Point-to-point link test.** See [`examples/lora-ping-pong`](../../examples/lora-ping-pong/README.md); this board interoperates with the SX1262 kit.
 
 ## Files
 

@@ -54,7 +54,7 @@ Arduino/Adafruit_GFX: `Adafruit_GC9A01A tft(TFT_CS, TFT_DC, TFT_RST); tft.begin(
 
 CircuitPython: the community `gc9a01` displayio driver, `fourwire.FourWire(spi, command=tft_dc, chip_select=tft_cs, reset=tft_rst)` then `gc9a01.GC9A01(display_bus, width=240, height=240, backlight_pin=tft_bl)`.
 
-## Gotchas
+## Operational notes
 
 - **SDA/SCL are SPI, not I2C.** Wire SDA to MOSI and SCL to SCK; nothing on the module speaks I2C.
 - **No MISO on most modules,** so `TFT_eSPI` register reads and `tft.readPixel()` return junk. Set `TFT_MISO -1` where the setup allows it.
@@ -62,6 +62,12 @@ CircuitPython: the community `gc9a01` displayio driver, `fourwire.FourWire(spi, 
 - **The init sequence is long and mostly undocumented registers** (0xEF/0xEB/0x84…0x90, gamma at 0xF0–0xF3). Use a library's table (`reference/GC9A01_Init.h`) rather than writing one; several registers are only reachable after the "inter register enable" pair 0xFE/0xEF.
 - **3.3 V logic.** The datasheet allows IOVCC down to 1.65 V but the modules regulate nothing; driving them from 5 V logic needs level shifting.
 - **Round panel, square framebuffer.** The controller still addresses 240×240; the corners exist in GRAM but are not visible.
+
+## Applications
+
+- **Circular instrument face.** Gauges, compasses and dials use the round active area directly; the controller still addresses a 240×240 square, and the corners are not visible.
+- **Rotary control readout.** Pairs with an encoder for menu or value display in a 1.28 inch outline.
+- **Constraint:** most modules expose no MISO, so register reads and `readPixel()` return invalid data. Write-only rendering is required.
 
 ## Files
 

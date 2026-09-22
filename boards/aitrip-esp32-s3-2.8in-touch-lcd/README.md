@@ -34,6 +34,10 @@ Everything that matters for writing code:
 3. With the board in hand, `i2cdetect`-style scan on the candidate pins finds the FT6336U (typically 0x38 `(unverified)`).
 4. If the model code turns up a vendor demo repository, file the real entry under the vendor's name and delete this folder — the queue note asked for exactly that.
 
+## Applications
+
+Not stated. The board is unidentified and no pin map is recorded, so no application can be described without guessing which GPIO drives the display. Complete the identification steps above first.
+
 ## Files
 
 None yet. No schematic, datasheet or demo code has been located for this board.

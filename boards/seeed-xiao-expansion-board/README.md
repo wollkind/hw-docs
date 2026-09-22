@@ -27,7 +27,7 @@ Used by: no project found.
 
 The OLED is addressed through U8g2's `U8X8_SSD1306_128X64_NONAME_HW_I2C`, i.e. the default 0x3C `(unverified — the wiki never states the address)`. The RTC uses the `PCF8563` Arduino library.
 
-## Gotchas
+## Operational notes
 
 - **Not compatible with every XIAO.** Seeed states the SWD pins differ on the **XIAO nRF54L15 and XIAO MG24**, so this board does not support them. SAMD21, RP2040 and nRF52840 are called out as compatible.
 - **Seat the XIAO between the two female headers**, and plug the XIAO in before the USB-C cable — Seeed warns that getting this wrong damages both boards.
@@ -36,6 +36,13 @@ The OLED is addressed through U8g2's `U8X8_SSD1306_128X64_NONAME_HW_I2C`, i.e. t
 - **The buzzer is hard-wired to A3/D3.** If that pad is needed for something else, the wiki shows the trace to cut.
 - **The wiki's button example tests for `HIGH` as "pressed" while configuring `INPUT_PULLUP`**, which reads backwards; check the polarity on the actual board before copying it `(unverified)`.
 - **Battery polarity is not keyed** — Seeed's photo is the only guide.
+
+## Applications
+
+- **Standalone logger.** PCF8563 supplies timestamps, the microSD slot on D2 stores records, the OLED displays current values. RTC accuracy is ±1.5 s/day at 25 °C with a CR1220 cell fitted.
+- **Grove sensor prototyping.** Two I2C, one UART and one A0/D0 Grove port, battery charging at 460 mA maximum, no soldering required.
+- **Timed alarm device.** RTC interrupt plus the passive buzzer on A3/D3.
+- **Constraint:** the 5 V pin is fed from USB only. A servo on the 5 V header does not operate on battery power.
 
 ## Files
 

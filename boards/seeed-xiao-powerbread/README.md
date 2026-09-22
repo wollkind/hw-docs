@@ -46,13 +46,19 @@ lib_deps =
 
 The RP2040/RP2350 environments use `maxgerhardt/platform-raspberrypi` with `board_build.core = earlephilhower`, boards `rpipico` / `rpipico2`, and add `-D USE_TINYUSB`. Each environment sets its own `-D SEEED_XIAO_*` flag, which is what selects the pin block above.
 
-## Gotchas
+## Operational notes
 
 - **v3.0 firmware is ESP32-only.** The project's README states the RP2040 / RP2350 ports have an unresolved FreeRTOS scheduling bug; those boards should stay on **v2.0.1** until the port lands.
 - **The XIAO SAMD21 and RA4M1 are not supported** — no compatible firmware.
 - **The LCD chip-select is not driven** (`pin_lcd_cs -1`), so the panel is permanently selected; another SPI device cannot share that bus.
 - **I2C peripheral choice is board-specific**: the firmware picks `Wire` or `Wire1` inside `INA3221Sensor.cpp`, and the SPI host likewise in `LGFX_096_XPB.hpp`. Porting to another XIAO means touching both, not just the pin macros.
 - **1.5 A is the 3.3 V rail's limit**, not a per-rail figure for 5 V; the 5 V rail passes through from USB.
+
+## Applications
+
+- **Breadboard bench supply with live metering.** 3.3 V at up to 1.5 A and 5 V, with per-rail voltage, current and power on the LCD. Removes the need for an inline multimeter during bring-up.
+- **Sleep-current measurement of other boards.** The INA3221 measures both rails continuously, which quantifies deep sleep figures claimed by other entries in this library.
+- **Logged power profiling.** Firmware v3.0 streams measurements at 100 Hz over USB serial to a browser console with per-channel mAh and mWh integration. ESP32 hosts only; RP2040 and RP2350 hosts must remain on v2.0.1.
 
 ## Files
 

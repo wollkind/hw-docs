@@ -64,14 +64,20 @@ monitor_speed = 115200
 
 `(untested for this board — that is the line the owner uses in `pio-crowpanel2` for the 2.13" model.)`
 
-## Gotchas
+## Operational notes
 
 - **GPIO7 gates panel power.** Without `pinMode(7, OUTPUT); digitalWrite(7, HIGH);` the display stays blank and the SPI writes go nowhere. Every Elecrow example starts with it.
 - **The SD card has its own power gate on GPIO42**, held low at boot. Enable it and wait ~10 ms before `SD.begin()`.
 - **The SD bus is separate from the panel bus** (SCK 39 / MISO 13 / MOSI 40 / CS 10 on HSPI); do not reuse the EPD pins for it.
-- **Elecrow's header carries a second, commented-out pin set** (`RES 21, DC 9, CS 10`) for a different CrowPanel model. Uncommenting the wrong block gives a dead panel — the numbers above are the ones marked "项目板子" (this board).
+- **Elecrow's header carries a second, commented-out pin set** (`RES 21, DC 9, CS 10`) for a different CrowPanel model. Uncommenting the wrong block results in no display output. The values above are the set marked "项目板子" (this board).
 - **Partial refresh is the default mode**; full refresh is slower and flashes, but is needed periodically to clear ghosting.
 - **GPIO41 is only the power indicator LED**, not a rail.
+
+## Applications
+
+- **Wi-Fi status sign.** Fetch, render, deep sleep. E-paper retains the image with the panel rail off, so average current is set by the refresh interval, not the display.
+- **Standalone logger with local readout.** Log to the microSD card on its own SPI bus, render a summary page on demand. Enable GPIO42 for card power and GPIO7 for panel power.
+- **Four-button menu instrument.** MENU, EXIT, PREV and NEXT are already wired to GPIO2, 1, 6 and 4.
 
 ## Files
 

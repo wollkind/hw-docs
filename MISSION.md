@@ -8,7 +8,7 @@ Build a local, git-tracked reference library of every board, chip and part the o
 
 - the vendor's docs converted to markdown
 - the files: schematics, datasheets, dimensions, 3D models, small firmware
-- a **distilled README**: specs, pinout, a working config, gotchas
+- a **distilled README**: specs, pinout, a working config, operational notes, applications
 
 Done means: every item in the queue below has an entry, it's in the index in `README.md`, and it's committed.
 
@@ -18,7 +18,7 @@ Done means: every item in the queue below has an entry, it's in the index in `RE
 - Fetch tools (in `tools/`) are Python scripts with inline deps:
   - With uv: `uv run tools/fetch_page.py …`
   - Without uv: `pip install beautifulsoup4 html5lib markdownify requests openpyxl pypdf`, then `python tools/fetch_page.py …`
-- The owner's PlatformIO projects are separate private repos, `wollkind/pio-<name>`, plus `wollkind/infopanel64` and `wollkind/info-orbs`. Locally they're in `~/Documents/PlatformIO/Projects/<name>`. In a sandbox, use `gh repo clone` or `gh api` to grep them for "Used by" and for lessons learned. Their `README.md`/`CLAUDE.md` often hold hard-won hardware facts.
+- The owner's PlatformIO projects are separate private repos, `wollkind/pio-<name>`, plus `wollkind/infopanel64` and `wollkind/info-orbs`. Locally they're in `~/Documents/PlatformIO/Projects/<name>`. In a sandbox, use `gh repo clone` or `gh api` to grep them for "Used by" and for lessons learned. Their `README.md`/`CLAUDE.md` often record hardware facts established by testing.
 - Style for the owner: terse reports, no padding. Don't ask about mechanical decisions.
 
 ## Workflow per item

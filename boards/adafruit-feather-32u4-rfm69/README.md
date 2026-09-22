@@ -49,7 +49,7 @@ lib_deps = mikem/RadioHead@^1.120     ; pio-radio uses epsilonrt/RadioHead@^1.12
 
 **`pio-radio2` sets `board = leonardo` inside an env still named `feather32u4`.** Both are ATmega32U4 at 8 MHz, so it builds and runs, but the board profile differs (USB VID/PID and the bootloader description), so uploads and USB identification behave like a Leonardo. Worth correcting to `feather32u4` unless that was deliberate.
 
-## Gotchas
+## Operational notes
 
 - **Reset the radio at boot.** Adafruit's example, which all three projects copy, pulses `RFM69_RST` high for ~10 ms then low before `rf69.init()`; skipping it leaves the module in an undefined state after a brown-out.
 - **915 MHz vs 433 MHz is a hardware difference.** `RF69_FREQ` must match the module fitted; the wrong value passes `init()` and then transmits nothing usable.
@@ -57,6 +57,12 @@ lib_deps = mikem/RadioHead@^1.120     ; pio-radio uses epsilonrt/RadioHead@^1.12
 - **D4/D7/D8 are taken** by the radio and are not free for user I/O.
 - **32U4 USB serial drops on reset:** the port disappears while the sketch restarts, which makes `monitor` reconnect races common with PlatformIO.
 - **Only 2.5 KB RAM.** RadioHead's 60-byte buffers plus a display library is already tight; `pio-radio2` drives a Waveshare 2.13" e-paper and an HDC302x from the same 32U4.
+
+## Applications
+
+- **Sub-GHz telemetry node.** Battery sensor transmitting short frames at 915 MHz to a second board of the same type. Sub-GHz penetrates building structure better than 2.4 GHz.
+- **Wireless trigger link.** One board reads a switch, the second drives a relay. Packet sizes stay small because RadioHead buffers plus the sketch must fit in 2.5 KB of SRAM.
+- **Unsuitable for:** LoRa networks, Meshtastic, TLS, or any graphical interface. This module is FSK, not LoRa, and the ATmega32U4 has no room for a display library alongside the radio stack.
 
 ## Files
 

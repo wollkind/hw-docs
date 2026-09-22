@@ -68,7 +68,7 @@ Baud codes for `0x0019`: 0 = 9600, 1 = 14400, 2 = 19200, 3 = 38400, 4 = 56000, 5
 
 Each group is 14 registers wide. Group *n* starts at **0x0050 + n × 0x0010** (M0 = 0x0050, M3 = 0x0080): V-SET, I-SET, LVP, OVP, OCP, OPP, max-output hours/minutes, max Ah low/high, max Wh low/high, OTP, power-on output state, external over-temperature.
 
-## Gotchas
+## Operational notes
 
 - **The vendor's own docs contradict each other on the group base address.** `xy-sk120-modbus-protocol.pdf` note 1 writes the formula as `0x0020 + group × 0x0010` but then works its own example as `0x0050 + 3 × 0x0010 = 0x0080`; `xy-sk120-modbus-address.pdf` lists M0 at 0x0050. 0x0050 is the one that matches the register listing.
 - **Only 0x03/0x06/0x10.** Libraries that reach for 0x01/0x02/0x04 get an exception.
@@ -76,6 +76,13 @@ Each group is 14 registers wide. Group *n* starts at **0x0050 + n × 0x0010** (M
 - **Wi-Fi, RTC and weather registers** are for the Sinilink ESP8285 add-on and the on-screen clock. They answer on units without the module, but nothing happens.
 - **Undocumented registers** found by probing (in `reference/XY-SKxxx.h`, from the library author, so `(unverified)` against the vendor): 0x0025 factory reset (write 1), 0x005E/0x005F external-temperature protection — 0x005E accepts writes with no visible effect. The FET, CLOF and POFF menu items on the OSD have no register anyone has located.
 - **Model register:** 0x0016 reportedly returns 22873 on an XY-SK120 `(unverified)`.
+
+## Applications
+
+- **Programmable bench supply.** 6 to 36 V in, 0 to 36 V out at up to 120 W with CC/CV, set from the front panel or over Modbus.
+- **Battery charging profile.** Constant current to a voltage limit, with the battery-full cutoff current at register 0x0021 and protection limits per memory group.
+- **Automated test rail.** Function codes 0x03, 0x06 and 0x10 over TTL serial permit a host to set voltage and current and read back output, energy and protection state during a test sequence.
+- **Solar input.** MPPT is enabled at register 0x001F with the coefficient at 0x0020.
 
 ## Files
 

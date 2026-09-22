@@ -51,7 +51,7 @@ build_flags = -D SEEED_XIAO_S3 -DBOARD_HAS_PSRAM
 
 Meshtastic hardware model 81, slug `SEEED_XIAO_S3`, 8 MB partition scheme, and it requires DFU for flashing.
 
-## Gotchas
+## Operational notes
 
 - **Kit pins ≠ header-board pins.** The B2B kit uses CS 41 / RESET 42 / DIO1 39 / BUSY 40. The separately sold "Wio-SX1262 for XIAO" header board wires the radio to different pins (community reports CS 5, RESET 3, DIO1 2, BUSY 4 `(unverified)`), so the stock Meshtastic build will not talk to a self-wired pairing.
 - **The nRF52840 version of the kit is a different connector**: Seeed notes the ESP32-S3 kit is B2B while the nRF52840 kit uses through-hole headers; the boards are not interchangeable.
@@ -62,6 +62,13 @@ Meshtastic hardware model 81, slug `SEEED_XIAO_S3`, 8 MB partition scheme, and i
 ## Demo
 
 [`examples/lora-ping-pong`](../../examples/lora-ping-pong/README.md) builds for this board: a ping/pong link test that reports RSSI and SNR in both directions. Untested on hardware.
+
+## Applications
+
+- **Meshtastic node.** The kit ships pre-flashed with Meshtastic firmware and is supported upstream as variant `seeed-xiao-s3`.
+- **LoRaWAN sensor node or single-channel gateway.** Seeed documents both configurations; the gateway supports approximately 30 nodes depending on interval and payload.
+- **Point-to-point link test.** See [`examples/lora-ping-pong`](../../examples/lora-ping-pong/README.md).
+- **GNSS tracker.** The L76K module stacks on the same connector. Its RESET pin must be removed or overridden first; it conflicts with the LoRa SPI bus.
 
 ## Files
 

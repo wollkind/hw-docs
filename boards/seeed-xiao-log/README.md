@@ -38,13 +38,20 @@ On a XIAO ESP32-C3 those map to GPIO 6/7 (I2C), GPIO 10 (power gate) and GPIO 5 
 
 `reference/xiaohat.py` is the MicroPython driver for the whole board: power the rail with `Pin(10).on()`, read the PCF8563 BCD registers from 0x51 (with per-field masks), the SHT40 with command `0xFD` (hi-res), the BH1750 with `0x01`/`0x07`/`0x20`, then drop the rail and `machine.deepsleep()`. `reference/set_rtc.py` seeds the clock; `reference/esphome-xiaohat.yaml` is a Home Assistant/ESPHome configuration.
 
-## Gotchas
+## Operational notes
 
 - **Nothing reads until D10 is high.** Sensors and the divider are gated, so an I2C scan straight after boot finds only the RTC at 0x51.
 - **Only the RTC is always on** (~250 nA per the project readme). That is what makes the 0.25 µA idle figure possible, and it is also why the RTC keeps time across deep sleep while the sensors do not.
-- **Retrieving the log over USB is awkward:** the author notes that on an ESP32-C3 in deep sleep the only way in is to reset the board and hit "restart backend" inside the 10-second window before it sleeps again.
+- **Retrieving the log over USB requires a manual sequence.** the author notes that on an ESP32-C3 in deep sleep the only way in is to reset the board and hit "restart backend" inside the 10-second window before it sleeps again.
 - **SAMD21 and RP2040 lose battery monitoring** — their ADC pad does not line up with the divider.
 - **Three hardware revisions exist** (V1 and V2 are named `XIAO-log^2`, V3 is `XIAO-HAT-3`); the pin map above is read from the V3 schematic, which is what Seeed sells.
+
+## Applications
+
+- **Long-duration environmental logger.** PCF8563 wakes the host on D0, D10 powers the sensors, sample, then return to deep sleep. Idle current is approximately 0.25 µA with only the RTC running.
+- **Light and humidity survey.** SHT40 and BH1750 on the same bus, logged with timestamps, powered from a single cell.
+- **Battery-life measurement.** The 100 kΩ/100 kΩ divider on A3 records supply voltage over the run.
+- **Constraint:** XIAO SAMD21 and RP2040 hosts lose battery monitoring; their ADC pad does not align with the divider.
 
 ## Files
 

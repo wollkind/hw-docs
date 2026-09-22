@@ -41,17 +41,23 @@ board = featheresp32-s2
 framework = arduino
 ```
 
-**`featheresp32-s2` is the no-PSRAM profile.** Its board file sets `-DARDUINO_ADAFRUIT_FEATHER_ESP32S2_NOPSRAM` and points at product 4769. For a PID 5000/5303 board the right id is **`adafruit_feather_esp32s2`**, which sets `-DARDUINO_ADAFRUIT_FEATHER_ESP32S2 -DBOARD_HAS_PSRAM` and `memory_type = qio_qspi`. Building with the current id works but leaves the 2 MB PSRAM unusable — fine for the small sensor sketches in these projects, wrong for anything that wants a frame buffer.
+**`featheresp32-s2` is the no-PSRAM profile.** Its board file sets `-DARDUINO_ADAFRUIT_FEATHER_ESP32S2_NOPSRAM` and points at product 4769. For a PID 5000/5303 board the right id is **`adafruit_feather_esp32s2`**, which sets `-DARDUINO_ADAFRUIT_FEATHER_ESP32S2 -DBOARD_HAS_PSRAM` and `memory_type = qio_qspi`. Building with the current id succeeds but leaves the 2 MB PSRAM unavailable. This is acceptable for the sensor sketches in these projects and incorrect for any application requiring a frame buffer.
 
 Both profiles flash `tinyuf2.bin` at 0x2d0000 and use `use_1200bps_touch`, so the UF2 bootloader survives an Arduino upload.
 
-## Gotchas
+## Operational notes
 
-- **GPIO7 gates the STEMMA QT port and the second LDO.** Drive it high before scanning I2C; after deep sleep it comes back low. This is the same trap as on the ESP32-S3 Feathers.
+- **GPIO7 gates the STEMMA QT port and the second LDO.** Drive it high before scanning I2C; after deep sleep it comes back low. The ESP32-S3 Feathers use the same arrangement.
 - **No Bluetooth.** The ESP32-S2 is Wi-Fi only — code ported from an ESP32/S3 that opens a BLE service will not compile.
 - **NeoPixel power is on GPIO21**; the pixel stays dark until it is high.
 - **Single core.** Anything assuming `xTaskCreatePinnedToCore(..., 1)` needs revisiting.
 - **The BME280 is not fitted on PID 5000**, though its footprint is on the board — an I2C scan that finds nothing at the BME280 address means a bare 5000, not a fault. The owner's BME280/BME680 projects use external breakouts anyway.
+
+## Applications
+
+- **Wi-Fi sensor bridge.** STEMMA QT sensors to MQTT or HTTP. GPIO7 removes power from the sensor rail between samples, which lowers average current on battery.
+- **USB HID device.** Native USB permits keyboard, mouse or MIDI enumeration. Header GPIO reads the switches.
+- **Unsuitable for:** Bluetooth work of any kind. The ESP32-S2 has no radio for it.
 
 ## Files
 

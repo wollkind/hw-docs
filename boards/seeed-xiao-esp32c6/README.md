@@ -55,7 +55,7 @@ framework = arduino
 
 `pio-soil1` pins the same fork's `#develop` branch instead of the stable zip. Note the two board ids differ (`seeed-xiao-esp32-c6` vs `seeed_xiao_esp32c6`) and belong to different platform packages.
 
-## Gotchas
+## Operational notes
 
 - **The stock `platformio/espressif32` platform has no ESP32-C6 Arduino support** — hence the pioarduino fork in every one of the owner's C6 projects. Copying a `platform = espressif32` line from an older project will not build.
 - **Antenna switching needs two pins, in order.** GPIO3 (RF switch power) must be driven **low** to enable the switch at all; then GPIO14 low = ceramic antenna (default), high = external U.FL. Setting GPIO14 alone does nothing.
@@ -65,6 +65,13 @@ framework = arduino
 - **Battery pads are unmarked for polarity:** negative is the pad on the left near the "D8" silkscreen, positive on the right near "D5".
 - **No 5 V output on battery power.**
 - **D3–D5 double as SDIO data lines**, so an SD card on SDIO collides with the I2C pads.
+
+## Applications
+
+- **Zigbee or Thread end device.** The ESP32-C6 supports 802.15.4. Pairing to a Matter or Zigbee controller does not require Wi-Fi credentials on the device.
+- **Battery sensor node.** Deep sleep is 15 µA at 3.8 V. Battery monitoring requires a soldered 200 kΩ divider into A0; none is fitted.
+- **ESP-NOW link.** No access point, no broker. `pio-strip-com` uses this board as the ESP-NOW receiver driving a NeoPixel strip.
+- **Extended-range link.** GPIO3 low enables the RF switch, then GPIO14 high selects the external U.FL antenna.
 
 ## Files
 

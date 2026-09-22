@@ -38,14 +38,19 @@ framework = arduino
 lib_deps = adafruit/Adafruit Protomatter, adafruit/Adafruit LIS3DH, adafruit/Adafruit Unified Sensor
 ```
 
-## Gotchas
+## Operational notes
 
-- **LIS3DH address:** it sits at **0x19** because SDO/SA0 is tied high. At 0x18, `begin()` fails and `setup()` hangs. Use `lis.begin(0x19)`.
+- **LIS3DH address:** the address is **0x19** because SDO/SA0 is tied high. At 0x18, `begin()` fails and `setup()` hangs. Use `lis.begin(0x19)`.
 - **Wrong HUB75 pin map:** gives a dark or garbled panel with no error. `sandpanel` guards against this with `_VARIANT_MATRIXPORTAL_M4_` and `#error`.
 - **64×64 panels:** these need the Address-E solder jumper. Bridge the middle pad to **8** for Adafruit 64×64 panels; panels from other sources may need **16**, so check the panel datasheet.
 - **Screw terminals are outputs only.** Powering the board through them while USB is plugged in can cause damage. For big panels, power the panel directly.
 - **Buttons:** UP/DOWN need `INPUT_PULLUP`.
 - **Bootloader:** double-tap reset for the UF2 drive (MATRIXBOOT).
+
+## Applications
+
+- **Networked information panel.** The ESP32 coprocessor supplies Wi-Fi for time and data; Protomatter drives a 64×32 or 64×64 HUB75 panel. Power the panel separately from the screw terminals for panels above 64×32.
+- **Motion-reactive display.** The LIS3DH at 0x19 provides tilt and shake input. The `sandpanel` project uses this.
 
 ## Files
 

@@ -15,7 +15,7 @@ Used by: none in `PlatformIO/Projects` yet.
 
 - Power input: USB-C 5 V, or a 3.7 V LiPo on the BAT pads.
 - The 3V3 pin supplies up to 700 mA.
-- The 5V pin is dead when running on battery.
+- The 5V pin carries no voltage when running on battery.
 
 ## Pinout: Plus (`variants/XIAO_ESP32S3_Plus/pins_arduino.h`)
 
@@ -47,7 +47,7 @@ board_build.partitions = default_16MB.csv   ; the JSON defaults to default_8MB.c
 
 For the plain S3 or Sense, use `board = seeed_xiao_esp32s3`.
 
-## Gotchas
+## Operational notes
 
 - **Upload fails / no port:** hold BOOT while plugging in USB, then release it.
 - **A11/A12 (GPIO41/42)** have no ADC, despite the labels.
@@ -56,6 +56,13 @@ For the plain S3 or Sense, use `board = seeed_xiao_esp32s3`.
 - **Flash/PSRAM pins:** GPIO33–37 are used by the octal PSRAM and are not broken out.
 - **Plus B2B connector:** fits the Wio-SX1262 board, but **not** the Sense camera board.
 - **5V pin as input:** needs a diode between your source and the pin.
+
+## Applications
+
+- **Camera node (Sense variant only).** OV3660 plus PDM mic plus SD slot on the expansion board. Deep sleep rises to 3 mA with the expansion board attached, so this variant is unsuitable for long battery operation.
+- **Compact Wi-Fi/BLE controller (base variant).** 14 µA deep sleep, 700 mA available on the 3V3 pin for peripherals.
+- **Dense I/O work (Plus variant).** 18 additional GPIO on the bottom pads, a second UART and SPI, 16 MB flash.
+- **Constraint for all variants:** the 5V pin carries no voltage when running from battery.
 
 ## Files
 

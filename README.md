@@ -12,7 +12,7 @@ examples/                  small cross-board demos that exercise entries in the 
 
 Each entry has:
 
-- `README.md`: the distilled page. Key specs, pinout, a working PlatformIO config, gotchas, and which projects use it. Read this first.
+- `README.md`: the distilled page. Key specs, pinout, a working PlatformIO config, operational notes, applications, and which projects use it. Read this first.
 - `sources.md`: every URL, the fetch date and the vendor repo commit.
 - `wiki/`: vendor pages converted to markdown, with images.
 - `hardware/`: schematic, dimensions and 3D files. `datasheets/`: PDFs.

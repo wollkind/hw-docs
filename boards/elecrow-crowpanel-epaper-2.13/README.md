@@ -48,13 +48,19 @@ monitor_speed = 115200
 
 That project drives the panel with Elecrow's `EPD.cpp` / `EPD_Init.cpp` / `spi.cpp` copied in, not an Arduino library.
 
-## Gotchas
+## Operational notes
 
 - **GPIO7 gates panel power** — set it HIGH in `setup()` before `EPD_GPIOInit()`, exactly as `pio-crowpanel2` does.
 - **Two different driver ICs ship under the same product.** SSD1680Z and JD79661 need different init sequences; Elecrow's bundled `EPD_Init.cpp` is written against the SSD1680 command set (its comments cite the SSD1680 datasheet for 0x12, 0x10, 0x22, 0x20, 0x26, 0x3C). A panel that stays blank with working SPI is the first sign of a JD79661 build `(unverified — no JD79661 board seen here)`.
 - **Orientation is a compile-time switch**: `USE_HORIZONTIAL` in `EPD_Init.h`, 0/2 give 250×122 and 1/3 give 122×250. The buffer size changes with it.
 - **No SD slot** on this model, unlike the 4.2".
 - **Partial refresh is the normal mode**; run a full refresh occasionally to clear ghosting.
+
+## Applications
+
+- **Periodic data display.** Weather, calendar or sensor values on a slow refresh cycle. This is what `pio-crowpanel2` does with the OpenWeatherMap API.
+- **Desk or asset label.** Text written once, retained with power removed, updated over Wi-Fi when required.
+- **Unsuitable for:** anything needing local file storage. This model has no SD slot; the 4.2" model does.
 
 ## Files
 

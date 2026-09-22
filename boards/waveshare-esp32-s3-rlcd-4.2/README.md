@@ -62,13 +62,20 @@ lib_deps =
 
 Waveshare ships Arduino, ESP-IDF, ESPHome and XiaoZhi examples plus prebuilt firmware; there is no vendor PlatformIO board file, hence the generic N16R8 devkit target.
 
-## Gotchas
+## Operational notes
 
 - **Width and height swap between examples.** Waveshare's own `user_config.h` files disagree: the SHTC3 and audio examples set 400 × 300, the SD and ADC ones 300 × 400. The panel is 300 (H) × 400 (V); which way round the constants go depends on the rotation the sketch uses. `pio-rlcd` uses 400 × 300.
 - **Reflective panel, no backlight** — nothing to PWM, and contrast depends on ambient light.
 - **ST7305 is not a common Arduino target.** The owner wrote `ST7305_U8g2` for `pio-rlcd`; Waveshare's own examples use their bundled driver. There is no mainstream library to fall back on.
 - **The codec, RTC and sensor all share one I2C bus** at 13/14; a bus hang takes out audio, time and temperature together.
 - **PA on GPIO46 must be driven** for speaker output; ES8311 alone produces silence.
+
+## Applications
+
+- **Always-on desk display.** The reflective panel requires no backlight, so static content costs almost nothing to retain. PCF85063 holds time; the 18650 holder supplies extended runtime.
+- **Voice-controlled display terminal.** ES7210 dual microphones in, ES8311 and speaker out, with the display as the response surface. `pio-rlcd` already drives the ST7305 through U8g2.
+- **Environmental readout.** The onboard SHTC3 at 0x70 requires no external sensor.
+- **Constraint:** contrast depends on ambient light. This board is unsuitable for dark environments.
 
 ## Files
 

@@ -39,14 +39,20 @@ Arduino, with the arduino-pico core (`earlephilhower`): board id **`adafruit_fea
 
 CircuitPython: `board.NEOPIXEL0`…`NEOPIXEL7`, `board.NEOPIXEL`, `board.STEMMA_I2C()`.
 
-## Gotchas
+## Operational notes
 
-- **The status NeoPixel sits on GPIO4, which is also the D4 header pad.** Anything wired to D4 fights the onboard pixel.
+- **The status NeoPixel sits on GPIO4, which is also the D4 header pad.** A device wired to D4 conflicts with the onboard pixel.
 - **Outputs are 5 V only if SJ1 says so.** The shifter's supply comes from that jumper; with it on the 3.3 V side the eight outputs swing 3.3 V. Factory default position is not documented here `(unverified)` — check the bottom of the board.
 - **The 8 outputs can be made inputs** by moving SJ2 (T/R), which is how the board doubles as an 8-channel 5 V input. Both jumpers are on the underside.
 - **100 Ω in series on every output** — already the resistor NeoPixel strips usually want, so don't add another.
 - **Only GPIO16–23 are contiguous.** PIO programs that assume a run of pins must start at 16; other Feather pads are scattered.
 - **VHI, not VBUS, feeds the LDO and the shifter jumper**: VHI is whichever of USB 5 V or battery is higher, so on battery the "5 V" outputs are the battery voltage.
+
+## Applications
+
+- **Eight-strand LED installation.** GPIO16 to 23 drive eight WS2812 strands through the level shifter, each with a 100 Ω series resistor already fitted. 264 KB of SRAM buffers several thousand pixels.
+- **Eight-channel 5 V logic capture.** Move SJ2 to reverse the 74AHCT245 and the same eight pins become inputs. PIO samples them without processor involvement.
+- **Low-brightness lighting.** The available SRAM permits temporal dithering buffers, which raises usable resolution at low brightness settings.
 
 ## Files
 

@@ -54,7 +54,7 @@ upload_speed = 460800
 
 The board JSON also sets `use_1200bps_touch` and flashes `tinyuf2.bin` at 0x2d0000, so the UF2 bootloader survives an Arduino upload. CircuitPython names the same pins `board.TFT_CS`, `board.TFT_I2C_POWER`, `board.NEOPIXEL_POWER`, `board.D1`, …
 
-## Gotchas
+## Operational notes
 
 - **GPIO7 gates the TFT, the STEMMA QT port and the sensor rail.** Drive it high (and wait a moment) before talking to anything on I2C or the display; after a deep sleep it comes back low. This is the usual "my STEMMA sensor disappeared" cause on this board.
 - **D1/D2 are active high.** Code copied from other Feathers that uses `INPUT_PULLUP` and tests for LOW will never see a press.
@@ -62,6 +62,12 @@ The board JSON also sets `use_1200bps_touch` and flashes `tinyuf2.bin` at 0x2d00
 - **The display's CS/DC/RESET/backlight pins are not on the headers** — GPIO40/41/42/45 are consumed by the TFT even if the display is unused.
 - **NeoPixel power is switched on GPIO21**; the pixel stays dark until that pin is high.
 - **Backlight is PWM-able on GPIO45** through a BSS138, which is also an ESP32-S3 strapping pin `(unverified — no ESP32-S3 datasheet check done here)`.
+
+## Applications
+
+- **Panel-mounted status display.** The TFT is on the reverse side, so the screen faces out of an enclosure cutout while the three buttons stay on the operator side. Drive GPIO7 high before each redraw.
+- **Battery-powered network monitor.** Wi-Fi poll, redraw, deep sleep. The MAX17048 supplies battery percentage for display without an ADC divider. Measured deep sleep is approximately 100 µA with the TFT rail off.
+- **Handheld I2C instrument.** STEMMA QT sensor in, values on the TFT, D1 and D2 to change range or units. D1 and D2 read HIGH when pressed.
 
 ## Files
 

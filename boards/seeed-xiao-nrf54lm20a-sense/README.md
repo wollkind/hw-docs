@@ -64,14 +64,21 @@ Install the platform once with `pio pkg install -g -p "https://github.com/Seeed-
 
 Arduino is possible but unofficial: the wiki points at a **third-party** core, `https://raw.githubusercontent.com/lolren/nrf54-arduino-core/main/package_nrf54l15clean_index.json` ("nRF54L15 Boards" → XIAO nRF54LM20A). Zephyr, either through PlatformIO or the nRF Connect SDK, is the supported path; MicroPython has a flash package too.
 
-## Gotchas
+## Operational notes
 
 - **The IMU and mic are not powered at boot.** The rails are `power_en` (fixed regulator on P1.12) and `imu_vdd`/`dmic_vdd` = nPM1300 **LDO1** at 3.3 V. Seeed's samples mark the sensor `zephyr,deferred-init` and enable the rails from `main()`, because the nPM1300 hangs off a GPIO-bit-banged I2C that is not ready when the regulator driver initialises (priority 92 vs sensor 90). Initialise in that order or the IMU never answers.
 - **IMU driver:** the LSM6DS3TR-C binds to Zephyr's `st,lsm6dsl` driver (`CONFIG_LSM6DSL=y`) at address 0x6A on `i2c30`.
 - **Charger defaults** in Seeed's sample: 4.2 V termination, 150 mA charge current, 500 mA VBUS limit. Raise the current only after checking the cell's rating.
-- **Ship mode** is entered through the PMIC and drops the board to 0.33 µA; the SHPHLD pad brings it back.
-- **Two I2C buses:** the user I2C (P1.03/P1.07) is separate from both the IMU bus (P0.08/P0.07) and the PMIC bus (P1.18/P1.17). Adding a sensor on the user bus does not clash with the onboard ones.
+- **Ship mode** is entered through the PMIC and drops the board to 0.33 µA. The SHPHLD pad returns it to normal operation.
+- **Two I2C buses:** the user I2C (P1.03/P1.07) is separate from both the IMU bus (P0.08/P0.07) and the PMIC bus (P1.18/P1.17). A sensor added to the user bus cannot conflict with the onboard devices.
 - **Non-Sense variant:** same board without the IMU and microphone; everything else in the pin map is identical.
+
+## Applications
+
+- **Motion-wake asset tag.** LSM6DS3TR-C interrupt on P0.06 wakes the SoC from System OFF at 4.76 µA; ship mode at 0.33 µA covers storage and transport. Power the IMU rail from nPM1300 LDO1 before initialising the sensor.
+- **Audio or vibration event recorder.** PDM microphone on `pdm20`, 8 MB PY25Q64 flash on `spi00` for buffered capture.
+- **Matter or Thread sensor.** BLE 6.0, Thread, Zigbee and Matter are supported through the nRF Connect SDK; PlatformIO builds the same Zephyr targets.
+- **Constraint:** Arduino support is a third-party core. Zephyr is the supported path.
 
 ## Files
 
