@@ -12,6 +12,8 @@ Build a local, git-tracked reference library of every board, chip and part the o
 
 Done means: every item in the queue below has an entry, it's in the index in `README.md`, and it's committed.
 
+`examples/` holds cross-board demonstrations. `examples/lora-ping-pong` builds for both LoRa boards; its protocol header is compile-checked, the sketch is not, because the PlatformIO registry was unreachable when it was written.
+
 ## Environment
 
 - Repo: `wollkind/hw-docs` (private). The local checkout is `~/Documents/hw-docs`.
@@ -19,7 +21,8 @@ Done means: every item in the queue below has an entry, it's in the index in `RE
   - With uv: `uv run tools/fetch_page.py …`
   - Without uv: `pip install beautifulsoup4 html5lib markdownify requests openpyxl pypdf`, then `python tools/fetch_page.py …`
 - The owner's PlatformIO projects are separate private repos, `wollkind/pio-<name>`, plus `wollkind/infopanel64` and `wollkind/info-orbs`. Locally they're in `~/Documents/PlatformIO/Projects/<name>`. In a sandbox, use `gh repo clone` or `gh api` to grep them for "Used by" and for lessons learned. Their `README.md`/`CLAUDE.md` often record hardware facts established by testing.
-- Style for the owner: terse reports, no padding. Don't ask about mechanical decisions.
+- Style for the owner: terse reports, no padding. Don't ask about mechanical decisions. No idioms in repository text.
+- **Network access** in a cloud session is set by the environment's access level, not by anything in this repo. Levels are None, Trusted, Full and Custom, edited at claude.ai/code in the environment selector (hover the environment, settings icon). At **Trusted**, every vendor host used by this library is refused at the proxy and only GitHub, web search and package registries work. At **Full**, any domain is reachable and the "blocked host" open issues below can be closed by refetching. A change applies to new sessions only.
 
 ## Workflow per item
 
@@ -31,7 +34,10 @@ The 14 numbered items from 2026-09-21 are all filed (see Done). Item 8 is filed 
 
 Next, the **bulk pass:**
 
-- Document every board used across the owner's PlatformIO projects. Distinct `board =` IDs: seeed_xiao_esp32c6 ×9, d1_mini ×6, featheresp32-s2 ×5, feather32u4 ×4, esp32dev ×3, esp32-s3-devkitc-1 ×3, adafruit_qualia_s3_rgb666 ×3, uno, leonardo, huzzah, adafruit_matrix_portal_m4 (done), rymcu-esp32-s3-devkitc-1, rpipico2w, rpipico2, pico, metro, esp32-s3-devkitc1-n8r8/-n16r8, esp32-c6-devkitc-1, esp32-c3-devkitc-02, blackpill_f103c8, adafruit_feather_esp32s3, adafruit_feather_esp32s2.
+- Document every board used across the owner's PlatformIO projects. Distinct `board =` IDs, with entries filed so far marked:
+  - **done:** seeed_xiao_esp32c6 ×9, featheresp32-s2 ×5, feather32u4 ×4, adafruit_matrix_portal_m4
+  - **outstanding:** d1_mini ×6, esp32dev ×3, esp32-s3-devkitc-1 ×3, adafruit_qualia_s3_rgb666 ×3, uno, leonardo, huzzah, rymcu-esp32-s3-devkitc-1, rpipico2w, rpipico2, pico, metro, esp32-s3-devkitc1-n8r8/-n16r8, esp32-c6-devkitc-1, esp32-c3-devkitc-02, blackpill_f103c8, adafruit_feather_esp32s3, adafruit_feather_esp32s2
+- Repositories attached to a session so far: `pio-radio`, `pio-radio1`, `pio-radio2`, `pio-crowpanel2`, `pio-rlcd`, `pio-solar`, `pio-soil1`, `pio-strip-com`, `pio-xiao-hdc-wifi`, `pio-feather`, `pio-d1mini`, `pio-bme280`, `pio-bme680`. Each one needs `add_repo` before it can be cloned in a sandbox session.
 - Generic IDs often hide the real vendor hardware (e.g. `infopanel64` is `esp32-s3-devkitc-1` but really the Waveshare RGB Matrix). Read each project's README/comments.
 - Parts from `lib_deps`: BME280, BME680, LIS3DH, CCS811, DHT, MAX1704X, INA228, INMP441 mic, ST7789 240×240, e-paper panels and so on.
 - Local-only vendor downloads that are **not** in any repo: `Documents/PlatformIO/E-Paper_code` (Waveshare e-paper demo, 164 MB) and `Documents/PlatformIO/ESP32-C6-Touch-LCD-1.47-Demo` (56 MB). The ESP32-C6-Touch-LCD-1.47 is owned hardware and should get an entry.
@@ -74,7 +80,8 @@ Next, the **bulk pass:**
 - **Missing source:** no `chips/esp32-c6` entry — the Espressif datasheet is only on blocked hosts.
 - **Blocked — item 8:** the AITRIP 2.8" ESP32-S3 touch module has no identifiable vendor design. Amazon is blocked from the sandbox and the listing text (ST7789P3 + FT6336U + ESP32-S3-R2 + RS485) matches several white-label sellers, none with documentation. Needs a photo of the board silkscreen to get a model code; the entry records what is known and deliberately records no pin map.
 
-- **Sandbox egress:** vendor sites (lilygo.cc, wiki.seeedstudio.com, docs.waveshare.com, adafruit.com, espressif.com, semtech.com) are blocked by the proxy. GitHub (including raw and clones of public vendor repos) and web search work, so vendor GitHub repos are the way in.
+- **Sandbox egress (the cause of every "blocked" issue below):** under the **Trusted** access level the proxy refuses CONNECT to every vendor host used here — lilygo.cc, wiki.seeedstudio.com, files.seeedstudio.com, docs.waveshare.com, adafruit.com, cdn-learn.adafruit.com, espressif.com, semtech.com, st.com, elecrow.com, raspberrypi.com, amazon.com and \*.platformio.org. The refusal is local; the vendors are not blocking anything. GitHub, raw.githubusercontent.com, clones of public vendor repos, pypi.org and web search do work, which is why every entry filed so far sources its facts from vendor GitHub repositories. Setting the environment to **Full** removes the restriction; each "Missing source" item below then becomes a straightforward refetch.
+- **PlatformIO builds are not possible under Trusted.** `pio run` fails at `Platform Manager: Installing espressif32` because \*.platformio.org is refused. This is why `examples/lora-ping-pong` is unbuilt.
 - **Missing source:** ESP32-S3-RLCD-4.2 schematic, dimensions and the ST7305 datasheet — only on the blocked Waveshare wiki.
 - **Missing source:** no `chips/rp2040` entry — datasheets.raspberrypi.com is blocked by the proxy. Adafruit Learn guides are unreachable too (adafruit.com, cdn-learn.adafruit.com), so Adafruit entries rest on the PCB repos and board definitions.
 - **Missing source:** XY-SK120 electrical specs and front-panel manual. The user guides live on telemetry2u.com / manuals.plus / done.land, all blocked by the proxy; and which variant (SK120/SK120X/SK120D) the owner has is unconfirmed.
