@@ -44,6 +44,7 @@ Each entry has:
 | [boards/adafruit-matrix-portal-m4](boards/adafruit-matrix-portal-m4/README.md) | SAMD51 + ESP32 HUB75 controller, LIS3DH |
 | [boards/lilygo-t3-lora32-v1.6.1](boards/lilygo-t3-lora32-v1.6.1/README.md) | ESP32-PICO-D4 + SX1276/SX1278 LoRa, SSD1306 OLED, microSD |
 | [boards/wemos-d1-mini](boards/wemos-d1-mini/README.md) | LOLIN D1 mini: ESP8266EX, 4 MB flash, CH340C, LOLIN I2C port |
+| [boards/adafruit-feather-huzzah-esp8266](boards/adafruit-feather-huzzah-esp8266/README.md) | ESP8266 Feather, CP2104, LiPo charger (used by pio-huzzah) |
 | [parts/waveshare-1.69in-lcd-module](parts/waveshare-1.69in-lcd-module/README.md) | 1.69" 240×280 ST7789V2 SPI LCD (Seeed SKU 5755) |
 | [parts/gc9a01-1.28in-round-lcd](parts/gc9a01-1.28in-round-lcd/README.md) | 1.28" 240×240 round GC9A01A SPI LCD module |
 | [parts/sk-120-buck-boost](parts/sk-120-buck-boost/README.md) | XY-SK120 120 W buck-boost, CC/CV, Modbus RTU over TTL |

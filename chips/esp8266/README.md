@@ -30,4 +30,4 @@ Espressif single-core Tensilica L106 32-bit RISC @ 80/160 MHz, 2.4 GHz Wi-Fi 802
 - **CHIP_EN (pin 7)** must be high for the chip to run.
 - TOUT must be left floating when the ADC is not used (datasheet, section 4.9).
 
-Boards: [wemos-d1-mini](../../boards/wemos-d1-mini/README.md)
+Boards: [wemos-d1-mini](../../boards/wemos-d1-mini/README.md), [adafruit-feather-huzzah-esp8266](../../boards/adafruit-feather-huzzah-esp8266/README.md)
