@@ -42,4 +42,4 @@ Full list in `errata.md`. The ones that change how code is written:
 - **[WIFI-9686]** the ESP32-C6 cannot act as an 802.11mc FTM initiator.
 - **[CPU-206]** (v0.0/v0.1 only, fixed in v0.2) and **[CPU-863]** concern LP SRAM execution and misaligned access.
 
-Boards: [seeed-xiao-esp32c6](../../boards/seeed-xiao-esp32c6/README.md)
+Boards: [seeed-xiao-esp32c6](../../boards/seeed-xiao-esp32c6/README.md), [espressif-esp32-c6-devkitc-1](../../boards/espressif-esp32-c6-devkitc-1/README.md)
