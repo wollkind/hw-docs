@@ -49,20 +49,20 @@ Every `board =` id across the owner's PlatformIO projects, and the projects that
 | `esp32-s3-devkitc-1` | infopanel64 (really the Waveshare RGB Matrix, filed), pio-strip-com `display` (really the SmartPanle SC05_X, filed) | filed (the kit itself) |
 | `esp32-s3-devkitc1-n16r8` | pio-rlcd (really the Waveshare ESP32-S3-RLCD-4.2, filed) | filed (the kit itself) |
 | `esp32-s3-devkitc1-n8r8` | pio-crowpanel2 (really the Elecrow CrowPanel 2.13, filed) | filed (the kit itself) |
-| `esp32dev` | pio-ir-decode, pio-num1-2, pio-feather | **outstanding** |
-| `uno` | pio-lcd2, pio-feather | **outstanding** |
-| `leonardo` | pio-lcd, pio-radio2 (see Open issues) | **outstanding** |
-| `metro` | pio-bme280 | **outstanding** |
-| `pico` | pio-feather | **outstanding** |
-| `rpipico2` | pio-pico3 (framework = micropython) | **outstanding** |
-| `rpipico2w` | pio-feather | **outstanding** |
-| `rymcu-esp32-s3-devkitc-1` | pio-feather | **outstanding** |
-| `adafruit_feather_esp32s3` | pio-blink | **outstanding** |
-| `adafruit_feather_esp32s2` | pio-bme280 | **outstanding** |
+| `esp32dev` | pio-ir-decode, pio-num1-2, pio-feather | filed (generic id; the physical board is unconfirmed) |
+| `uno` | pio-lcd2, pio-feather | filed |
+| `leonardo` | pio-lcd, pio-radio2 (see Open issues) | filed |
+| `metro` | pio-bme280 | filed |
+| `pico` | pio-feather | filed |
+| `rpipico2` | pio-pico3 (framework = micropython) | filed |
+| `rpipico2w` | pio-feather | filed |
+| `rymcu-esp32-s3-devkitc-1` | pio-feather | covered as a memory variant in the ESP32-S3-DevKitC-1 entry; no RYMCU datasheet exists |
+| `adafruit_feather_esp32s3` | pio-blink | filed |
+| `adafruit_feather_esp32s2` | pio-bme280 | filed — `boards/adafruit-feather-esp32-s2` covers both this id and `featheresp32-s2` |
 | `esp32-c3-devkitc-02` | pio-blink | filed |
 | `esp32-c6-devkitc-1` | pio-blink | filed |
-| `esp32-c5-devkitc1-n4` | pio-seafive (two MCUs, `mcu_a` and `mcu_b`) | **outstanding — new, not in the earlier list** |
-| `blackpill_f103c8` | pio-feather | **outstanding** |
+| `esp32-c5-devkitc1-n4` | pio-seafive (two MCUs, `mcu_a` and `mcu_b`) | filed |
+| `blackpill_f103c8` | pio-feather | filed (generic id; the physical board is unconfirmed) |
 
 Reading any of this in a sandbox needs `add_repo` per repository first (the GitHub API refuses unattached repos), then either a clone or `api.github.com/repos/wollkind/<repo>/contents/<path>` with `Accept: application/vnd.github.raw`.
 
@@ -126,17 +126,20 @@ Still to do beyond the board ids:
 
 ### Hardware still undocumented
 
-- **`pio-seafive` builds `board = esp32-c5-devkitc1-n4`** for two MCUs (`mcu_a`, `mcu_b`) with GPS and an SSD1306. Neither the board nor `chips/esp32-c5` has an entry.
-- The board ids still marked **outstanding** in the table above: `esp32dev`, `uno`, `leonardo`, `metro`, `rymcu-esp32-s3-devkitc-1`, `adafruit_feather_esp32s3`, `adafruit_feather_esp32s2`, `blackpill_f103c8`.
-- Parts from `lib_deps` — see the list under the bulk pass.
+**Every `board =` id in the table above now has an entry.** What is left:
+
+- **Parts from `lib_deps`** — see the list under the bulk pass. This is the bulk of the remaining work.
 - The **ESP32-C6-Touch-LCD-1.47**, owned hardware whose vendor demo is only in a local folder.
+- **Two board entries rest on a generic id** and do not identify the owner's hardware: `esp32dev` (`boards/espressif-esp32-devkitc`) and `blackpill_f103c8` (`boards/stm32f103c8-pill`). Each says so at the top. A photograph of either board would settle it.
+- **No `chips/stm32f103` entry**, because st.com will not serve to a script — see below.
+- **`chips/atmega328p` holds no datasheet**: Microchip's is 33 MB, past this library's per-file limit. The URL is in that entry's `sources.md`.
 
 ### Still missing after the 2026-09-22 refetch
 
 - **SmartPanle SC05_X vendor datasheet.** en.wireless-tag.com renders its catalogue in JavaScript, so the product page for the WT32S3-28S PRO could not be crawled; its datasheet link would be on the `img0*.71360.com` CDN under a hashed path. A browser can get it. The same entry records a flash/PSRAM disagreement (library says 8 MB + QSPI, the project flashes 16 MB + OPI) that `esptool.py flash_id` would settle.
 - **Semtech's SX1276 errata note and application notes.** semtech.com serves documents through a Salesforce JavaScript post-back that `curl` cannot follow. The datasheet itself is filed, from Adafruit's copy of Semtech's Rev 4 document.
 - **Nordic's current nRF52840 product specification.** docs.nordicsemi.com, infocenter.nordicsemi.com and docs-be.nordicsemi.com all answer 403 to scripted requests, browser user agent included. `chips/nrf52840/` holds Seeed's v1.5 copy.
-- **LSM6DS3TR-C datasheet from ST.** st.com drops the connection mid-transfer (`HTTP/2 stream not closed cleanly`). Seeed's copy is in `boards/seeed-xiao-nrf52840-sense/datasheets/`.
+- **Anything from st.com.** Over HTTP/2 the connection resets (`stream not closed cleanly, INTERNAL_ERROR`); over HTTP/1.1 the server sends an empty reply; a browser user agent changes nothing. This blocks the LSM6DS3TR-C datasheet (Seeed's copy is in `boards/seeed-xiao-nrf52840-sense/datasheets/`) and the STM32F103 datasheet and RM0008, which is why there is no `chips/stm32f103`.
 - **An XY-SK120 manufacturer specification sheet** with ripple, efficiency and tolerances, and confirmation of which variant (SK120/SK120X/SK120D) the owner has. The user manual and a community write-up are now filed.
 - **Waveshare's `www.waveshare.com`** answers 403 to scripted requests (wiki and product pages alike). `docs.waveshare.com` and `files.waveshare.com` serve normally — use those.
 - **Seeed's XIAO ESP32-S3 Sense schematic PDF** link still serves the plain-S3 v1.4 file. This is a vendor error, confirmed with the host reachable. The `SCH&PCB` zip does contain the Sense design and is filed.

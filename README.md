@@ -58,6 +58,7 @@ Each entry has:
 | [boards/arduino-uno-r3](boards/arduino-uno-r3/README.md) | ATmega328P, 5 V, the reference shield footprint |
 | [boards/arduino-leonardo](boards/arduino-leonardo/README.md) | ATmega32U4, native USB — keyboard/mouse capable |
 | [boards/adafruit-metro-328](boards/adafruit-metro-328/README.md) | Uno-format ATmega328 with a 3.3 V logic jumper and CP2104 |
+| [boards/stm32f103c8-pill](boards/stm32f103c8-pill/README.md) | Blue/Black Pill STM32F103C8T6 boards and the `blackpill_f103c8` id |
 | [parts/waveshare-1.69in-lcd-module](parts/waveshare-1.69in-lcd-module/README.md) | 1.69" 240×280 ST7789V2 SPI LCD (Seeed SKU 5755) |
 | [parts/gc9a01-1.28in-round-lcd](parts/gc9a01-1.28in-round-lcd/README.md) | 1.28" 240×240 round GC9A01A SPI LCD module |
 | [parts/sx127x-lora-transceiver](parts/sx127x-lora-transceiver/README.md) | Semtech SX1276/77/78/79 LoRa + FSK transceiver |

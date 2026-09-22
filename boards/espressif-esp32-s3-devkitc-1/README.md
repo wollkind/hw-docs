@@ -82,6 +82,8 @@ Three board ids cover the variants, and they differ only in memory:
 | `esp32-s3-devkitc1-n8r8` | ESP32-S3-DevKitC-1-N8R8 | 8 MB | 8 MB octal (`qio_opi`) | `default_8MB.csv` | 921600 |
 | `esp32-s3-devkitc1-n16r8` | ESP32-S3-DevKitC-1-N16R8V | 16 MB | 8 MB octal (`qio_opi`) | `default_16MB.csv` | 921600 |
 
+A fourth id belongs to a clone of this kit: **`rymcu-esp32-s3-devkitc-1`**, "RYMCU ESP32-S3-DevKitC-1-N8R2 (8 MB QD, 2 MB PSRAM)", used by `pio-feather`'s `[env:s3]`. Its board file is this kit's with different memory — 8 MB flash, `default_8MB.csv`, `BOARD_HAS_PSRAM` for 2 MB of **quad** PSRAM rather than octal, and `esp-builtin` named as the onboard debug tool. RYMCU publishes no datasheet that could be found; treat the hardware as an ESP32-S3-DevKitC-1 with an N8R2 module and confirm the memory with `esptool.py flash_id` before trusting either number.
+
 All three set `mcu esp32s3`, `variant esp32s3`, 240 MHz and `-DARDUINO_ESP32S3_DEV`. Only the plain `esp32-s3-devkitc-1` adds `-DARDUINO_USB_MODE=1`; the two PSRAM profiles add `-DBOARD_HAS_PSRAM` instead. **Picking the wrong one silently costs the PSRAM**, exactly as with the Feather ESP32-S2 profiles.
 
 ## Operational notes
