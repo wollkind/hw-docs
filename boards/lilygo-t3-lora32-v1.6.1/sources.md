@@ -10,6 +10,6 @@
   - `examples/SD/SD_Test/utilities.h` → `reference/utilities.h` (identical pin block in every example)
   - `platformio.ini` → `reference/lilygo-platformio.ini`
 - Not copied: `firmware/lora-v1.6.1-{433,868,915}mhz-{sender,reciver}-*.bin` and `lora-v1.6.1-868mhz-paxcounter-*.bin` (vendor demo binaries, 0.4–1.4 MB each), `dimensions/T3-V2.1-1.6*.7z`, the whole `lib/` tree of bundled Arduino libraries.
-- Missing: ESP32-PICO-D4 datasheet — espressif.com and docs.espressif.com are blocked by the proxy, so no `chips/esp32` entry was created.
-- Missing: SX1276/SX1278 datasheet — semtech.com is blocked by the proxy.
+- Resolved 2026-09-22: the ESP32-PICO-D4 datasheet is in `chips/esp32/`, fetched once espressif.com became reachable.
+- Resolved 2026-09-22: the SX1276/77/78/79 datasheet is in `parts/sx127x-lora-transceiver/` (Semtech's Rev 4 document, taken from Adafruit's copy because semtech.com serves its documents through a JavaScript post-back; see that entry's `sources.md`).
 - Owner's projects checked for "Used by": `wollkind/pio-radio`, `wollkind/pio-radio1`, `wollkind/pio-radio2` (all `feather32u4`/`leonardo` with RadioHead; no LilyGO board). Other `pio-*` repos were not searched.

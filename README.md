@@ -54,7 +54,9 @@ Each entry has:
 | [boards/raspberrypi-pico-2](boards/raspberrypi-pico-2/README.md) | Pico 2 and Pico 2 W: RP2350, 4 MB flash, CYW43439 on the W |
 | [parts/waveshare-1.69in-lcd-module](parts/waveshare-1.69in-lcd-module/README.md) | 1.69" 240×280 ST7789V2 SPI LCD (Seeed SKU 5755) |
 | [parts/gc9a01-1.28in-round-lcd](parts/gc9a01-1.28in-round-lcd/README.md) | 1.28" 240×240 round GC9A01A SPI LCD module |
+| [parts/sx127x-lora-transceiver](parts/sx127x-lora-transceiver/README.md) | Semtech SX1276/77/78/79 LoRa + FSK transceiver |
 | [parts/sk-120-buck-boost](parts/sk-120-buck-boost/README.md) | XY-SK120 120 W buck-boost, CC/CV, Modbus RTU over TTL |
+| [chips/esp32](chips/esp32/README.md) | Espressif ESP32 (LX6, includes the PICO-D4 SiP) |
 | [chips/esp32-s3](chips/esp32-s3/README.md) | Espressif ESP32-S3 |
 | [chips/esp32-c6](chips/esp32-c6/README.md) | Espressif ESP32-C6 (Wi-Fi 6, BLE, 802.15.4) |
 | [chips/esp32-c3](chips/esp32-c3/README.md) | Espressif ESP32-C3 (RISC-V, Wi-Fi 4, BLE) |

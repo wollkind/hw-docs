@@ -1,7 +1,7 @@
 # LilyGO T3 LoRa32 V1.6.1 (TTGO LoRa32)
 
 ESP32-PICO-D4 board with an SX1276/SX1278 LoRa module, a 0.96" SSD1306 OLED, a microSD slot and a Li-ion charger. Sold as [lilygo.cc/products/lora3](https://lilygo.cc/products/lora3) ("T3 LoRa32 V1.6.1").
-Chip: ESP32-PICO-D4 — no `chips/esp32` entry yet (espressif.com is unreachable from the sandbox).
+Chip: [`chips/esp32`](../../chips/esp32/README.md), the ESP32-PICO-D4 system-in-package (its datasheet is in that entry). Radio: [`parts/sx127x-lora-transceiver`](../../parts/sx127x-lora-transceiver/README.md).
 Used by: no project found (`pio-radio`, `pio-radio1`, `pio-radio2` are all Feather 32u4 / RadioHead, not this board).
 
 ## Key specs
