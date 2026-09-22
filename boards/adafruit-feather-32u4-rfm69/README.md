@@ -1,6 +1,6 @@
 # Adafruit Feather 32u4 RFM69HCW (RadioFruit, PID 3076 / 3077)
 
-ATmega32U4 Feather with an RFM69HCW packet radio on board. The same PCB carries the RFM9x LoRa variants, so the pinout files cover both.
+ATmega32U4 Feather with an RFM69HCW packet radio on board. The same PCB carries the RFM9x LoRa variants, so the pinout files cover both. Chip: [`chips/atmega32u4`](../../chips/atmega32u4/README.md).
 Used by: `pio-radio`, `pio-radio1`, `pio-radio2` — all three run RadioHead's `RH_RF69` at **915 MHz**, which is the 868/915 MHz SKU (PID 3076).
 
 ## Key specs

@@ -55,6 +55,9 @@ Each entry has:
 | [boards/espressif-esp32-c5-devkitc-1](boards/espressif-esp32-c5-devkitc-1/README.md) | ESP32-C5 dev kit: dual-band Wi-Fi 6 (2.4 and 5 GHz), used by pio-seafive |
 | [boards/adafruit-feather-esp32-s3](boards/adafruit-feather-esp32-s3/README.md) | ESP32-S3 Feather, STEMMA QT, MAX17048 or LC709203F gauge |
 | [boards/espressif-esp32-devkitc](boards/espressif-esp32-devkitc/README.md) | ESP32-DevKitC V4, and what the generic `esp32dev` board id means |
+| [boards/arduino-uno-r3](boards/arduino-uno-r3/README.md) | ATmega328P, 5 V, the reference shield footprint |
+| [boards/arduino-leonardo](boards/arduino-leonardo/README.md) | ATmega32U4, native USB — keyboard/mouse capable |
+| [boards/adafruit-metro-328](boards/adafruit-metro-328/README.md) | Uno-format ATmega328 with a 3.3 V logic jumper and CP2104 |
 | [parts/waveshare-1.69in-lcd-module](parts/waveshare-1.69in-lcd-module/README.md) | 1.69" 240×280 ST7789V2 SPI LCD (Seeed SKU 5755) |
 | [parts/gc9a01-1.28in-round-lcd](parts/gc9a01-1.28in-round-lcd/README.md) | 1.28" 240×240 round GC9A01A SPI LCD module |
 | [parts/sx127x-lora-transceiver](parts/sx127x-lora-transceiver/README.md) | Semtech SX1276/77/78/79 LoRa + FSK transceiver |
@@ -70,6 +73,8 @@ Each entry has:
 | [chips/nrf54lm20a](chips/nrf54lm20a/README.md) | Nordic nRF54LM20A |
 | [chips/nrf52840](chips/nrf52840/README.md) | Nordic nRF52840 |
 | [chips/atsamd51](chips/atsamd51/README.md) | Microchip ATSAMD51 |
+| [chips/atmega32u4](chips/atmega32u4/README.md) | Microchip ATmega16U4/32U4 (native USB AVR) |
+| [chips/atmega328p](chips/atmega328p/README.md) | Microchip ATmega328P (datasheet not stored — see entry) |
 
 Demos: [examples/lora-ping-pong](examples/lora-ping-pong/README.md) — SX1276 ↔ SX1262 link test with a documented packet format.
 
