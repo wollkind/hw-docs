@@ -22,16 +22,24 @@ Used by: no project (new board, not in any `pio-*` repo checked).
 
 ## Pinout
 
-Header pins (Seeed pin map):
+Header pins, from Seeed's schematic. Pad names as the schematic labels them — each header pad carries an analogue name, a digital name and, where applicable, a bus name, all on one pin:
 
-| Pad | Function | Chip pin |
+| Pad | Chip pin | Schematic label |
 |---|---|---|
-| A0 / A1 / A2 / A3 / A7 | AIN0 / AIN1 / AIN2 / AIN3 / AIN7 | P1.00 / P1.31 / P1.30 / P1.29 / P1.03 |
-| SDA / SCL | user I2C | P1.03 / P1.07 |
-| TX / RX | UART | P1.08 / P1.09 |
-| MOSI / MISO / SCK | SPI | P1.06 / P1.05 / P1.04 |
-| VBUS, 3V3, GND, BAT+, BAT−, SHPHLD | power | — |
-| RESET, SWCLK, SWDIO, SAMD11_RESET | debug/reset | — |
+| A0 / D0 | P1.00 | `P1.00/A0/D0` |
+| A1 / D1 | P1.31 | `P1.31/A1/D1` |
+| A2 / D2 | P1.30 | `P1.30/A2/D2` |
+| A3 / D3 | P1.29 | `P1.29/A3/D3` |
+| **SDA / A7 / D4** | P1.03 | `P1.03/SDA/A7/D4` |
+| **SCL / A8 / D5** | P1.07 | `P1.07/SCL/A8/D5` |
+| TX / D6 | P1.08 | `P1.08/Tx/D6` |
+| RX / D7 | P1.09 | `P1.09/Rx/D7` |
+| SCK / A6 / D8 | P1.04 | `P1.04/SCK/A6/D8` |
+| MISO / A5 / D9 | P1.05 | `P1.05/MISO/A5/D9` |
+| MOSI / A4 / D10 | P1.06 | `P1.06/MOSI/A4/D10` |
+| NFC1 / NFC2 | P1.01 / P1.02 | `P1.01/NFC1`, `P1.02/NFC2` |
+| VBUS, 3V3, GND, BAT+, BAT−, SHPHLD | — | power |
+| RESET, SWCLK, SWDIO, SAMD11_RESET | — | debug/reset |
 
 Onboard peripherals (Seeed pin map, confirmed against the Zephyr overlays in `reference/`):
 
@@ -48,7 +56,7 @@ Onboard peripherals (Seeed pin map, confirmed against the Zephyr overlays in `re
 | GRTC | P0.04 / P0.05 |
 | External flash `py25q64` on `spi00`: HOLD# / SCK / MOSI / WP# / MISO / CS# | P2.00 / P2.01 / P2.02 / P2.03 / P2.04 / P2.05 |
 
-**Conflict in the vendor table:** both `A7` and `SDA` are listed as **P1.03**. Seeed's own table says so; no schematic was available to settle it, so treat A7/SDA as the same pin `(unverified)`.
+**The A7/SDA question is settled by the schematic:** they are one pin. Seeed's silkscreen names P1.03 `SDA`, `A7` and `D4`, and the schematic net is literally `P1.03/SDA/A7/D4`. The same applies to SCL, which is also `A8` and `D5` on P1.07. Using the user I2C therefore costs two of the analogue inputs.
 
 ## PlatformIO (from the Seeed wiki, untested here)
 

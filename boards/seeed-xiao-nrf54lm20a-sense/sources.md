@@ -12,4 +12,4 @@
   - https://files.seeedstudio.com/wiki/XIAO_nRF54LM20A/getting_start/RES/XIAO_nRF54LM20A_V1.0_SCH&PCB_260508.zip → `hardware/sch-pcb-v1.0.zip` (kept packed)
   - https://files.seeedstudio.com/wiki/XIAO_nRF54LM20A/getting_start/RES/nRF54LM20A_nRF54LM20B_Datasheet_v1.0.pdf → `../../chips/nrf54lm20a/nrf54lm20a-nrf54lm20b-datasheet-v1.0.pdf`
 - Missing: LSM6DS3TR-C datasheet. `https://www.st.com/resource/en/datasheet/lsm6ds3tr-c.pdf` was retried on 2026-09-22 and the connection failed mid-transfer (`HTTP/2 stream not closed cleanly`), so st.com still needs a browser. No MSM261DGT006 datasheet was found anywhere.
-- Pin facts cross-checked between the wiki pin map, the wiki's own Zephyr overlays, and the board-DTS notes quoted in the low-power page. The A7/SDA = P1.03 collision is Seeed's, and is unresolved.
+- Pin facts cross-checked between the wiki pin map, the wiki's own Zephyr overlays, and the board-DTS notes quoted in the low-power page. The A7/SDA = P1.03 question was **settled on 2026-09-22 from `hardware/schematic.pdf`**: the net is `P1.03/SDA/A7/D4`, one pin with three names. The header table in `README.md` now follows the schematic's labels.
