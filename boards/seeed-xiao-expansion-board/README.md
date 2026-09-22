@@ -25,7 +25,7 @@ Used by: no project found.
 | Passive buzzer | **A3** (the same pad as D3 — the wiki's text says A3, its example code says `D3`) |
 | User button | **D1**, with `INPUT_PULLUP` |
 
-The OLED is addressed through U8g2's `U8X8_SSD1306_128X64_NONAME_HW_I2C`, i.e. the default 0x3C `(unverified — the wiki never states the address)`. The RTC uses the `PCF8563` Arduino library.
+The OLED is addressed through U8g2's `U8X8_SSD1306_128X64_NONAME_HW_I2C`. **The schematic confirms the address**: it prints "The I2C slave address is 0x78" against the `IIC_ADDR` strap (and 0x7a if the strap is moved), which is **0x3C** as a 7-bit address, 0x3D on the alternative. The RTC uses the `PCF8563` Arduino library; the schematic prints its addresses as write 0xA2 / read 0xA3, i.e. **0x51** 7-bit.
 
 ## Operational notes
 
@@ -46,4 +46,8 @@ The OLED is addressed through U8g2's `U8X8_SSD1306_128X64_NONAME_HW_I2C`, i.e. t
 
 ## Files
 
-- `wiki/Seeeduino-XIAO-Expansion-Board.md`: the full Seeed wiki page (OLED, button, buzzer, RTC, SD and CircuitPython walkthroughs). Images are remote links on the blocked `files.seeedstudio.com`.
+- `hardware/schematic-v1.0.pdf`: Seeed's v1.0 schematic (fetched 2026-09-22) — the source for the I2C addresses above
+- `hardware/eagle-v1.0.sch`, `hardware/eagle-v1.0.brd`: the EAGLE design files
+- `datasheets/eta1038.pdf`, `eta3410.pdf`, `eta6003.pdf`: the power-path, regulator and charger ICs
+- `datasheets/pcf8563t.pdf`: the RTC
+- `wiki/Seeeduino-XIAO-Expansion-Board.md`: the full Seeed wiki page (OLED, button, buzzer, RTC, SD and CircuitPython walkthroughs). Its images are remote links on `files.seeedstudio.com`.
