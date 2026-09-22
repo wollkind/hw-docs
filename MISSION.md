@@ -46,9 +46,9 @@ Every `board =` id across the owner's PlatformIO projects, and the projects that
 | `d1_mini` | pio-d1mini, pio-d12, pio-bme280, pio-bme680, pio-feather, pio-blink | filed |
 | `huzzah` | pio-huzzah, pio-radio | filed |
 | `adafruit_qualia_s3_rgb666` | pio-piotest, pio-blink, pio-feather | filed |
-| `esp32-s3-devkitc-1` | infopanel64 (really the Waveshare RGB Matrix, filed), pio-strip-com `display` (really a SmartPanle SC05, see Open issues) | id only |
-| `esp32-s3-devkitc1-n16r8` | pio-rlcd (really the Waveshare ESP32-S3-RLCD-4.2, filed) | id only |
-| `esp32-s3-devkitc1-n8r8` | pio-crowpanel2 (really the Elecrow CrowPanel 2.13, filed) | id only |
+| `esp32-s3-devkitc-1` | infopanel64 (really the Waveshare RGB Matrix, filed), pio-strip-com `display` (really the SmartPanle SC05_X, filed) | filed (the kit itself) |
+| `esp32-s3-devkitc1-n16r8` | pio-rlcd (really the Waveshare ESP32-S3-RLCD-4.2, filed) | filed (the kit itself) |
+| `esp32-s3-devkitc1-n8r8` | pio-crowpanel2 (really the Elecrow CrowPanel 2.13, filed) | filed (the kit itself) |
 | `esp32dev` | pio-ir-decode, pio-num1-2, pio-feather | **outstanding** |
 | `uno` | pio-lcd2, pio-feather | **outstanding** |
 | `leonardo` | pio-lcd, pio-radio2 (see Open issues) | **outstanding** |
@@ -59,8 +59,8 @@ Every `board =` id across the owner's PlatformIO projects, and the projects that
 | `rymcu-esp32-s3-devkitc-1` | pio-feather | **outstanding** |
 | `adafruit_feather_esp32s3` | pio-blink | **outstanding** |
 | `adafruit_feather_esp32s2` | pio-bme280 | **outstanding** |
-| `esp32-c3-devkitc-02` | pio-blink | **outstanding** |
-| `esp32-c6-devkitc-1` | pio-blink | **outstanding** |
+| `esp32-c3-devkitc-02` | pio-blink | filed |
+| `esp32-c6-devkitc-1` | pio-blink | filed |
 | `esp32-c5-devkitc1-n4` | pio-seafive (two MCUs, `mcu_a` and `mcu_b`) | **outstanding — new, not in the earlier list** |
 | `blackpill_f103c8` | pio-feather | **outstanding** |
 
@@ -106,6 +106,11 @@ Still to do beyond the board ids:
 | `boards/wemos-d1-mini`, `chips/esp8266` | bulk pass: the six `d1_mini` environments. Vendor V4.0.0 + V3.1.0 pages, V4 schematic, Espressif datasheet v7.1 (NRND) |
 | `boards/adafruit-feather-huzzah-esp8266` | bulk pass: `pio-huzzah`, `pio-radio`. Learn guide + Rev G EAGLE. The `huzzah` board id names PID 2471, the breakout; the Feather is the board in hand |
 | `boards/adafruit-qualia-esp32-s3-rgb666` | bulk pass: `pio-piotest`, `pio-blink`, `pio-feather`. PCA9554A map, RGB-666 pin table, EAGLE design |
+| `chips/esp32-c6` | datasheet v1.5, TRM and errata; closes the old "blocked host" issue |
+| `boards/espressif-esp32-c6-devkitc-1` | bulk pass: `pio-blink`. Both header tables, schematic v1.4, module datasheet |
+| `boards/espressif-esp32-c3-devkitc-02`, `chips/esp32-c3` | bulk pass: `pio-blink`. Guide, schematic, module datasheet; chip datasheet v2.4, TRM, errata |
+| `boards/espressif-esp32-s3-devkitc-1` | bulk pass: the kit behind three board ids that four projects use as build profiles |
+| `boards/smartpanle-sc05x-zx2d80ce02s` | bulk pass: `pio-strip-com` `display`. Pin map from the vendor library; **vendor datasheet still missing** |
 
 ## Open issues
 
@@ -115,7 +120,7 @@ Still to do beyond the board ids:
 - **Found in the bulk pass:** `pio-seafive` builds `board = esp32-c5-devkitc1-n4` for two separate MCUs (`mcu_a`, `mcu_b`) with GPS (MicroNMEA) and an SSD1306. The ESP32-C5 was not in the earlier board list and has neither a board entry nor a `chips/esp32-c5` entry.
 - **Found in the bulk pass:** `pio-d12` drives `GPIO5` as a "done" output while the same sketch uses `Wire`, whose default SCL on the `d1_mini` variant is GPIO5. Recorded in `boards/wemos-d1-mini/README.md`; the project is the thing to fix.
 - **Found in the bulk pass:** `pio-blink`'s `qualia` env defines `-D LED_BUILTIN=18`, and GPIO18 is the Qualia's SCL. Harmless with nothing on I2C, wrong with a STEMMA device attached.
-- **Found in the bulk pass:** `pio-strip-com`'s `display` env is `board = esp32-s3-devkitc-1` but is really a **SmartPanle PanelLan `BOARD_SC05_X`** (320×240 IPS + touch, 16 MB flash, OPI PSRAM, `smartpanle/PanelLan` library). It needs its own entry. That project also pins `platform = file://C:/Users/steve/pio-esp32-55.03.311`, a local fork that will not resolve on another machine.
+- **Resolved:** `pio-strip-com`'s `display` env is now filed as `boards/smartpanle-sc05x-zx2d80ce02s`. Two things stay open there: the vendor datasheet could not be fetched (see that entry's `sources.md` for what was tried and what a browser would need to do), and the library's own table says SC05_X has 8 MB flash with QSPI PSRAM while the project flashes 16 MB with OPI PSRAM. Read the flash with `esptool.py flash_id` to settle it. That project also pins `platform = file://C:/Users/steve/pio-esp32-55.03.311`, a local fork that will not resolve on another machine.
 - **Missing source:** no `chips/esp32-c6` entry. Espressif is reachable again (see Environment), so this is a straightforward fetch now.
 - **Blocked — item 8:** the AITRIP 2.8" ESP32-S3 touch module has no identifiable vendor design. Amazon is blocked from the sandbox and the listing text (ST7789P3 + FT6336U + ESP32-S3-R2 + RS485) matches several white-label sellers, none with documentation. Needs a photo of the board silkscreen to get a model code; the entry records what is known and deliberately records no pin map.
 
