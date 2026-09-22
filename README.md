@@ -54,6 +54,7 @@ Each entry has:
 | [boards/raspberrypi-pico-2](boards/raspberrypi-pico-2/README.md) | Pico 2 and Pico 2 W: RP2350, 4 MB flash, CYW43439 on the W |
 | [boards/espressif-esp32-c5-devkitc-1](boards/espressif-esp32-c5-devkitc-1/README.md) | ESP32-C5 dev kit: dual-band Wi-Fi 6 (2.4 and 5 GHz), used by pio-seafive |
 | [boards/adafruit-feather-esp32-s3](boards/adafruit-feather-esp32-s3/README.md) | ESP32-S3 Feather, STEMMA QT, MAX17048 or LC709203F gauge |
+| [boards/espressif-esp32-devkitc](boards/espressif-esp32-devkitc/README.md) | ESP32-DevKitC V4, and what the generic `esp32dev` board id means |
 | [parts/waveshare-1.69in-lcd-module](parts/waveshare-1.69in-lcd-module/README.md) | 1.69" 240×280 ST7789V2 SPI LCD (Seeed SKU 5755) |
 | [parts/gc9a01-1.28in-round-lcd](parts/gc9a01-1.28in-round-lcd/README.md) | 1.28" 240×240 round GC9A01A SPI LCD module |
 | [parts/sx127x-lora-transceiver](parts/sx127x-lora-transceiver/README.md) | Semtech SX1276/77/78/79 LoRa + FSK transceiver |

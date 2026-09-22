@@ -42,4 +42,4 @@ Full list in `errata.md`. The ones most likely to be met:
 - **[ULP-3.19]** the ULP coprocessor and touch sensors are unusable in deep sleep if RTC_PERIPH stays powered.
 - **[CLK-3.22]** the ESP32 cannot be the PHY clock source when Wi-Fi and Ethernet run together.
 
-Boards: [lilygo-t3-lora32-v1.6.1](../../boards/lilygo-t3-lora32-v1.6.1/README.md) (ESP32-PICO-D4)
+Boards: [espressif-esp32-devkitc](../../boards/espressif-esp32-devkitc/README.md), [lilygo-t3-lora32-v1.6.1](../../boards/lilygo-t3-lora32-v1.6.1/README.md) (ESP32-PICO-D4)
