@@ -114,25 +114,39 @@ Still to do beyond the board ids:
 
 ## Open issues
 
-- **Found in the bulk pass:** the projects that target `board = featheresp32-s2` are building the **no-PSRAM** profile (`-DARDUINO_ADAFRUIT_FEATHER_ESP32S2_NOPSRAM`). If the hardware is a PID 5000/5303 Feather, `board = adafruit_feather_esp32s2` is the profile that enables its 2 MB PSRAM.
-- **Found in the bulk pass:** `pio-radio2` builds with `board = leonardo` in an env named `feather32u4`; the hardware is a Feather 32u4 RFM69. Harmless but wrong profile.
-- **Found in the bulk pass:** `pio-inmp`'s only env is named `featheresp32-s2` but builds `board = seeed_xiao_esp32c6`. The env name is wrong, not the board id. It also pins `platform = file://C:/Users/steve/pio-esp32-55.03.311`, the same local fork `pio-strip-com`, `pio-blink`, `pio-mlab` and `pio-strip-com` use, which will not resolve on another machine.
-- **Found in the bulk pass:** `pio-seafive` builds `board = esp32-c5-devkitc1-n4` for two separate MCUs (`mcu_a`, `mcu_b`) with GPS (MicroNMEA) and an SSD1306. The ESP32-C5 was not in the earlier board list and has neither a board entry nor a `chips/esp32-c5` entry.
-- **Found in the bulk pass:** `pio-d12` drives `GPIO5` as a "done" output while the same sketch uses `Wire`, whose default SCL on the `d1_mini` variant is GPIO5. Recorded in `boards/wemos-d1-mini/README.md`; the project is the thing to fix.
-- **Found in the bulk pass:** `pio-blink`'s `qualia` env defines `-D LED_BUILTIN=18`, and GPIO18 is the Qualia's SCL. Harmless with nothing on I2C, wrong with a STEMMA device attached.
-- **Resolved:** `pio-strip-com`'s `display` env is now filed as `boards/smartpanle-sc05x-zx2d80ce02s`. Two things stay open there: the vendor datasheet could not be fetched (see that entry's `sources.md` for what was tried and what a browser would need to do), and the library's own table says SC05_X has 8 MB flash with QSPI PSRAM while the project flashes 16 MB with OPI PSRAM. Read the flash with `esptool.py flash_id` to settle it. That project also pins `platform = file://C:/Users/steve/pio-esp32-55.03.311`, a local fork that will not resolve on another machine.
-- **Missing source:** no `chips/esp32-c6` entry. Espressif is reachable again (see Environment), so this is a straightforward fetch now.
-- **Blocked — item 8:** the AITRIP 2.8" ESP32-S3 touch module has no identifiable vendor design. Amazon is blocked from the sandbox and the listing text (ST7789P3 + FT6336U + ESP32-S3-R2 + RS485) matches several white-label sellers, none with documentation. Needs a photo of the board silkscreen to get a model code; the entry records what is known and deliberately records no pin map.
+### Found in the bulk pass (project problems, not documentation gaps)
 
-- **Sandbox egress (the cause of every "blocked" issue below):** under the **Trusted** access level the proxy refuses CONNECT to every vendor host used here — lilygo.cc, wiki.seeedstudio.com, files.seeedstudio.com, docs.waveshare.com, adafruit.com, cdn-learn.adafruit.com, espressif.com, semtech.com, st.com, elecrow.com, raspberrypi.com, amazon.com and \*.platformio.org. The refusal is local; the vendors are not blocking anything. GitHub, raw.githubusercontent.com, clones of public vendor repos, pypi.org and web search do work, which is why every entry filed so far sources its facts from vendor GitHub repositories. Setting the environment to **Full** removes the restriction; each "Missing source" item below then becomes a straightforward refetch.
-- **PlatformIO builds are not possible under Trusted.** `pio run` fails at `Platform Manager: Installing espressif32` because \*.platformio.org is refused. This is why `examples/lora-ping-pong` is unbuilt.
-- **Missing source:** ESP32-S3-RLCD-4.2 schematic, dimensions and the ST7305 datasheet — only on the blocked Waveshare wiki.
-- **Missing source:** no `chips/rp2040` entry — datasheets.raspberrypi.com is blocked by the proxy. Adafruit Learn guides are unreachable too (adafruit.com, cdn-learn.adafruit.com), so Adafruit entries rest on the PCB repos and board definitions.
-- **Missing source:** XY-SK120 electrical specs and front-panel manual. The user guides live on telemetry2u.com / manuals.plus / done.land, all blocked by the proxy; and which variant (SK120/SK120X/SK120D) the owner has is unconfirmed.
-- **Unverified:** the GC9A01 module's pin labels and pin order (7- vs 8-pin build) — needs a photo of the owner's board.
-- **Missing source:** XIAO nRF54LM20A Sense schematic, KiCad project and the Nordic nRF54LM20A datasheet: all three live on `files.seeedstudio.com`, which the proxy blocks. Need a browser download.
-- **Missing source:** no `chips/esp32` entry for the ESP32-PICO-D4 on the T3 LoRa32, and no SX1276/SX1278 datasheet: espressif.com and semtech.com are unreachable.
-- **Missing source:** the nRF52840 PS in `chips/nrf52840` is v1.5 (Seeed's copy). The current Nordic PS needs a browser download.
-- **Missing source:** there's no separate XIAO ESP32-S3 Sense schematic. Seeed's URL serves the v1.4 base file.
-- **Unverified:** the XIAO nRF52840 Sense IMU address 0x6A is unconfirmed against the schematic.
-- **Tool limitation:** `fetch_page.py` gets server-rendered HTML only. JS-only pages (some store pages) come back nearly empty, so use the vendor wiki instead.
+- The projects that target `board = featheresp32-s2` are building the **no-PSRAM** profile (`-DARDUINO_ADAFRUIT_FEATHER_ESP32S2_NOPSRAM`). If the hardware is a PID 5000/5303 Feather, `board = adafruit_feather_esp32s2` is the profile that enables its 2 MB PSRAM. `pio-bme280` already has an `adafruit_feather_esp32s2` env beside its `featheresp32-s2` one.
+- `pio-radio2` builds with `board = leonardo` in an env named `feather32u4`; the hardware is a Feather 32u4 RFM69. Harmless but wrong profile.
+- `pio-inmp`'s only env is named `featheresp32-s2` but builds `board = seeed_xiao_esp32c6`. The env name is wrong, not the board id.
+- `pio-d12` drives `GPIO5` as a "done" output while the same sketch uses `Wire`, whose default SCL on the `d1_mini` variant is GPIO5. Recorded in `boards/wemos-d1-mini/README.md`.
+- `pio-blink`'s `qualia` env defines `-D LED_BUILTIN=18`, and GPIO18 is the Qualia's SCL. Harmless with nothing on I2C, wrong with a STEMMA device attached.
+- `pio-pico3` declares `framework = micropython` for `board = rpipico2`, and that board file lists only `arduino`, `picosdk` and `mbed-ce` on the platform's current `develop`. Check it still builds.
+- **`platform = file://C:/Users/steve/pio-esp32-55.03.311`** is pinned by `pio-strip-com`, `pio-blink`, `pio-mlab` and `pio-inmp`. That local fork resolves on the owner's machine only.
+
+### Hardware still undocumented
+
+- **`pio-seafive` builds `board = esp32-c5-devkitc1-n4`** for two MCUs (`mcu_a`, `mcu_b`) with GPS and an SSD1306. Neither the board nor `chips/esp32-c5` has an entry.
+- The board ids still marked **outstanding** in the table above: `esp32dev`, `uno`, `leonardo`, `metro`, `rymcu-esp32-s3-devkitc-1`, `adafruit_feather_esp32s3`, `adafruit_feather_esp32s2`, `blackpill_f103c8`.
+- Parts from `lib_deps` — see the list under the bulk pass.
+- The **ESP32-C6-Touch-LCD-1.47**, owned hardware whose vendor demo is only in a local folder.
+
+### Still missing after the 2026-09-22 refetch
+
+- **SmartPanle SC05_X vendor datasheet.** en.wireless-tag.com renders its catalogue in JavaScript, so the product page for the WT32S3-28S PRO could not be crawled; its datasheet link would be on the `img0*.71360.com` CDN under a hashed path. A browser can get it. The same entry records a flash/PSRAM disagreement (library says 8 MB + QSPI, the project flashes 16 MB + OPI) that `esptool.py flash_id` would settle.
+- **Semtech's SX1276 errata note and application notes.** semtech.com serves documents through a Salesforce JavaScript post-back that `curl` cannot follow. The datasheet itself is filed, from Adafruit's copy of Semtech's Rev 4 document.
+- **Nordic's current nRF52840 product specification.** docs.nordicsemi.com, infocenter.nordicsemi.com and docs-be.nordicsemi.com all answer 403 to scripted requests, browser user agent included. `chips/nrf52840/` holds Seeed's v1.5 copy.
+- **LSM6DS3TR-C datasheet from ST.** st.com drops the connection mid-transfer (`HTTP/2 stream not closed cleanly`). Seeed's copy is in `boards/seeed-xiao-nrf52840-sense/datasheets/`.
+- **An XY-SK120 manufacturer specification sheet** with ripple, efficiency and tolerances, and confirmation of which variant (SK120/SK120X/SK120D) the owner has. The user manual and a community write-up are now filed.
+- **Waveshare's `www.waveshare.com`** answers 403 to scripted requests (wiki and product pages alike). `docs.waveshare.com` and `files.waveshare.com` serve normally — use those.
+- **Seeed's XIAO ESP32-S3 Sense schematic PDF** link still serves the plain-S3 v1.4 file. This is a vendor error, confirmed with the host reachable. The `SCH&PCB` zip does contain the Sense design and is filed.
+- **The Wio-SX1262 schematic's GPIO labels** do not match the Meshtastic variant's pin numbers, and the PDF's text layer cannot settle it — read it by eye.
+- **AITRIP 2.8" ESP32-S3 touch module (queue item 8):** still no identifiable vendor design. The listing text (ST7789P3 + FT6336U + ESP32-S3-R2 + RS485) matches several white-label sellers, none with documentation. Needs a photo of the board silkscreen.
+- **The GC9A01 module's pin labels and pin order** (7- vs 8-pin build) — needs a photo of the owner's board.
+
+### Tooling and environment
+
+- **`fetch_page.py` gets server-rendered HTML only.** JS-only pages (store pages, some catalogues) come back nearly empty; use the vendor's documentation site instead.
+- **`fetch_file.py` refuses HTML posing as a PDF**, which is what a JavaScript download gate returns. When it refuses, the file needs a browser.
+- **PlatformIO builds need \*.platformio.org**, which the Trusted access level refuses. That is why `examples/lora-ping-pong` is unbuilt; at Full it should be buildable.
+- **The GitHub API stays scoped to attached repositories** whatever the access level. Use `raw.githubusercontent.com` and `git ls-remote` for vendor repositories, and `add_repo` before reading one of the owner's.
