@@ -47,11 +47,13 @@ Each entry has:
 | [boards/adafruit-feather-huzzah-esp8266](boards/adafruit-feather-huzzah-esp8266/README.md) | ESP8266 Feather, CP2104, LiPo charger (used by pio-huzzah) |
 | [boards/adafruit-qualia-esp32-s3-rgb666](boards/adafruit-qualia-esp32-s3-rgb666/README.md) | ESP32-S3 16MB/8MB PSRAM driver for 40-pin RGB-666 panels |
 | [boards/espressif-esp32-c6-devkitc-1](boards/espressif-esp32-c6-devkitc-1/README.md) | ESP32-C6-WROOM-1 8 MB dev kit, dual USB-C, WS2812 on GPIO8 |
+| [boards/espressif-esp32-c3-devkitc-02](boards/espressif-esp32-c3-devkitc-02/README.md) | ESP32-C3-WROOM-02 4 MB dev kit, micro-USB, WS2812 on GPIO8 |
 | [parts/waveshare-1.69in-lcd-module](parts/waveshare-1.69in-lcd-module/README.md) | 1.69" 240×280 ST7789V2 SPI LCD (Seeed SKU 5755) |
 | [parts/gc9a01-1.28in-round-lcd](parts/gc9a01-1.28in-round-lcd/README.md) | 1.28" 240×240 round GC9A01A SPI LCD module |
 | [parts/sk-120-buck-boost](parts/sk-120-buck-boost/README.md) | XY-SK120 120 W buck-boost, CC/CV, Modbus RTU over TTL |
 | [chips/esp32-s3](chips/esp32-s3/README.md) | Espressif ESP32-S3 |
 | [chips/esp32-c6](chips/esp32-c6/README.md) | Espressif ESP32-C6 (Wi-Fi 6, BLE, 802.15.4) |
+| [chips/esp32-c3](chips/esp32-c3/README.md) | Espressif ESP32-C3 (RISC-V, Wi-Fi 4, BLE) |
 | [chips/esp8266](chips/esp8266/README.md) | Espressif ESP8266EX (NRND) |
 | [chips/nrf54lm20a](chips/nrf54lm20a/README.md) | Nordic nRF54LM20A |
 | [chips/nrf52840](chips/nrf52840/README.md) | Nordic nRF52840 |
