@@ -15,4 +15,4 @@ Espressif dual-core Xtensa LX7 @ 240 MHz, 512 KB SRAM, 384 KB ROM, Wi-Fi 4 + BLE
 
 Module datasheet for the WROOM-1/1U (`esp32-s3-wroom-1_datasheet_en.pdf`) is here too.
 
-Boards: [waveshare-esp32-s3-rgb-matrix](../../boards/waveshare-esp32-s3-rgb-matrix/README.md), [adafruit-esp32-s3-reverse-tft-feather](../../boards/adafruit-esp32-s3-reverse-tft-feather/README.md), [seeed-xiao-esp32s3](../../boards/seeed-xiao-esp32s3/README.md), [seeed-xiao-1.14in-display-esp32s3](../../boards/seeed-xiao-1.14in-display-esp32s3/README.md)
+Boards: [waveshare-esp32-s3-rgb-matrix](../../boards/waveshare-esp32-s3-rgb-matrix/README.md), [adafruit-esp32-s3-reverse-tft-feather](../../boards/adafruit-esp32-s3-reverse-tft-feather/README.md), [seeed-xiao-esp32s3](../../boards/seeed-xiao-esp32s3/README.md), [seeed-xiao-1.14in-display-esp32s3](../../boards/seeed-xiao-1.14in-display-esp32s3/README.md), [adafruit-qualia-esp32-s3-rgb666](../../boards/adafruit-qualia-esp32-s3-rgb666/README.md)
