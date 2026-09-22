@@ -7,14 +7,19 @@ Used by: no project.
 
 | | |
 |---|---|
-| Input | 6–36 V DC `(from the listing, not a vendor document)` |
-| Output | 0–36 V DC, CC/CV `(same)` |
-| Power | 120 W `(same)` |
+| Input | 6–36 V DC |
+| Output | 0–36 V DC, CC/CV/CW |
+| Power | **120 W at up to 6 A.** The vendor's manual calls 120 W "a conservative power rating": with software support it enables up to 150 W, and "under optimal cooling conditions, the power output can reach between 130 W and 150 W" |
+| Display resolution | 0.01 V; voltage and current are both calibratable from the system menu |
 | Display | colour LCD with rotary encoder and keypad |
 | Serial | TTL UART, Modbus RTU, 8N1 (1 start, 8 data, no parity, 1 stop) |
 | Default address / baud | slave address 1, baud code 6 = 115200 |
 | Memory groups | M0–M9; M0 loads at power-on, M1/M2 are the front-panel shortcuts |
-| Extra functions | MPPT solar charging, constant-power mode, battery-full cutoff current, timed/Ah/Wh cutoffs, key lock, buzzer |
+| Extra functions | MPPT solar charging, constant-power mode, anti-backflow (so it can charge batteries), external temperature probe with over-temperature cutoff, battery-full cutoff current, timed/Ah/Wh cutoffs, key lock, buzzer, firmware upgrade over the Wi-Fi module |
+| Data groups | ten, Cd0–Cd9, reachable by holding VSET on the main screen |
+| Package weight | 127 g |
+
+**No output reverse-connection protection.** The vendor manual states it plainly: reversing the battery's positive and negative terminals at the output will damage the module.
 
 **Variant caution:** the listing was not fetchable, so which exact build is in hand (SK120, SK120X, SK120D) is unconfirmed. The Modbus map below is what the vendor ships for the SK120 family; the `0x0030`–`0x0034` Wi-Fi registers only do something on units carrying the Sinilink ESP8285 Wi-Fi module.
 
@@ -76,6 +81,9 @@ Each group is 14 registers wide. Group *n* starts at **0x0050 + n × 0x0010** (M
 - **Wi-Fi, RTC and weather registers** are for the Sinilink ESP8285 add-on and the on-screen clock. They answer on units without the module, but nothing happens.
 - **Undocumented registers** found by probing (in `reference/XY-SKxxx.h`, from the library author, so `(unverified)` against the vendor): 0x0025 factory reset (write 1), 0x005E/0x005F external-temperature protection — 0x005E accepts writes with no visible effect. The FET, CLOF and POFF menu items on the OSD have no register anyone has located.
 - **Model register:** 0x0016 reportedly returns 22873 on an XY-SK120 `(unverified)`.
+- **Constant power is a calculated mode, not a separate regulator.** The manual describes it as: with CW enabled the current limit defaults to maximum and CV is the starting voltage; the module computes the load resistance from Ohm's law and then tracks the voltage that satisfies P = U²/R. A load whose resistance changes fast will make it hunt.
+- **The CC loop is slow.** A community write-up of the SK120X reports temporary current overshoot before regulation settles, and the same for CV — enough to matter for sensitive loads `(unverified — community source, `wiki/done-land-xy-sk120x.md`)`.
+- **Front panel, from the manual:** VSET and ISET short-press enter the voltage and current settings, SW shifts the digit and toggles the input/output voltage display, the encoder button cycles W / Ah / Wh / h / °C and, held for 2 s, locks the keys. Holding SW opens the system menu (first item `bEP`, the buzzer); holding ISET opens the data-group menu.
 
 ## Applications
 
@@ -90,3 +98,5 @@ Each group is 14 registers wide. Group *n* starts at **0x0050 + n × 0x0010** (M
 - `datasheets/xy-sk120-modbus-address.pdf`: the vendor's register address table (Chinese), including the calibration block
 - `reference/XY-SKxxx.h`: register defines with per-register notes from the community Arduino library
 - `reference/data-group-osd-notes.md`: what the on-screen data-group abbreviations mean
+- `manuals/sk60-sk120-user-guide.pdf`: the XY-SK60/SK120 instruction manual (English, mostly scanned pages) — front-panel operation, CV/CC/CW behaviour, warnings
+- `wiki/done-land-xy-sk120x.md`: a community write-up of the XY-SK120X with measured behaviour, dimensions and terminal labels. Not a vendor document; facts taken from it are marked.
