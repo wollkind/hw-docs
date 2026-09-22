@@ -22,7 +22,8 @@ Done means: every item in the queue below has an entry, it's in the index in `RE
   - Without uv: `pip install beautifulsoup4 html5lib markdownify requests openpyxl pypdf`, then `python tools/fetch_page.py …`
 - The owner's PlatformIO projects are separate private repos, `wollkind/pio-<name>`, plus `wollkind/infopanel64` and `wollkind/info-orbs`. Locally they're in `~/Documents/PlatformIO/Projects/<name>`. In a sandbox, use `gh repo clone` or `gh api` to grep them for "Used by" and for lessons learned. Their `README.md`/`CLAUDE.md` often record hardware facts established by testing.
 - Style for the owner: terse reports, no padding. Don't ask about mechanical decisions. No idioms in repository text.
-- **Network access** in a cloud session is set by the environment's access level, not by anything in this repo. Levels are None, Trusted, Full and Custom, edited at claude.ai/code in the environment selector (hover the environment, settings icon). At **Trusted**, every vendor host used by this library is refused at the proxy and only GitHub, web search and package registries work. At **Full**, any domain is reachable and the "blocked host" open issues below can be closed by refetching. A change applies to new sessions only.
+- **Network access** in a cloud session is set by the environment's access level, not by anything in this repo. Levels are None, Trusted, Full and Custom, edited at claude.ai/code in the environment selector (hover the environment, settings icon). At **Trusted**, every vendor host used by this library is refused at the proxy and only GitHub, web search and package registries work. At **Full**, any domain is reachable. A change applies to new sessions only.
+- **The 2026-09-22 session ran at Full**: wemos.cc, adafruit.com, cdn-learn.adafruit.com, learn.adafruit.com, espressif.com and documentation.espressif.com all answered. The "Missing source" issues below are therefore refetchable now, and the three entries filed that day take their facts from vendor pages rather than GitHub mirrors. Note that the **GitHub API** stays scoped to attached repositories even at Full — `api.github.com` returns 403 for a repo that `add_repo` has not attached, so use `raw.githubusercontent.com` (unrestricted) and `git ls-remote` for vendor repos and their commit SHAs.
 
 ## Workflow per item
 
@@ -34,12 +35,43 @@ The 14 numbered items from 2026-09-21 are all filed (see Done). Item 8 is filed 
 
 Next, the **bulk pass:**
 
-- Document every board used across the owner's PlatformIO projects. Distinct `board =` IDs, with entries filed so far marked:
-  - **done:** seeed_xiao_esp32c6 ×9, featheresp32-s2 ×5, feather32u4 ×4, adafruit_matrix_portal_m4
-  - **outstanding:** d1_mini ×6, esp32dev ×3, esp32-s3-devkitc-1 ×3, adafruit_qualia_s3_rgb666 ×3, uno, leonardo, huzzah, rymcu-esp32-s3-devkitc-1, rpipico2w, rpipico2, pico, metro, esp32-s3-devkitc1-n8r8/-n16r8, esp32-c6-devkitc-1, esp32-c3-devkitc-02, blackpill_f103c8, adafruit_feather_esp32s3, adafruit_feather_esp32s2
-- Repositories attached to a session so far: `pio-radio`, `pio-radio1`, `pio-radio2`, `pio-crowpanel2`, `pio-rlcd`, `pio-solar`, `pio-soil1`, `pio-strip-com`, `pio-xiao-hdc-wifi`, `pio-feather`, `pio-d1mini`, `pio-bme280`, `pio-bme680`. Each one needs `add_repo` before it can be cloned in a sandbox session.
-- Generic IDs often hide the real vendor hardware (e.g. `infopanel64` is `esp32-s3-devkitc-1` but really the Waveshare RGB Matrix). Read each project's README/comments.
-- Parts from `lib_deps`: BME280, BME680, LIS3DH, CCS811, DHT, MAX1704X, INA228, INMP441 mic, ST7789 240×240, e-paper panels and so on.
+Every `board =` id across the owner's PlatformIO projects, and the projects that build it. The map below was read from each repo's `platformio.ini` on 2026-09-22 and is complete for the 36 repos attached that day; **filed** means the hardware has an entry here.
+
+| `board =` | Projects | Entry |
+|---|---|---|
+| `seeed_xiao_esp32c6` | pio-solar, pio-soil1, pio-strip-com (`strip`), pio-xiao-hdc-wifi, pio-leddrive, pio-music1, pio-baseboard2, pio-inmp, pio-feather | filed |
+| `featheresp32-s2` | pio-bme280, pio-bme680, pio-feather, pio-blink, pio-mlab | filed (see Open issues: wrong profile) |
+| `feather32u4` | pio-radio, pio-radio1, pio-epapertest, pio-epdv4 | filed |
+| `adafruit_matrix_portal_m4` | pio-sandpanel | filed |
+| `d1_mini` | pio-d1mini, pio-d12, pio-bme280, pio-bme680, pio-feather, pio-blink | filed |
+| `huzzah` | pio-huzzah, pio-radio | filed |
+| `adafruit_qualia_s3_rgb666` | pio-piotest, pio-blink, pio-feather | filed |
+| `esp32-s3-devkitc-1` | infopanel64 (really the Waveshare RGB Matrix, filed), pio-strip-com `display` (really a SmartPanle SC05, see Open issues) | id only |
+| `esp32-s3-devkitc1-n16r8` | pio-rlcd (really the Waveshare ESP32-S3-RLCD-4.2, filed) | id only |
+| `esp32-s3-devkitc1-n8r8` | pio-crowpanel2 (really the Elecrow CrowPanel 2.13, filed) | id only |
+| `esp32dev` | pio-ir-decode, pio-num1-2, pio-feather | **outstanding** |
+| `uno` | pio-lcd2, pio-feather | **outstanding** |
+| `leonardo` | pio-lcd, pio-radio2 (see Open issues) | **outstanding** |
+| `metro` | pio-bme280 | **outstanding** |
+| `pico` | pio-feather | **outstanding** |
+| `rpipico2` | pio-pico3 (framework = micropython) | **outstanding** |
+| `rpipico2w` | pio-feather | **outstanding** |
+| `rymcu-esp32-s3-devkitc-1` | pio-feather | **outstanding** |
+| `adafruit_feather_esp32s3` | pio-blink | **outstanding** |
+| `adafruit_feather_esp32s2` | pio-bme280 | **outstanding** |
+| `esp32-c3-devkitc-02` | pio-blink | **outstanding** |
+| `esp32-c6-devkitc-1` | pio-blink | **outstanding** |
+| `esp32-c5-devkitc1-n4` | pio-seafive (two MCUs, `mcu_a` and `mcu_b`) | **outstanding — new, not in the earlier list** |
+| `blackpill_f103c8` | pio-feather | **outstanding** |
+
+Reading any of this in a sandbox needs `add_repo` per repository first (the GitHub API refuses unattached repos), then either a clone or `api.github.com/repos/wollkind/<repo>/contents/<path>` with `Accept: application/vnd.github.raw`.
+
+Repos with no `platformio.ini` to read: `pio-mpy1` (MicroPython, no ini), `pio-workspace`, `pio-infopanel64` and `pio-info-orbs` (all three empty). `wollkind/info-orbs` is a public fork and was not attached.
+
+Still to do beyond the board ids:
+
+- Parts from `lib_deps`: BME280, BME680, LIS3DH, CCS811, DHT, MAX1704X, INA228, HDC302x, TSC2007, MPL115A2, TEMT6000, LM35, INMP441 mic, ILI9341 FeatherWing, ST7789 240×240, SSD1306, e-paper panels, ADS1115, FT6206.
+- Generic IDs hide real vendor hardware — read each project's README/comments and source before trusting the id.
 - Local-only vendor downloads that are **not** in any repo: `Documents/PlatformIO/E-Paper_code` (Waveshare e-paper demo, 164 MB) and `Documents/PlatformIO/ESP32-C6-Touch-LCD-1.47-Demo` (56 MB). The ESP32-C6-Touch-LCD-1.47 is owned hardware and should get an entry.
 
 ## Done
@@ -71,13 +103,20 @@ Next, the **bulk pass:**
 | `parts/gc9a01-1.28in-round-lcd` | GC9A01A datasheet + TFT_eSPI/Adafruit init; module pin labels unverified |
 | `boards/seeed-xiao-nrf54lm20a-sense`, `chips/nrf54lm20a` | wiki source from GitHub; schematic and Nordic datasheet still missing |
 | `boards/lilygo-t3-lora32-v1.6.1` | T3 LoRa32 V1.6.1, SX1276/SX1278; sources from the LilyGO GitHub repo |
+| `boards/wemos-d1-mini`, `chips/esp8266` | bulk pass: the six `d1_mini` environments. Vendor V4.0.0 + V3.1.0 pages, V4 schematic, Espressif datasheet v7.1 (NRND) |
+| `boards/adafruit-feather-huzzah-esp8266` | bulk pass: `pio-huzzah`, `pio-radio`. Learn guide + Rev G EAGLE. The `huzzah` board id names PID 2471, the breakout; the Feather is the board in hand |
+| `boards/adafruit-qualia-esp32-s3-rgb666` | bulk pass: `pio-piotest`, `pio-blink`, `pio-feather`. PCA9554A map, RGB-666 pin table, EAGLE design |
 
 ## Open issues
 
 - **Found in the bulk pass:** the projects that target `board = featheresp32-s2` are building the **no-PSRAM** profile (`-DARDUINO_ADAFRUIT_FEATHER_ESP32S2_NOPSRAM`). If the hardware is a PID 5000/5303 Feather, `board = adafruit_feather_esp32s2` is the profile that enables its 2 MB PSRAM.
 - **Found in the bulk pass:** `pio-radio2` builds with `board = leonardo` in an env named `feather32u4`; the hardware is a Feather 32u4 RFM69. Harmless but wrong profile.
+- **Found in the bulk pass:** `pio-inmp`'s only env is named `featheresp32-s2` but builds `board = seeed_xiao_esp32c6`. The env name is wrong, not the board id. It also pins `platform = file://C:/Users/steve/pio-esp32-55.03.311`, the same local fork `pio-strip-com`, `pio-blink`, `pio-mlab` and `pio-strip-com` use, which will not resolve on another machine.
+- **Found in the bulk pass:** `pio-seafive` builds `board = esp32-c5-devkitc1-n4` for two separate MCUs (`mcu_a`, `mcu_b`) with GPS (MicroNMEA) and an SSD1306. The ESP32-C5 was not in the earlier board list and has neither a board entry nor a `chips/esp32-c5` entry.
+- **Found in the bulk pass:** `pio-d12` drives `GPIO5` as a "done" output while the same sketch uses `Wire`, whose default SCL on the `d1_mini` variant is GPIO5. Recorded in `boards/wemos-d1-mini/README.md`; the project is the thing to fix.
+- **Found in the bulk pass:** `pio-blink`'s `qualia` env defines `-D LED_BUILTIN=18`, and GPIO18 is the Qualia's SCL. Harmless with nothing on I2C, wrong with a STEMMA device attached.
 - **Found in the bulk pass:** `pio-strip-com`'s `display` env is `board = esp32-s3-devkitc-1` but is really a **SmartPanle PanelLan `BOARD_SC05_X`** (320×240 IPS + touch, 16 MB flash, OPI PSRAM, `smartpanle/PanelLan` library). It needs its own entry. That project also pins `platform = file://C:/Users/steve/pio-esp32-55.03.311`, a local fork that will not resolve on another machine.
-- **Missing source:** no `chips/esp32-c6` entry — the Espressif datasheet is only on blocked hosts.
+- **Missing source:** no `chips/esp32-c6` entry. Espressif is reachable again (see Environment), so this is a straightforward fetch now.
 - **Blocked — item 8:** the AITRIP 2.8" ESP32-S3 touch module has no identifiable vendor design. Amazon is blocked from the sandbox and the listing text (ST7789P3 + FT6336U + ESP32-S3-R2 + RS485) matches several white-label sellers, none with documentation. Needs a photo of the board silkscreen to get a model code; the entry records what is known and deliberately records no pin map.
 
 - **Sandbox egress (the cause of every "blocked" issue below):** under the **Trusted** access level the proxy refuses CONNECT to every vendor host used here — lilygo.cc, wiki.seeedstudio.com, files.seeedstudio.com, docs.waveshare.com, adafruit.com, cdn-learn.adafruit.com, espressif.com, semtech.com, st.com, elecrow.com, raspberrypi.com, amazon.com and \*.platformio.org. The refusal is local; the vendors are not blocking anything. GitHub, raw.githubusercontent.com, clones of public vendor repos, pypi.org and web search do work, which is why every entry filed so far sources its facts from vendor GitHub repositories. Setting the environment to **Full** removes the restriction; each "Missing source" item below then becomes a straightforward refetch.
