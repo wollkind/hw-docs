@@ -34,6 +34,23 @@ Used by: none in `PlatformIO/Projects` yet.
 
 The user LED is on GPIO21 and BOOT is GPIO0. The pin headers for the plain S3 and Sense are in `reference/pins_arduino-XIAO_ESP32S3.h`. D0–D10 are the same on all three variants; D11/D12 there are GPIO42/41 (the PDM mic on Sense).
 
+### Sense camera and microphone
+
+From the net labels in Seeed's own KiCad source for the Sense v1.5 (`hardware/sense-v1.5-sch-pcb.zip`, sheet `03 XIAO ESP32-S3-Sense.kicad_sch`):
+
+| Signal | GPIO |
+|---|---|
+| Camera XMCLK | 10 |
+| DVP_Y2 / Y3 / Y4 / Y5 / Y6 / Y7 / Y8 / Y9 | 15 / 17 / 18 / 16 / 14 / 12 / 11 / 48 |
+| DVP_PCLK | 13 |
+| DVP_VSYNC | 38 |
+| DVP_HREF | 47 |
+| Camera SCCB SCL / SDA | 39 / 40 |
+| PDM microphone DATA / CLK | 41 / 42 |
+| User LED | 21 |
+
+The camera control bus (GPIO39/40) and the PDM pins (41/42) are the chip's JTAG pins MTCK, MTDO, MTDI and MTMS, which is why hardware JTAG debugging and the Sense peripherals cannot both be used.
+
 ## PlatformIO
 
 `board = seeed_xiao_esp32_s3_plus` is in the pioarduino platform (55.03.x) but not in stock `espressif32`. Its board JSON sets `memory_type = qio_opi`, `BOARD_HAS_PSRAM`, `USB_CDC_ON_BOOT=1` and upload `flash_size = 16MB`. From the board JSON; untested.
@@ -71,4 +88,5 @@ For the plain S3 or Sense, use `board = seeed_xiao_esp32s3`.
 - `hardware/xiao-esp32s3-schematic-v1.4.pdf`, `dimensions-v1.1.dxf`
 - `hardware/plus-pinout.xlsx`: despite the name, this sheet lists the base/Sense mapping (camera and PDM columns), not the Plus D11–D19. Use the variant header above for the Plus.
 - `hardware/sense-pinout.xlsx`
+- `hardware/sense-v1.5-sch-pcb.zip`: Seeed's KiCad source for the **Sense v1.5** — schematic sheets, PCB and a block diagram. This is the Sense schematic; the PDF Seeed links for it serves the plain-S3 file instead (see `sources.md`).
 - `reference/pins_arduino-*.h`: arduino-esp32 variant files
