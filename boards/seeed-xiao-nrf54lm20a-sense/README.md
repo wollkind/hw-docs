@@ -82,6 +82,8 @@ Arduino is possible but unofficial: the wiki points at a **third-party** core, `
 
 ## Files
 
-- `wiki/`: Seeed's wiki pages in their source form — getting started, built-in sensors, pin multiplexing, low power, NCS, Arduino, MicroPython, BLE, Matter, NFC, e-paper + SD application. Images are remote links on `files.seeedstudio.com` (blocked from this sandbox), so they do not render offline.
+- `hardware/schematic.pdf`: Seeed's schematic (fetched 2026-09-22)
+- `hardware/sch-pcb-v1.0.zip`: the V1.0 schematic and PCB source archive, kept packed
+- `wiki/`: Seeed's wiki pages in their source form — getting started, built-in sensors, pin multiplexing, low power, NCS, Arduino, MicroPython, BLE, Matter, NFC, e-paper + SD application. Images are remote links on `files.seeedstudio.com`, which was unreachable when the pages were saved, so they do not render offline.
 - `reference/seeed-xiao-nrf54lm20a.json`: the PlatformIO board definition (memory sizes, upload protocols, SVD name)
 - `reference/tapwake-imu.overlay`, `reference/npm1300.overlay`: Seeed's Zephyr overlays for the IMU rails and the PMIC I2C/charger settings
