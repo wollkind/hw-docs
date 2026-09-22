@@ -59,6 +59,10 @@ Meshtastic hardware model 81, slug `SEEED_XIAO_S3`, 8 MB partition scheme, and i
 - **TCXO voltage matters.** A RadioLib setup that leaves `DIO3` TCXO at the default instead of 1.8 V gives a radio that initialises but never receives.
 - **Connect the U.FL antenna before transmitting.**
 
+## Demo
+
+[`examples/lora-ping-pong`](../../examples/lora-ping-pong/README.md) builds for this board: a ping/pong link test that reports RSSI and SNR in both directions. Untested on hardware.
+
 ## Files
 
 - `wiki/kit-introduction.md`, `wio-sx1262-module-introduction.md`: Seeed's product and module pages

@@ -7,6 +7,7 @@ boards/<vendor>-<board>/   a dev board or module (Waveshare, Adafruit, Seeed…)
 chips/<chip>/              an MCU/SoC family: datasheet, TRM, errata (shared by boards)
 parts/<part>/              sensors, displays, drivers, panels, ICs
 tools/                     fetchers (run with uv; no setup needed)
+examples/                  small cross-board demos that exercise entries in the library
 ```
 
 Each entry has:
@@ -49,6 +50,8 @@ Each entry has:
 | [chips/nrf54lm20a](chips/nrf54lm20a/README.md) | Nordic nRF54LM20A |
 | [chips/nrf52840](chips/nrf52840/README.md) | Nordic nRF52840 |
 | [chips/atsamd51](chips/atsamd51/README.md) | Microchip ATSAMD51 |
+
+Demos: [examples/lora-ping-pong](examples/lora-ping-pong/README.md) — SX1276 ↔ SX1262 link test with a documented packet format.
 
 Work queue and resume instructions: [MISSION.md](MISSION.md).
 

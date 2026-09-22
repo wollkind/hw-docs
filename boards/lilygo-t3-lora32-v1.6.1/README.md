@@ -74,6 +74,10 @@ The matching Arduino IDE settings from the vendor doc: ESP32 Dev Module, 240 MHz
 - **USB bridge conflict:** the schematic in this folder shows a Micro-USB connector with a CP2104. The vendor quick-start text tells you to install the **CH9102** driver and mentions USB-C — that text is shared across the T3 series, so later production runs may carry a CH9102F `(unverified)`. Check the chip on the board before hunting for a driver.
 - **V1.3 is not pin-compatible:** LoRa RESET moves from GPIO14 (V1.3) to GPIO23 (V1.6/V1.6.1), and V1.3 has no SD slot in the pin map.
 
+## Demo
+
+[`examples/lora-ping-pong`](../../examples/lora-ping-pong/README.md) builds for this board: a ping/pong link test that reports RSSI and SNR in both directions. Untested on hardware.
+
 ## Files
 
 - `wiki/t3-lora32-v1.6.1-hardware.md`: LilyGO's own hardware page for this board (pins, electrical, RF, IPEX mod), with `wiki/img/`
