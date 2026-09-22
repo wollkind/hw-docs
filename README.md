@@ -43,10 +43,12 @@ Each entry has:
 | [boards/seeed-xiao-nrf54lm20a-sense](boards/seeed-xiao-nrf54lm20a-sense/README.md) | XIAO nRF54LM20A Sense (BLE 6.0, nPM1300, IMU, PDM mic) |
 | [boards/adafruit-matrix-portal-m4](boards/adafruit-matrix-portal-m4/README.md) | SAMD51 + ESP32 HUB75 controller, LIS3DH |
 | [boards/lilygo-t3-lora32-v1.6.1](boards/lilygo-t3-lora32-v1.6.1/README.md) | ESP32-PICO-D4 + SX1276/SX1278 LoRa, SSD1306 OLED, microSD |
+| [boards/wemos-d1-mini](boards/wemos-d1-mini/README.md) | LOLIN D1 mini: ESP8266EX, 4 MB flash, CH340C, LOLIN I2C port |
 | [parts/waveshare-1.69in-lcd-module](parts/waveshare-1.69in-lcd-module/README.md) | 1.69" 240×280 ST7789V2 SPI LCD (Seeed SKU 5755) |
 | [parts/gc9a01-1.28in-round-lcd](parts/gc9a01-1.28in-round-lcd/README.md) | 1.28" 240×240 round GC9A01A SPI LCD module |
 | [parts/sk-120-buck-boost](parts/sk-120-buck-boost/README.md) | XY-SK120 120 W buck-boost, CC/CV, Modbus RTU over TTL |
 | [chips/esp32-s3](chips/esp32-s3/README.md) | Espressif ESP32-S3 |
+| [chips/esp8266](chips/esp8266/README.md) | Espressif ESP8266EX (NRND) |
 | [chips/nrf54lm20a](chips/nrf54lm20a/README.md) | Nordic nRF54LM20A |
 | [chips/nrf52840](chips/nrf52840/README.md) | Nordic nRF52840 |
 | [chips/atsamd51](chips/atsamd51/README.md) | Microchip ATSAMD51 |
