@@ -50,12 +50,16 @@ Each entry has:
 | [boards/espressif-esp32-c3-devkitc-02](boards/espressif-esp32-c3-devkitc-02/README.md) | ESP32-C3-WROOM-02 4 MB dev kit, micro-USB, WS2812 on GPIO8 |
 | [boards/espressif-esp32-s3-devkitc-1](boards/espressif-esp32-s3-devkitc-1/README.md) | ESP32-S3-WROOM dev kit; its board ids double as profiles for other S3 boards |
 | [boards/smartpanle-sc05x-zx2d80ce02s](boards/smartpanle-sc05x-zx2d80ce02s/README.md) | PanelLan SC05_X: ESP32-S3 + 240×320 ST7789 8080 panel, FT5x06, RS485 |
+| [boards/raspberrypi-pico](boards/raspberrypi-pico/README.md) | RP2040, 2 MB flash, 26 GPIO, LED on GPIO25 |
+| [boards/raspberrypi-pico-2](boards/raspberrypi-pico-2/README.md) | Pico 2 and Pico 2 W: RP2350, 4 MB flash, CYW43439 on the W |
 | [parts/waveshare-1.69in-lcd-module](parts/waveshare-1.69in-lcd-module/README.md) | 1.69" 240×280 ST7789V2 SPI LCD (Seeed SKU 5755) |
 | [parts/gc9a01-1.28in-round-lcd](parts/gc9a01-1.28in-round-lcd/README.md) | 1.28" 240×240 round GC9A01A SPI LCD module |
 | [parts/sk-120-buck-boost](parts/sk-120-buck-boost/README.md) | XY-SK120 120 W buck-boost, CC/CV, Modbus RTU over TTL |
 | [chips/esp32-s3](chips/esp32-s3/README.md) | Espressif ESP32-S3 |
 | [chips/esp32-c6](chips/esp32-c6/README.md) | Espressif ESP32-C6 (Wi-Fi 6, BLE, 802.15.4) |
 | [chips/esp32-c3](chips/esp32-c3/README.md) | Espressif ESP32-C3 (RISC-V, Wi-Fi 4, BLE) |
+| [chips/rp2040](chips/rp2040/README.md) | Raspberry Pi RP2040 |
+| [chips/rp2350](chips/rp2350/README.md) | Raspberry Pi RP2350 (M33 or Hazard3) |
 | [chips/esp8266](chips/esp8266/README.md) | Espressif ESP8266EX (NRND) |
 | [chips/nrf54lm20a](chips/nrf54lm20a/README.md) | Nordic nRF54LM20A |
 | [chips/nrf52840](chips/nrf52840/README.md) | Nordic nRF52840 |

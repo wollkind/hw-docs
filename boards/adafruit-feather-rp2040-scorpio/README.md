@@ -1,6 +1,6 @@
 # Adafruit Feather RP2040 SCORPIO (PID 5650)
 
-Feather-format RP2040 board built for driving NeoPixels: 8 consecutive GPIOs (16–23) go through a 74AHCT245 level shifter to eight 5 V outputs, fed by the RP2040's PIO and DMA. Chip: RP2040 — no `chips/rp2040` entry yet.
+Feather-format RP2040 board built for driving NeoPixels: 8 consecutive GPIOs (16–23) go through a 74AHCT245 level shifter to eight 5 V outputs, fed by the RP2040's PIO and DMA. Chip: [`chips/rp2040`](../../chips/rp2040/README.md).
 Used by: no project found.
 
 ## Key specs
