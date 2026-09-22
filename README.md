@@ -50,6 +50,7 @@ Each entry has:
 | [parts/gc9a01-1.28in-round-lcd](parts/gc9a01-1.28in-round-lcd/README.md) | 1.28" 240×240 round GC9A01A SPI LCD module |
 | [parts/sk-120-buck-boost](parts/sk-120-buck-boost/README.md) | XY-SK120 120 W buck-boost, CC/CV, Modbus RTU over TTL |
 | [chips/esp32-s3](chips/esp32-s3/README.md) | Espressif ESP32-S3 |
+| [chips/esp32-c6](chips/esp32-c6/README.md) | Espressif ESP32-C6 (Wi-Fi 6, BLE, 802.15.4) |
 | [chips/esp8266](chips/esp8266/README.md) | Espressif ESP8266EX (NRND) |
 | [chips/nrf54lm20a](chips/nrf54lm20a/README.md) | Nordic nRF54LM20A |
 | [chips/nrf52840](chips/nrf52840/README.md) | Nordic nRF52840 |

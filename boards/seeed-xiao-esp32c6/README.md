@@ -1,7 +1,7 @@
 # Seeed Studio XIAO ESP32-C6
 
-XIAO-format ESP32-C6 board: Wi-Fi 6, BLE 5, Zigbee/Thread/802.15.4, a ceramic antenna plus a U.FL connector with a GPIO-controlled RF switch, and battery charging.
-Used by: `pio-solar`, `pio-soil1`, `pio-strip-com` (the `strip` env), `pio-xiao-hdc-wifi` — four of the owner's projects confirmed; `MISSION.md` counts nine `board = seeed_xiao_esp32c6` environments in total.
+XIAO-format ESP32-C6 board: Wi-Fi 6, BLE 5, Zigbee/Thread/802.15.4, a ceramic antenna plus a U.FL connector with a GPIO-controlled RF switch, and battery charging. Chip: [`chips/esp32-c6`](../../chips/esp32-c6/README.md).
+Used by: `pio-solar`, `pio-soil1`, `pio-strip-com` (the `strip` env), `pio-xiao-hdc-wifi`, `pio-leddrive`, `pio-music1`, `pio-baseboard2`, `pio-inmp` (env misnamed `featheresp32-s2`), `pio-feather` — all nine `board = seeed_xiao_esp32c6` environments, confirmed against each project's `platformio.ini` on 2026-09-22.
 
 ## Key specs (Seeed wiki)
 
