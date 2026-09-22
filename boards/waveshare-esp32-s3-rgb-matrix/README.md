@@ -55,7 +55,7 @@ board_upload.flash_size = 32MB
 build_flags = -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_USB_MODE=1
 ```
 
-## Gotchas
+## Operational notes
 
 - **Arduino core:** Arduino-ESP32 3.3.x is only available through the pioarduino platform fork. Stock `espressif32` is too old for the vendor examples.
 - **Vendored HUB75 driver:** the driver `#include`s `platforms/esp32s3/gdma_lcd_parallel16.cpp` itself. Exclude that folder with `build_src_filter = +<*> -<platforms/>` or the symbols get defined twice.
@@ -67,6 +67,12 @@ build_flags = -DBOARD_HAS_PSRAM -DARDUINO_USB_CDC_ON_BOOT=1 -DARDUINO_USB_MODE=1
 - **UART0 pins are taken:** GPIO43/44 (U0TXD/U0RXD) carry I2S BCLK and SD CMD. Serial goes over native USB CDC.
 - **Pins reserved for flash/PSRAM:** don't reassign the HUB75 pins onto octal-PSRAM pins (GPIO33–37). The vendor mapping already avoids them.
 - **Speaker amp:** GPIO11 enables the speaker amp. Hold it low when the speaker isn't used.
+
+## Applications
+
+- **Multi-panel information display.** Drives up to six 64×64 panels with 32 MB flash and 16 MB octal PSRAM for frame buffers. `infopanel64` uses this board.
+- **Room monitor with display.** SHTC3 supplies temperature and humidity, PCF85063A holds time across power loss, and the result renders on the panel.
+- **Audio-reactive panel.** ES7210 with two microphones supplies input for spectrum or level display; the ES8311 codec and speaker header provide output.
 
 ## Files
 

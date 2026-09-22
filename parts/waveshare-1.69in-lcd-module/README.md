@@ -36,11 +36,17 @@ The pin assignments come from `wiki/waveshare-wiki.md` (UNO, Pi, STM32) and `wik
 - **Seeed XIAO library:** [limengdu/XIAO_ST7789V2_LCD_Display](https://github.com/limengdu/XIAO_ST7789V2_LCD_Display), adapted from Waveshare's demo. Its README is in `reference/xiao-lib-README.md`.
 - **TFT_eSPI:** set `ST7789_DRIVER`, `TFT_WIDTH 240`, `TFT_HEIGHT 280` (unverified).
 
-## Gotchas
+## Operational notes
 
 - **Rounded corners:** the corners clip about R5 mm of the image, so keep UI clear of them.
 - **Supply and logic voltage must match.** With a 5 V supply, the MCU has to drive 5 V logic. Use 3.3 V with ESP32, XIAO or RP2040 boards.
 - **Offset:** the panel sits 20 rows into the controller's 320-row RAM. A driver set up for 240×320 or 240×240 draws shifted and wraps garbage at the edge.
+
+## Applications
+
+- **Compact status display.** 240×280 with rounded corners in a 31.5 × 39.0 mm module, suitable for handheld enclosures.
+- **Dual-voltage wiring.** The module accepts 3.3 V or 5 V, provided supply and logic use the same voltage. This permits direct connection to 5 V logic without a level shifter.
+- **Constraint:** the interface is write-only with no MISO line, so the controller state cannot be read back.
 
 ## Files
 

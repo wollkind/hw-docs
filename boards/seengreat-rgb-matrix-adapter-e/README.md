@@ -42,13 +42,19 @@ ESP32-DevKitC V4:
 
 The V2.x S3 column matches the vendor demo `examples/esp32-s3-devkitc-1-demo-v2.x/…/PatternPlasma.ino`.
 
-## Gotchas
+## Operational notes
 
 - **V1.x with an S3 R8/R16 module:** V1.x puts R1/B1/R2 on GPIO37/36/35, which are octal-PSRAM pins on N8R8 and N16R8 modules. It also uses the strapping pins GPIO0 and GPIO45. Use V2.x with PSRAM DevKits.
 - **DevKitC V4 on V1.x:** B is on GPIO3, the UART0 RX pin, so the serial monitor and upload share it with the panel.
 - **Panel driver chip:** the demos default to `HUB75_I2S_CFG::SHIFT`. FM6126A panels need `mxconfig.driver = HUB75_I2S_CFG::FM6126A`.
 - **64×64 panels:** these need the E pin set (`PIN_E`). Demo V1 code leaves `CH_E -1`.
 - **Power:** USB-C on the adapter is power only. Program through the DevKit's own USB. Don't hot-plug; check polarity first.
+
+## Applications
+
+- **Large HUB75 installation from a DevKit.** Two VH-4P outputs at 5 V/4 A each feed panel power separately from the logic supply.
+- **Reuse of an existing ESP32-S3-DevKitC-1 or ESP32-DevKitC V4.** No dedicated MCU is fitted, so the host board is replaceable.
+- **Constraint:** verify the silkscreen revision before wiring. V1.x routes HUB75 to GPIO37, 36 and 35, which are octal PSRAM pins on N8R8 and N16R8 modules. Use V2.x with PSRAM DevKits.
 
 ## Files
 

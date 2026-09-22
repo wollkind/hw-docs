@@ -50,13 +50,19 @@ From the wiki pin map (`wiki/getting-started.md`). GPIO numbers are from the Plu
 - The older Seeed_GFX (TFT_eSPI fork) uses a `driver.h` with `#define BOARD_SCREEN_COMBO 75` and `#define USE_XIAO_TFT_DISPLAY_BOARD`. See `examples/xiao_esp32s3_114_display/`.
 - The vendor demos read the IMU with raw `Wire` register access, so no IMU library is needed. The mic uses the IDF 5 `driver/i2s_pdm.h`.
 
-## Gotchas
+## Operational notes
 
 - **UART0 is taken:** D6/D7 (UART0 TX/RX) are buttons A/B, so serial goes over USB CDC.
-- **I2C address:** the IMU sits at 0x6A on the shared I2C bus, so Grove devices must avoid that address.
+- **I2C address:** the IMU address is 0x6A on the shared I2C bus, so Grove devices must avoid that address.
 - **I2C hot-plugging:** hot-plugging on Grove I2C can hang the bus. The factory dashboard's I2C scan freezes; press Reset.
 - **Battery voltage:** V = ADC mV × (316+160)/160. The code is in `examples/xiao_esp32s3_114_bat/`.
 - **Partitions:** the 16 MB flash needs a 16 MB partition table. The PIO board default is 8 MB.
+
+## Applications
+
+- **Handheld sensor readout.** Grove I2C in on D4/D5, values on the 135×240 LCD, three buttons for navigation. The IMU at 0x6A occupies that address on the shared bus.
+- **Motion-triggered recorder.** LSM6DS3 INT1 on D14 wakes the board; the PDM mic captures audio to PSRAM. 8 MB PSRAM and 16 MB flash are available on the Plus module.
+- **Battery instrument.** Battery voltage reads on D16 through a fixed 316k/160k divider, multiplier 2.975. No charge-status signal is available.
 
 ## Files
 

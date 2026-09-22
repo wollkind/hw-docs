@@ -44,13 +44,19 @@ The IMU I2C address is 0x6A according to the Seeed LSM6DS3 library default (unve
 - The two cores' pin definitions differ slightly.
 - PlatformIO: no official board in `nordicnrf52`, so community platforms are needed (unverified). Arduino IDE is the vendor path.
 
-## Gotchas
+## Operational notes
 
 - **Battery reading can damage P0.31:** with P0.14 HIGH, P0.31 can see the full battery voltage and exceed its 3.6 V limit. Keep P0.14 **LOW** whenever reading, and don't set it HIGH while charging.
 - **Charge current:** the wiki text says P0.13 as a hi-Z input selects 50 mA and driven LOW selects 100 mA. Its "low current" code sample drives HIGH instead. Use hi-Z or LOW as the text says.
 - **Board not found or upload stuck:** press Reset once; if that doesn't work, double-tap it for the UF2 bootloader.
 - **Bootloader recovery:** J-Link on the SWD pads, then flash `firmware/bootloader-0.6.1_s140_7.3.0.hex`.
 - **Charge LED:** the green/red charge LED follows ~CHG (P0.17): lit while charging, off when full or not charging.
+
+## Applications
+
+- **Wearable motion logger.** The 6-axis IMU plus BLE in a 21 × 17.8 mm outline. Suitable for gesture classification and step or orientation logging.
+- **Sound-level or keyword sensor.** The PDM microphone feeds edge inference without an external codec.
+- **BLE beacon or peripheral.** nRF52840 supports BLE 5 and NFC; the board runs from a LiPo cell with onboard charging.
 
 ## Files
 

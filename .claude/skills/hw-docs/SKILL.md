@@ -55,8 +55,9 @@ Follow the shape of `boards/waveshare-esp32-s3-rgb-matrix/README.md`:
 2. **Key specs** table: MCU, flash/PSRAM, radio, USB type (native or bridge chip), power inputs and limits, onboard ICs with their I2C addresses.
 3. **Pinout** tables for every bus and onboard peripheral. Take the pins from the schematic, vendor headers or the wiki's own tables, and cite the source file. When sources disagree, show both and say which is authoritative. Board revisions get separate columns.
 4. **PlatformIO config** that works: `board =`, memory type, partitions, build flags. Mark it "verified in <project>" only if a project actually uses it. Otherwise say "from vendor docs, untested".
-5. **Gotchas:** vendor FAQ items, strapping/flash/PSRAM pin conflicts (cross-check against the chip datasheet), UART pins that are taken, power limits, and lessons from the user's own projects (their `README.md`/`CLAUDE.md` often hold hard-won fixes).
-6. **Files:** what's in the folder.
+5. **Operational notes:** vendor FAQ items, strapping/flash/PSRAM pin conflicts (cross-check against the chip datasheet), UART pins that are already assigned, power limits, and findings from the user's own projects (their `README.md`/`CLAUDE.md` often record fixes established by testing).
+6. **Applications:** two to four concrete uses the board's own hardware supports, each naming the onboard peripheral it depends on, plus any use the board is unsuitable for. No speculation about parts the board does not have.
+7. **Files:** what's in the folder.
 
 Put every URL, the fetch date (today), repo SHAs and anything skipped in `<entry>/sources.md`.
 
