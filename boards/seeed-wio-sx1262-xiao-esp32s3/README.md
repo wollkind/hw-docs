@@ -37,6 +37,8 @@ Radio configuration in the same variant: `DIO2` drives the antenna switch (`SX12
 
 Optional L76K GNSS module (same stack): GPS RX 44, TX 43, standby 1.
 
+**The vendor schematic does not obviously agree with that table.** `hardware/schematic.pdf` (`Wio-SX1262 for XIAO V1.0`, KiCad 8) carries the expected nets — `LORA_SPI_SCK`, `LORA_SPI_MISO`, `LORA_SPI_MOSI`, `LORA_SPI_NSS`, `LORA_RST`, `LORA_BUSY`, `LORA_DIO1`, `LORA_RF_SW1` — but the GPIO labels printed beside its 30-pin connector are GPIO14, 15, 16, 17, 18, 21, 47 and 48, not the 7/8/9 and 38–42 the Meshtastic variant uses. The PDF's text layer gives the labels without the pin each one attaches to, so the two cannot be reconciled from the text alone *(unverified)*. Before wiring anything by hand, read the schematic by eye; for a Meshtastic build the variant's numbers are the ones that are known to work.
+
 ## Meshtastic / PlatformIO
 
 ```ini
@@ -72,6 +74,9 @@ Meshtastic hardware model 81, slug `SEEED_XIAO_S3`, 8 MB partition scheme, and i
 
 ## Files
 
+- `hardware/schematic.pdf`: Seeed's `Wio-SX1262 for XIAO V1.0` schematic (fetched 2026-09-22)
+- `hardware/3d-model.step.gz`: the STEP model, gzipped
+- `datasheets/wio-sx1262-module.pdf`, `datasheets/wio-sx1262-n-module.pdf`: the module datasheets for both variants
 - `wiki/kit-introduction.md`, `wio-sx1262-module-introduction.md`: Seeed's product and module pages
 - `wiki/Get_Started_meshtastic.md`, `LoRaWAN_Sensor_Node.md`, `Single_Channel_LoRaWAN_Gateway.md`: the three applications Seeed documents
 - `reference/meshtastic-variant.h`, `meshtastic-platformio.ini`, `meshtastic-pins_arduino.h`: the upstream Meshtastic variant this entry's pin table comes from
