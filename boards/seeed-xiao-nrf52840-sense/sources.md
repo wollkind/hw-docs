@@ -1,4 +1,4 @@
-# Sources (fetched 2026-09-21)
+# Sources (fetched 2026-09-21, extended 2026-09-22)
 
 - Product (Pre-Soldered): https://www.seeedstudio.com/Seeed-Studio-XIAO-nRF52840-Sense-Pre-Soldered-p-6330.html
 - Wiki: https://wiki.seeedstudio.com/XIAO_BLE/ → `wiki/getting-started.md`
@@ -14,4 +14,5 @@
 - https://files.seeedstudio.com/wiki/github_weiruanexample/Flash_P25Q16H-UXH-IR_Datasheet.pdf → `datasheets/flash-p25q16h.pdf`
 - https://github.com/Seeed-Studio/Adafruit_nRF52_Arduino @ `667f05fdaafd01a05d8027d7dbbf1f4e0b137047`: `variants/Seeed_XIAO_nRF52840_Sense/variant.{h,cpp}` → `reference/`
 - Not copied: the Plus-variant KiCad/schematics, the XIAO KiCad libraries, the non-Sense KiCad
-- Failed: Nordic's current nRF52840 PS (docs.nordicsemi.com returns 403 to scripts)
+- https://github.com/Seeed-Studio/Seeed_Arduino_LSM6DS3 @ `4ceed57ef83bfa6213659fc4377612af6e38002f`: the XIAO examples (`Pedometer`, `FreeFallDetect`, `IMU_Classifier`) all construct `LSM6DS3(I2C_MODE, 0x6A)` while the library's own default is 0x6B. Together with the datasheet's SA0 table this settles the IMU address at 0x6A.
+- Failed: Nordic's current nRF52840 PS. `docs.nordicsemi.com`, `infocenter.nordicsemi.com` and `docs-be.nordicsemi.com` all answer **403** to a scripted request, with a browser user agent too; re-checked 2026-09-22 at the Full access level. `chips/nrf52840/` therefore still holds Seeed's copy of v1.5. A browser download is the only route.

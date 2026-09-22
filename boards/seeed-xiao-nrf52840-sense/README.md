@@ -35,7 +35,7 @@ Used by: none in `PlatformIO/Projects` yet. Wiring to the 1.69" LCD is in [../..
 | | | | | D30 / D31 | P0.09 / P0.10 | NFC1 / NFC2 |
 | | | | | PIN_VBAT (32) | P0.31 (AIN7) | battery voltage |
 
-The IMU I2C address is 0x6A according to the Seeed LSM6DS3 library default (unverified against the schematic, which doesn't show the SA0 strap clearly).
+**IMU I2C address: 0x6A.** The LSM6DS3TR-C datasheet (`datasheets/lsm6ds3tr.pdf`) gives the slave address as `110101xb`, where the `SDO/SA0` pin sets the low bit: grounded is `1101010b` = **0x6A**, tied to the supply is `1101011b` = 0x6B. Every XIAO BLE example in Seeed's own `Seeed_Arduino_LSM6DS3` library constructs the sensor as `LSM6DS3(I2C_MODE, 0x6A)`, against a library default of 0x6B, so the board grounds SA0. The schematic's text layer shows the pin as `SDO/DA0` without its net, so this rests on Seeed's code plus the datasheet rather than on the schematic itself.
 
 ## Arduino cores
 
