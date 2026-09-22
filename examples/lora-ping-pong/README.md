@@ -1,106 +1,108 @@
-# LoRa ping/pong
+# LoRa ping/pong example
 
-A two-node link demo for the LoRa boards in this library:
+A two-node link test for the LoRa boards in this library:
 
-- [`boards/lilygo-t3-lora32-v1.6.1`](../../boards/lilygo-t3-lora32-v1.6.1/README.md) — ESP32-PICO-D4 + SX1276
-- [`boards/seeed-wio-sx1262-xiao-esp32s3`](../../boards/seeed-wio-sx1262-xiao-esp32s3/README.md) — XIAO ESP32-S3 + SX1262
+- [`boards/lilygo-t3-lora32-v1.6.1`](../../boards/lilygo-t3-lora32-v1.6.1/README.md): ESP32-PICO-D4 with SX1276
+- [`boards/seeed-wio-sx1262-xiao-esp32s3`](../../boards/seeed-wio-sx1262-xiao-esp32s3/README.md): XIAO ESP32-S3 with SX1262
 
-One source tree builds both boards and both roles. The boards can be mixed:
-an SX1276 talks to an SX1262 as long as the air parameters match.
+One source tree builds both boards and both roles. The two nodes may use
+different boards; an SX1276 and an SX1262 interoperate when configured with
+identical radio parameters.
 
-> **Not built or run here.** Written against the pin maps and radio settings
-> recorded in the two board entries. `pio run` could not complete in the
-> sandbox — the ESP32 platform download is blocked by the egress proxy. What
-> *was* checked: `include/protocol.h` compiles and its `static_assert`s pass
-> (header 8 / ping 12 / pong 16 bytes, little-endian on the wire), and
-> `src/main.cpp` passes a syntax check against stub headers — which says
-> nothing about whether the RadioLib calls match that library's real
-> signatures. Treat the first flash as the test.
+## Verification status
 
-## Build
+Not built and not run. The PlatformIO ESP32 platform download is blocked by the
+egress proxy in the environment where this was written.
+
+Checks that were performed:
+
+| Check | Result |
+|---|---|
+| `include/protocol.h` compiles, static assertions pass | Pass: header 8 bytes, ping 12 bytes, pong 16 bytes |
+| Byte order of a populated `ping_msg_t` | Little-endian, confirmed by memory dump |
+| `src/main.cpp` syntax check against stub headers | Pass for both board definitions |
+
+The syntax check used locally written stub headers. It does not confirm that
+the RadioLib calls match that library's actual signatures.
+
+## Build and run
 
 ```sh
-pio run -e t3_ping   -t upload    # node 1 on the T3
-pio run -e xiao_pong -t upload    # node 2 on the XIAO kit
+pio run -e t3_ping   -t upload    # node 1, T3 LoRa32
+pio run -e xiao_pong -t upload    # node 2, Wio-SX1262 kit
 pio device monitor -b 115200
 ```
 
-Any pairing works: `t3_ping` + `t3_pong`, `xiao_ping` + `xiao_pong`, or one of
-each. The pinger prints; the ponger mostly answers.
+Available environments: `t3_ping`, `t3_pong`, `xiao_ping`, `xiao_pong`. Any
+ping and pong pair functions.
 
-Expected output on the pinger:
-
-```
-ping 7 sent (12 bytes)
-pong 7  rtt 148 ms  here: RSSI -41.0 dBm SNR 9.8 dB  there: RSSI -43.50 dBm SNR 9.25 dB  loss 0/7
-```
-
-`here` is the pong as this node heard it; `there` is the ping as the *other*
-node heard it, carried back inside the pong. Asymmetry between the two is the
-useful signal — it usually means one antenna, not the path.
-
-## What is actually on the air
-
-12 bytes for a ping, 16 for a pong, plus the LoRa PHY's own preamble, header
-and CRC. `include/protocol.h` is the whole protocol:
+Output format on the pinger:
 
 ```
-msg_header_t   magic(2) version(1) type(1) src(1) dst(1) seq(2)   = 8 bytes
-ping_msg_t     header + t_ms(4)                                   = 12 bytes
-pong_msg_t     header + t_ms(4) + rssi_cdbm(2) + snr_cdb(2)       = 16 bytes
+ping 7 transmitted, 12 bytes
+pong 7, round trip 148 ms, local RSSI -41.0 dBm SNR 9.8 dB, remote RSSI -43.50 dBm SNR 9.25 dB, unanswered 0 of 7
 ```
 
-Design choices worth copying into the next link:
+`local` values are measured on the node printing the line. `remote` values are
+measured by the other node and returned inside the pong.
 
-- **Fixed-width types and `__attribute__((packed))`.** Otherwise padding differs
-  between architectures and the bytes on air stop matching the bytes in memory.
-  `static_assert` on every struct size makes a silent change loud.
-- **Dispatch on length first, magic second.** The two message types are
-  deliberately different sizes, so a truncated or foreign packet is rejected
-  before any field is read. This is the same discipline as `pio-strip-com`'s
-  ESP-NOW protocol.
-- **A version byte.** An old node meeting a new one says so instead of decoding
-  garbage.
-- **Echo, don't restamp.** The pong returns the ping's `t_ms` untouched, so the
-  round-trip time is computed entirely on the pinger's clock. Two nodes never
-  share a time base.
-- **Sequence numbers** give loss counting and stale-reply rejection for free.
-- **No application CRC.** The LoRa PHY already CRCs the payload and RadioLib
-  reports `RADIOLIB_ERR_CRC_MISMATCH`; adding another is wasted airtime.
+## Message format
 
-Deliberately absent, because a two-node demo does not need them: retries,
-acknowledgements, fragmentation for payloads over 255 bytes, encryption, and
-any duty-cycle limiter (relevant in EU 868 bands).
+Defined in `include/protocol.h`.
 
-## Air parameters
-
-Set in `src/main.cpp` and identical on both ends — frequency, bandwidth,
-spreading factor, coding rate, sync word and preamble length. One mismatch
-means silence, with no error anywhere.
-
-| Setting | Value | Effect of changing it |
+| Structure | Size | Fields |
 |---|---|---|
-| `FREQ_MHZ` | 915.0 | Must suit the module fitted. 868.0 for EU parts. |
-| `BW_KHZ` | 125.0 | Narrower = more range, slower, less tolerant of drift |
-| `SPREAD_FACT` | 9 | 7 fast/short … 12 slow/far; each step up roughly doubles airtime |
-| `CODING_RATE` | 7 | 4/7 — more redundancy, more airtime |
-| `SYNC_WORD` | 0x12 | Private network. RadioLib maps the byte to each chip family's encoding |
-| `TX_DBM` | 17 | Within both modules' range; SX1262 can go higher |
+| `msg_header_t` | 8 bytes | magic (2), version (1), type (1), src (1), dst (1), seq (2) |
+| `ping_msg_t` | 12 bytes | header, t_ms (4) |
+| `pong_msg_t` | 16 bytes | header, t_ms (4), rssi_cdbm (2), snr_cdb (2) |
 
-Raising `SPREAD_FACT` to 12 and walking away is the interesting demo: the RTT
-climbs into seconds, and the link survives well past where SF7 drops.
+Properties of this format:
 
-## Gotchas this code already handles
+- Fields use fixed-width integer types. The width of `int` differs between
+  target architectures.
+- Structures are packed. Unpacked structures receive compiler padding that
+  differs between architectures.
+- The two message types have different sizes. A receiver checks the received
+  length before reading any field.
+- The header contains a version field. A node receiving an unknown version
+  discards the message and prints a line.
+- The pong copies the ping's timestamp without modification. Round trip time is
+  therefore computed entirely from the pinger's clock. The two nodes do not
+  share a time reference.
+- No application-level checksum is present. The radio computes and verifies a
+  CRC, and RadioLib reports `RADIOLIB_ERR_CRC_MISMATCH`.
 
-- `transmit()` leaves the radio idle, so every send is followed by
-  `startReceive()`. Forgetting that is the classic "it answers once then goes
-  deaf".
-- On the SX1262 kit, `begin(..., 1.8)` powers the TCXO from DIO3 and
-  `setDio2AsRfSwitch(true)` drives the antenna switch. Omit either and the
-  radio initialises fine and hears nothing.
-- The SX1276 and SX1262 take different `Module()` arguments: DIO0 + DIO1 for
-  the SX127x, DIO1 + BUSY for the SX126x.
-- Native-USB boards need a delay before the serial port exists; the XIAO envs
-  also set `ARDUINO_USB_CDC_ON_BOOT=1`.
+Not implemented: retransmission, acknowledgement beyond the pong itself,
+fragmentation of payloads larger than 255 bytes, encryption, duty cycle
+limiting.
 
-**Attach an antenna before powering either board.**
+## Radio parameters
+
+Set in `src/main.cpp`. All values must be identical on both nodes. A difference
+in any one value results in no reception and no error report.
+
+| Parameter | Value | Effect of increase |
+|---|---|---|
+| `FREQ_MHZ` | 915.0 | Must match the installed module. Use 868.0 for European modules. |
+| `BW_KHZ` | 125.0 | Shorter transmission, lower sensitivity |
+| `SPREAD_FACT` | 9 | Longer transmission, higher sensitivity. Range 7 to 12. |
+| `CODING_RATE` | 7 | More error correction, longer transmission |
+| `SYNC_WORD` | 0x12 | Separates networks on one frequency |
+| `TX_DBM` | 17 | Higher output power |
+
+Transmission duration at 125 kHz bandwidth, coding rate 4/5, for the 12-byte
+ping: 41 ms at SF7, 144 ms at SF9, 1155 ms at SF12.
+
+## Hardware behaviour handled by this code
+
+- `transmit()` leaves the radio in standby. `startReceive()` is called after
+  every transmission.
+- On the SX1262 module, `begin(..., 1.8)` supplies the TCXO from DIO3 and
+  `setDio2AsRfSwitch(true)` configures the antenna switch. Without both calls
+  the radio initialises without error and receives no packets.
+- The `Module()` constructor takes different pins per chip family: NSS, DIO0,
+  RESET, DIO1 for the SX1276; NSS, DIO1, RESET, BUSY for the SX1262.
+- Boards with native USB require a delay before the serial port exists. The
+  XIAO environments also define `ARDUINO_USB_CDC_ON_BOOT=1`.
+
+An antenna must be connected before either board is powered on.

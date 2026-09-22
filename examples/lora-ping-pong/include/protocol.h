@@ -2,25 +2,24 @@
 #include <stdint.h>
 
 /*
- * One header, both nodes. Edit it here and rebuild both ends — a protocol
- * header that lives in one place is the only version control a two-node link
- * gets.
+ * Message definitions for the LoRa ping/pong example.
  *
- * Rules this file follows:
- *  1. Fixed-width types only. `int` is 16 bits on an AVR and 32 on an ESP32.
- *  2. Packed structs. Without it the compiler inserts padding that differs
- *     between architectures, and the bytes on air stop matching the bytes in
- *     memory.
- *  3. Every message starts with the same header, so a receiver can read the
- *     type before it knows the shape.
- *  4. The two message types are DIFFERENT SIZES. Dispatch on length first and
- *     magic second: a truncated or foreign packet fails the length test before
- *     anything reads its fields.
- *  5. A version byte, so an old node meeting a new one says so instead of
- *     decoding garbage.
+ * Both nodes compile this file. Any change requires rebuilding both nodes.
+ *
+ * Constraints applied here:
+ *   - All fields use fixed-width integer types. The width of "int" differs
+ *     between target architectures.
+ *   - All structures are packed. Unpacked structures receive compiler padding
+ *     that differs between architectures.
+ *   - All messages begin with the same header, so that a receiver can read the
+ *     message type before it knows the message length.
+ *   - The two message types have different sizes. A receiver checks the
+ *     received length before reading any field.
+ *   - The header contains a version field. A node receiving an unknown version
+ *     discards the message.
  */
 
-#define PROTO_MAGIC   0x4C50u  /* 'LP', little-endian on both boards */
+#define PROTO_MAGIC   0x4C50u  /* ASCII "LP", stored little-endian */
 #define PROTO_VERSION 1
 
 #define ADDR_BROADCAST 0xFF
@@ -33,27 +32,28 @@ enum : uint8_t {
 struct __attribute__((packed)) msg_header_t {
     uint16_t magic;    /* PROTO_MAGIC */
     uint8_t  version;  /* PROTO_VERSION */
-    uint8_t  type;     /* MSG_* */
-    uint8_t  src;      /* node id of the sender */
-    uint8_t  dst;      /* node id, or ADDR_BROADCAST */
-    uint16_t seq;      /* incremented per ping, echoed unchanged in the pong */
+    uint8_t  type;     /* MSG_PING or MSG_PONG */
+    uint8_t  src;      /* node identifier of the sender */
+    uint8_t  dst;      /* node identifier of the recipient, or ADDR_BROADCAST */
+    uint16_t seq;      /* incremented once per ping; copied into the pong */
 };
 
 struct __attribute__((packed)) ping_msg_t {
     msg_header_t h;
-    uint32_t t_ms;     /* sender's millis() at transmit */
+    uint32_t t_ms;     /* value of millis() on the sender at transmit time */
 };
 
 struct __attribute__((packed)) pong_msg_t {
     msg_header_t h;
-    uint32_t t_ms;      /* echoed from the ping, untouched */
-    int16_t  rssi_cdbm; /* RSSI of the ping at the responder, dBm x100 */
-    int16_t  snr_cdb;   /* SNR of the ping at the responder, dB x100 */
+    uint32_t t_ms;      /* copied from the ping without modification */
+    int16_t  rssi_cdbm; /* RSSI of the ping at the responder, in 0.01 dBm units */
+    int16_t  snr_cdb;   /* SNR of the ping at the responder, in 0.01 dB units */
 };
 
-/* Sizes are part of the protocol: if these fire, both ends need rebuilding. */
+/* Structure sizes form part of the message format. A failed assertion here
+ * indicates that both nodes require rebuilding. */
 static_assert(sizeof(msg_header_t) == 8, "msg_header_t size changed");
 static_assert(sizeof(ping_msg_t) == 12, "ping_msg_t size changed");
 static_assert(sizeof(pong_msg_t) == 16, "pong_msg_t size changed");
 static_assert(sizeof(ping_msg_t) != sizeof(pong_msg_t),
-              "message types must differ in size for length-first dispatch");
+              "message types must differ in size for length-based dispatch");
