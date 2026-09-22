@@ -48,6 +48,7 @@ Each entry has:
 | [boards/adafruit-qualia-esp32-s3-rgb666](boards/adafruit-qualia-esp32-s3-rgb666/README.md) | ESP32-S3 16MB/8MB PSRAM driver for 40-pin RGB-666 panels |
 | [boards/espressif-esp32-c6-devkitc-1](boards/espressif-esp32-c6-devkitc-1/README.md) | ESP32-C6-WROOM-1 8 MB dev kit, dual USB-C, WS2812 on GPIO8 |
 | [boards/espressif-esp32-c3-devkitc-02](boards/espressif-esp32-c3-devkitc-02/README.md) | ESP32-C3-WROOM-02 4 MB dev kit, micro-USB, WS2812 on GPIO8 |
+| [boards/espressif-esp32-s3-devkitc-1](boards/espressif-esp32-s3-devkitc-1/README.md) | ESP32-S3-WROOM dev kit; its board ids double as profiles for other S3 boards |
 | [parts/waveshare-1.69in-lcd-module](parts/waveshare-1.69in-lcd-module/README.md) | 1.69" 240×280 ST7789V2 SPI LCD (Seeed SKU 5755) |
 | [parts/gc9a01-1.28in-round-lcd](parts/gc9a01-1.28in-round-lcd/README.md) | 1.28" 240×240 round GC9A01A SPI LCD module |
 | [parts/sk-120-buck-boost](parts/sk-120-buck-boost/README.md) | XY-SK120 120 W buck-boost, CC/CV, Modbus RTU over TTL |
