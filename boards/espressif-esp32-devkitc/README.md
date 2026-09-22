@@ -86,7 +86,7 @@ The board file sets `mcu esp32`, `variant esp32`, `-DARDUINO_ESP32_DEV`, 240 MHz
 - **Six pins are input-only:** GPIO34, 35, 36, 39 (and per the chip entry, 37 and 38, which this board does not break out). No pull-ups, no outputs.
 - **GPIO16 and GPIO17 vanish on WROVER modules**, where they are the PSRAM interface. A design that uses them stops working when the module changes.
 - **MTDI (GPIO12) selects the flash voltage at reset.** Pulled high at boot, the chip expects 1.8 V flash and a 3.3 V module will not start.
-- **Only ADC2 pins are free for analogue while Wi-Fi is on?** — the ESP32's ADC2 is unavailable to the application while the Wi-Fi driver is running, so use the ADC1 pins (32–36, 39) for anything measured during a connection.
+- **Prefer the ADC1 pins for anything measured while Wi-Fi is running.** ADC1 is on GPIO32–36 and 39; ADC2 is on GPIO0, 2, 4, 12–15, 25–27. The ESP32's ADC2 is shared with the Wi-Fi driver *(unverified here — neither the datasheet nor the board guide states it; the ESP-IDF ADC API reference is where it is documented)*.
 - **Two DACs**, on GPIO25 and GPIO26. No other Espressif part in this library has them.
 - **Note on C15:** on earlier V4 boards this capacitor can make the board boot into download mode, and it distorts a clock output on GPIO0. Espressif's remedy is to remove it.
 - **No native USB.** Flashing and the serial monitor both go through the bridge chip.
