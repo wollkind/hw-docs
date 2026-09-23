@@ -1,7 +1,7 @@
 # Adafruit Qualia ESP32-S3 for TTL RGB-666 Displays (PID 5800)
 
 ESP32-S3 dev board that drives 40-pin RGB-666 TTL ("dot clock") TFT panels directly from the S3's LCD peripheral, with a PSRAM frame buffer, a constant-current backlight driver and an I2C I/O expander for panel init. **No display included.** Chip: [../../chips/esp32-s3](../../chips/esp32-s3/README.md).
-Used by: `pio-blink` (env `qualia`, `board = adafruit_qualia_s3_rgb666`). `MISSION.md` counts three environments with this board id across the owner's projects.
+Used by: none confirmed. `pio-blink` had a `qualia` env and dropped it on 2026-09-23 because the board has no user LED. `MISSION.md` counts three environments with this board id across the owner's projects.
 
 ## Key specs
 
@@ -52,7 +52,7 @@ Several panel lines are ESP32-S3 strapping pins: GPIO0 (B4), GPIO3 (R5), GPIO45 
 
 ## PlatformIO
 
-As built in `pio-blink` (`[env]` there points `platform` at a local pioarduino copy, `file://C:/Users/steve/pio-esp32-55.03.311`):
+As formerly built in `pio-blink` (`[env]` there points `platform` at a local pioarduino copy, `file://C:/Users/steve/pio-esp32-55.03.311`):
 
 ```ini
 [env:qualia]
