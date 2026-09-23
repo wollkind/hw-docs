@@ -35,8 +35,8 @@ The 14 numbered items from 2026-09-21 are all filed (see Done). Item 8 is filed 
 Next, the **bulk pass:**
 
 - Document every board used across the owner's PlatformIO projects. Distinct `board =` IDs, with entries filed so far marked:
-  - **done:** seeed_xiao_esp32c6 ×9, featheresp32-s2 ×5, feather32u4 ×4, adafruit_matrix_portal_m4
-  - **outstanding:** d1_mini ×6, esp32dev ×3, esp32-s3-devkitc-1 ×3, adafruit_qualia_s3_rgb666 ×3, uno, leonardo, huzzah, rymcu-esp32-s3-devkitc-1, rpipico2w, rpipico2, pico, metro, esp32-s3-devkitc1-n8r8/-n16r8, esp32-c6-devkitc-1, esp32-c3-devkitc-02, blackpill_f103c8, adafruit_feather_esp32s3, adafruit_feather_esp32s2
+  - **done:** seeed_xiao_esp32c6 ×9, d1_mini ×6, featheresp32-s2 ×5, feather32u4 ×4, adafruit_qualia_s3_rgb666 ×3, adafruit_matrix_portal_m4, esp32-c6-devkitc-1, esp32-c3-devkitc-02, adafruit_feather_esp32s3
+  - **outstanding:** esp32dev ×3, esp32-s3-devkitc-1 ×3, uno, leonardo, huzzah, rymcu-esp32-s3-devkitc-1, rpipico2w, rpipico2, pico, metro, esp32-s3-devkitc1-n8r8/-n16r8, blackpill_f103c8, adafruit_feather_esp32s2
 - Repositories attached to a session so far: `pio-radio`, `pio-radio1`, `pio-radio2`, `pio-crowpanel2`, `pio-rlcd`, `pio-solar`, `pio-soil1`, `pio-strip-com`, `pio-xiao-hdc-wifi`, `pio-feather`, `pio-d1mini`, `pio-bme280`, `pio-bme680`. Each one needs `add_repo` before it can be cloned in a sandbox session.
 - Generic IDs often hide the real vendor hardware (e.g. `infopanel64` is `esp32-s3-devkitc-1` but really the Waveshare RGB Matrix). Read each project's README/comments.
 - Parts from `lib_deps`: BME280, BME680, LIS3DH, CCS811, DHT, MAX1704X, INA228, INMP441 mic, ST7789 240×240, e-paper panels and so on.
@@ -71,13 +71,23 @@ Next, the **bulk pass:**
 | `parts/gc9a01-1.28in-round-lcd` | GC9A01A datasheet + TFT_eSPI/Adafruit init; module pin labels unverified |
 | `boards/seeed-xiao-nrf54lm20a-sense`, `chips/nrf54lm20a` | wiki source from GitHub; schematic and Nordic datasheet still missing |
 | `boards/lilygo-t3-lora32-v1.6.1` | T3 LoRa32 V1.6.1, SX1276/SX1278; sources from the LilyGO GitHub repo |
+| `boards/adafruit-feather-esp32-s3` | from `pio-blink`; PIDs 5477/5323/5885, Learn guide + EAGLE; env builds |
+| `boards/adafruit-qualia-esp32-s3-rgb666` | from `pio-blink`; PID 5800, Learn guide + EAGLE; env builds |
+| `boards/espressif-esp32-c3-devkitc-02` | from `pio-blink`; schematic v1.1; **pio-blink env fails to compile** (see Open issues) |
+| `boards/espressif-esp32-c6-devkitc-1`, `chips/esp32-c6` | from `pio-blink`; schematics v1.2–v1.4; env builds |
+| `chips/esp32-c3`, `chips/esp8266` | Espressif datasheets + TRMs, C3 errata page |
+| `boards/wemos-d1-mini` | from `pio-blink`; V4.0.0 and V3.0.0 schematics; env builds |
 
 ## Open issues
 
 - **Found in the bulk pass:** the projects that target `board = featheresp32-s2` are building the **no-PSRAM** profile (`-DARDUINO_ADAFRUIT_FEATHER_ESP32S2_NOPSRAM`). If the hardware is a PID 5000/5303 Feather, `board = adafruit_feather_esp32s2` is the profile that enables its 2 MB PSRAM.
 - **Found in the bulk pass:** `pio-radio2` builds with `board = leonardo` in an env named `feather32u4`; the hardware is a Feather 32u4 RFM69. Harmless but wrong profile.
 - **Found in the bulk pass:** `pio-strip-com`'s `display` env is `board = esp32-s3-devkitc-1` but is really a **SmartPanle PanelLan `BOARD_SC05_X`** (320×240 IPS + touch, 16 MB flash, OPI PSRAM, `smartpanle/PanelLan` library). It needs its own entry. That project also pins `platform = file://C:/Users/steve/pio-esp32-55.03.311`, a local fork that will not resolve on another machine.
-- **Missing source:** no `chips/esp32-c6` entry — the Espressif datasheet is only on blocked hosts.
+- **Found (2026-09-23 build):** `pio-blink`'s `esp32-c3` env fails to compile: `-D LED_BUILTIN=8` collides with the `esp32c3` variant's `static const uint8_t LED_BUILTIN` (core 3.3.11). Remove the flag; the variant's `LED_BUILTIN` already drives the RGB LED on GPIO8.
+- **Found:** `pio-blink`'s `qualia` env sets `-D LED_BUILTIN=18`, which is I2C SCL; the Qualia has no user LED, so the blink has no visible output.
+- **Found:** `pio-blink` builds `adafruit_feather_esp32s3` (PID 5477, 4 MB + PSRAM profile). If the hardware is a 5323/5885, the correct id is `adafruit_feather_esp32s3_nopsram`. Which PID the owner has is unconfirmed.
+- **Unconfirmed:** D1 mini revision (V4.0.0 USB-C vs V3.x Micro-USB vs clone). `pio-d1mini` not read yet.
+- **Build environment:** under Full network access, `pio run` works once the proxy CA is appended to certifi in both PlatformIO's own venv and pioarduino's `~/.platformio/penv` (pioarduino downloads through the penv interpreter, which ignores `REQUESTS_CA_BUNDLE`).
 - **Blocked — item 8:** the AITRIP 2.8" ESP32-S3 touch module has no identifiable vendor design. Amazon is blocked from the sandbox and the listing text (ST7789P3 + FT6336U + ESP32-S3-R2 + RS485) matches several white-label sellers, none with documentation. Needs a photo of the board silkscreen to get a model code; the entry records what is known and deliberately records no pin map.
 
 - **Sandbox egress (the cause of every "blocked" issue below):** under the **Trusted** access level the proxy refuses CONNECT to every vendor host used here — lilygo.cc, wiki.seeedstudio.com, files.seeedstudio.com, docs.waveshare.com, adafruit.com, cdn-learn.adafruit.com, espressif.com, semtech.com, st.com, elecrow.com, raspberrypi.com, amazon.com and \*.platformio.org. The refusal is local; the vendors are not blocking anything. GitHub, raw.githubusercontent.com, clones of public vendor repos, pypi.org and web search do work, which is why every entry filed so far sources its facts from vendor GitHub repositories. Setting the environment to **Full** removes the restriction; each "Missing source" item below then becomes a straightforward refetch.
