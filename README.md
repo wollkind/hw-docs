@@ -44,7 +44,6 @@ Each entry has:
 | [boards/adafruit-matrix-portal-m4](boards/adafruit-matrix-portal-m4/README.md) | SAMD51 + ESP32 HUB75 controller, LIS3DH |
 | [boards/lilygo-t3-lora32-v1.6.1](boards/lilygo-t3-lora32-v1.6.1/README.md) | ESP32-PICO-D4 + SX1276/SX1278 LoRa, SSD1306 OLED, microSD |
 | [boards/adafruit-feather-esp32-s3](boards/adafruit-feather-esp32-s3/README.md) | ESP32-S3 Feather (PID 5477 4 MB + 2 MB PSRAM; 5323/5885 8 MB), STEMMA QT, fuel gauge |
-| [boards/adafruit-qualia-esp32-s3-rgb666](boards/adafruit-qualia-esp32-s3-rgb666/README.md) | ESP32-S3 N16R8 driver for 40-pin RGB-666 TTL panels, PCA9554 expander |
 | [boards/espressif-esp32-c3-devkitc-02](boards/espressif-esp32-c3-devkitc-02/README.md) | ESP32-C3-WROOM-02 DevKit, CP2102N Micro-USB, RGB LED |
 | [boards/espressif-esp32-c6-devkitc-1](boards/espressif-esp32-c6-devkitc-1/README.md) | ESP32-C6-WROOM-1 DevKit, UART + native USB-C, RGB LED, current jumper |
 | [boards/wemos-d1-mini](boards/wemos-d1-mini/README.md) | ESP8266EX, 4 MB flash, CH340C (V4.0.0 USB-C / V3.x Micro-USB) |
