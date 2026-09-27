@@ -1,7 +1,7 @@
 # Waveshare ESP32-S3-RGB-Matrix
 
 HUB75 LED-panel driver board. SKU 34422. Chip docs: [../../chips/esp32-s3](../../chips/esp32-s3/README.md).
-Used by: `infopanel64` (in `Documents/PlatformIO/Projects`).
+Used by: `infopanel64`, `pio-chriss-scoreboard` (in `Documents/PlatformIO/Projects`).
 
 ## Key specs
 
