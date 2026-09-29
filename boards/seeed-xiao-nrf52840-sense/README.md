@@ -1,7 +1,7 @@
 # Seeed Studio XIAO nRF52840 Sense
 
 A 21 × 17.8 mm nRF52840 board with an LSM6DS3TR-C IMU, a PDM mic, 2 MB QSPI flash, an RGB LED and a LiPo charger. Chip docs: [../../chips/nrf52840](../../chips/nrf52840/README.md).
-Used by: none in `PlatformIO/Projects` yet. Wiring to the 1.69" LCD is in [../../parts/waveshare-1.69in-lcd-module](../../parts/waveshare-1.69in-lcd-module/README.md).
+Used by: [`wollkind/pio-pomodoro`](https://github.com/wollkind/pio-pomodoro). Wiring to the 1.69" LCD is in [../../parts/waveshare-1.69in-lcd-module](../../parts/waveshare-1.69in-lcd-module/README.md).
 
 ## Key specs
 
@@ -42,7 +42,16 @@ The IMU I2C address is 0x6A according to the Seeed LSM6DS3 library default (unve
 - **Seeed nRF52 Boards** (Adafruit-based): use it for BLE (Bluefruit) and low power. Serial may not compile without `#include <Adafruit_TinyUSB.h>`.
 - **Seeed nRF52 mbed-enabled Boards:** use it for the IMU/PDM advanced functions and TinyML. Serial works out of the box.
 - The two cores' pin definitions differ slightly.
-- PlatformIO: no official board in `nordicnrf52`, so community platforms are needed (unverified). Arduino IDE is the vendor path.
+- PlatformIO: verified working 2026-09-29 (build and USB upload, `pio-pomodoro`). The stock `nordicnrf52` platform has no XIAO board; use Seeed's platform with the Adafruit-based core:
+
+  ```ini
+  [env:xiao_nrf52840_sense]
+  platform = https://github.com/Seeed-Studio/platform-seeedboards.git
+  board = seeed-xiao-afruitnrf52-nrf52840-sense
+  framework = arduino
+  ```
+
+  pioarduino is ESP32-only and does not apply to this board.
 
 ## Operational notes
 
