@@ -2,7 +2,9 @@
 
 ESP32-PICO-D4 board with an SX1276/SX1278 LoRa module, a 0.96" SSD1306 OLED, a microSD slot and a Li-ion charger. Sold as [lilygo.cc/products/lora3](https://lilygo.cc/products/lora3) ("T3 LoRa32 V1.6.1").
 Chip: ESP32-PICO-D4 — no `chips/esp32` entry yet (espressif.com is unreachable from the sandbox).
-Used by: no project found (`pio-radio`, `pio-radio1`, `pio-radio2` are all Feather 32u4 / RadioHead, not this board).
+Used by: `squidtercom` (`firmware/`, env `t3v161`; two units on hand). (`pio-radio`, `pio-radio1`, `pio-radio2` are Feather 32u4 / RadioHead, not this board.)
+
+**Not the T3-S3.** The owner's boards are this V1.6.1 (classic ESP32). Firmware built for the T3-S3 (`esp32-s3-devkitc-1`) fails at upload with "This chip is ESP32, not ESP32-S3", and every T3-S3 pin differs. Use the pins below and `board = esp32dev`; no native USB, so no `ARDUINO_USB_CDC_ON_BOOT`.
 
 ## Key specs
 
